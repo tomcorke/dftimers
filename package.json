@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel",
     "build": "cross-env TEMP=E:\\temp parcel build",
-    "deploy": "npm run build && gh-pages -d dist --branch publish --cname dftimers.tomcorke.com"
+    "deploy": "npm run build && gh-pages -d dist --branch publish --cname dftimers.corke.dev"
   },
   "dependencies": {
     "classnames": "^2.5.1",
