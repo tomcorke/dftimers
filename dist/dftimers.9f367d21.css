@@ -1,0 +1,37 @@
+html {
+  color-scheme: light dark;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: system-ui;
+  display: flex;
+}
+
+.App {
+  & .currentTime {
+    margin-bottom: 1em;
+  }
+
+  & .timers {
+    & .timer {
+      padding: .5em;
+
+      & h2 {
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+      }
+
+      &.live {
+        color: #000;
+        background: #10f898;
+        font-weight: bold;
+      }
+
+      & .time {
+        font-size: 18px;
+      }
+    }
+  }
+}
+/*# sourceMappingURL=dftimers.9f367d21.css.map */
