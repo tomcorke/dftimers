@@ -15,9 +15,7 @@ export class MapTimer {
   static nowSeconds(): number {
     const now = new Date();
     const offset = now.getTimezoneOffset() * 60;
-    return (
-      now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds() + offset
-    );
+    return now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
   }
 
   nextOrCurrentTimeSpan(currentTimeSeconds: number): TimeSpan | undefined {

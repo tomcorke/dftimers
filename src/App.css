@@ -7,7 +7,11 @@ html {
   height: 100%;
 }
 
+
+
 .App {
+
+  --df-green: #10f898;
 
   .currentTime {
     margin-bottom: 1em;
@@ -16,6 +20,7 @@ html {
   .timers {
     .timer {
       padding: 0.5em;
+      border-left: 5px solid var(--df-green);
 
       h2 {
         font-size: 24px;
@@ -24,7 +29,7 @@ html {
       }
 
       &.live {
-        background: #10f898;
+        background: var(--df-green);
         color: black;
         font-weight: bold;
       }
