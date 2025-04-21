@@ -14,7 +14,10 @@ const DateTimeDisplay = ({
 }) => {
   const offsetHours = withOffset ? MapTimer.offsetHours() : 0;
   const adjustedSecondsFromMidnight = secondsFromMidnight - offsetHours * 3600;
-  const hours = Math.floor(adjustedSecondsFromMidnight / 3600);
+  let hours = Math.floor(adjustedSecondsFromMidnight / 3600);
+  if (hours >= 24) {
+    hours -= 24;
+  }
   const minutes = Math.floor((adjustedSecondsFromMidnight % 3600) / 60);
   const seconds = adjustedSecondsFromMidnight % 60;
   return (
