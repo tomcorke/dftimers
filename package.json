@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel",
+    "start": "cross-env TEMP=E:\\temp parcel",
     "build": "cross-env TEMP=E:\\temp parcel build",
     "deploy": "npm run build && gh-pages -d dist --branch publish --cname dftimers.corke.dev"
   },
@@ -12,13 +12,15 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "cross-env": "^7.0.3",
     "gh-pages": "^6.3.0",
-    "parcel": "^2.14.0"
+    "parcel": "^2.14.0",
+    "sharp": "^0.33.5"
   }
 }

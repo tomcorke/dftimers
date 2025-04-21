@@ -7,35 +7,112 @@ html {
   height: 100%;
 }
 
-
-
 .App {
 
   --df-green: #10f898;
+  --df-quality-common: #d0d0d0;
+  /* uncommon, rare, epic, legendary, exotic */
+  /* green, blue, purple, orange, red */
+  --df-quality-uncommon: #00ff3f;
+  --df-quality-rare: #00bfff;
+  --df-quality-epic: #ff00ff;
+  --df-quality-legendary: #ff7f00;
+  --df-quality-exotic: #ff0000;
 
-  .currentTime {
-    margin-bottom: 1em;
-  }
+  .sections {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
 
-  .timers {
-    .timer {
-      padding: 0.5em;
-      border-left: 5px solid var(--df-green);
+    .section {
+      /* border: 1px solid red; */
 
       h2 {
-        font-size: 24px;
+        margin: 0 0 1em;
         padding: 0;
-        margin: 0;
+        font-size: 24px;
       }
 
-      &.live {
-        background: var(--df-green);
-        color: black;
+    }
+  }
+
+  .MapTimers {
+
+    .currentTime {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 0.5em;
+    }
+
+
+    .timers {
+      .timer {
+        padding: 0.5em;
+        border-left: 5px solid var(--df-green);
+
+        h3 {
+          font-size: 24px;
+          padding: 0;
+          margin: 0;
+        }
+
+        &.live {
+          background: var(--df-green);
+          color: black;
+          font-weight: bold;
+        }
+
+        .time {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .Collector {
+    .mission {
+
+      h3 {
         font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 0.5em;
       }
 
-      .time {
-        font-size: 18px;
+      .items {
+        .item {
+
+          border-left: 4px solid transparent;
+          margin-bottom: 4px;
+          padding: 2px 0 2px 0.5em;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          gap: 1em;
+          width: 100%;
+
+          --item-color: transparent;
+          border-color: var(--item-color);
+          box-shadow: inset 100px 0 100px -100px var(--item-color);
+
+          &.common {
+            --item-color: var(--df-quality-common);
+          }
+          &.uncommon {
+            --item-color: var(--df-quality-uncommon);
+          }
+          &.rare {
+            --item-color: var(--df-quality-rare);
+          }
+          &.epic {
+            --item-color: var(--df-quality-epic);
+          }
+          &.legendary {
+            --item-color: var(--df-quality-legendary);
+          }
+          &.exotic {
+            --item-color: var(--df-quality-exotic);
+          }
+        }
       }
     }
   }

@@ -14,27 +14,36 @@ export class MapTimer {
 
   static nowSeconds(): number {
     const now = new Date();
-    const offset = now.getTimezoneOffset() * 60;
     return now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
   }
 
-  nextOrCurrentTimeSpan(currentTimeSeconds: number): TimeSpan | undefined {
-    // get current time as seconds since midnight
-    // get next time span's star hour as seconds since midnight
-    // if no time span has a start greater than current time, add 24 hours to earliest time span and use that
-    // return difference between next time span's start time and current time
+  static nowSecondsUTC(): number {
+    const now = new Date();
+    return (
+      now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds()
+    );
+  }
+
+  static offsetHours(): number {
+    const now = new Date();
+    return now.getTimezoneOffset() / 60;
+  }
+
+  nextOrCurrentTimeSpan(currentTimeSecondsUTC: number): TimeSpan | undefined {
     const nextTimeSpan = this.times.find((time) => {
       const startTimeSeconds = time.startHour * 3600;
       const endTimeSeconds = time.endHour * 3600;
       return (
-        (startTimeSeconds < currentTimeSeconds &&
-          endTimeSeconds > currentTimeSeconds) ||
-        startTimeSeconds > currentTimeSeconds
+        (startTimeSeconds < currentTimeSecondsUTC &&
+          endTimeSeconds > currentTimeSecondsUTC) ||
+        startTimeSeconds > currentTimeSecondsUTC
       );
     });
+
     if (nextTimeSpan) {
       return nextTimeSpan;
     }
+
     const nextDayFirstTimeSpan = this.times[0];
     if (nextDayFirstTimeSpan) {
       return {
@@ -42,11 +51,12 @@ export class MapTimer {
         endHour: nextDayFirstTimeSpan.endHour + 24,
       };
     }
+
     return undefined;
   }
 
-  nextOrCurrentTimeSpanStartSeconds(currentTimeSeconds: number): number {
-    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentTimeSeconds);
+  nextOrCurrentTimeSpanStartSeconds(currentTimeSecondsUTC: number): number {
+    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentTimeSecondsUTC);
     let nextTimeSpanStartSeconds: number | undefined;
     if (nextTimeSpan) {
       nextTimeSpanStartSeconds = nextTimeSpan.startHour * 3600;
@@ -57,8 +67,8 @@ export class MapTimer {
     return nextTimeSpanStartSeconds;
   }
 
-  nextOrCurrentTimeSpanEndSeconds(currentTimeSeconds: number): number {
-    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentTimeSeconds);
+  nextOrCurrentTimeSpanEndSeconds(currentTimeSecondsUTC: number): number {
+    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentTimeSecondsUTC);
     let nextTimeSpanEndSeconds: number | undefined;
     if (nextTimeSpan) {
       nextTimeSpanEndSeconds = nextTimeSpan.endHour * 3600;
@@ -70,12 +80,12 @@ export class MapTimer {
   }
 
   secondsUntilNextEnd(): number {
-    const now = MapTimer.nowSeconds();
+    const now = MapTimer.nowSecondsUTC();
     return this.nextOrCurrentTimeSpanEndSeconds(now) - now;
   }
 
   isLive(): boolean {
-    const now = MapTimer.nowSeconds();
+    const now = MapTimer.nowSecondsUTC();
     const nextTimeSpan = this.nextOrCurrentTimeSpan(now);
     if (nextTimeSpan) {
       const startTimeSeconds = nextTimeSpan.startHour * 3600;
