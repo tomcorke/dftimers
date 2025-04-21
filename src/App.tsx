@@ -12,7 +12,10 @@ const DateTimeDisplay = ({
   secondsFromMidnight: number;
   withSeconds?: boolean;
 }) => {
-  const hours = Math.floor(secondsFromMidnight / 3600);
+  let hours = Math.floor(secondsFromMidnight / 3600);
+  if (hours >= 24) {
+    hours -= 24;
+  }
   const minutes = Math.floor((secondsFromMidnight % 3600) / 60);
   const seconds = secondsFromMidnight % 60;
   return (
