@@ -298,14 +298,16 @@ export const CollectorSection = () => {
   return (
     <div className="section Collector">
       <h2>Collector</h2>
-      {collectorMissionStates.map((mission, missionIndex) => {
-        return (
-          <CollectorMissionDisplay
-            key={mission.name}
-            missionIndex={missionIndex}
-          />
-        );
-      })}
+      <div className="missions">
+        {collectorMissionStates.map((mission, missionIndex) => {
+          return (
+            <CollectorMissionDisplay
+              key={mission.name}
+              missionIndex={missionIndex}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

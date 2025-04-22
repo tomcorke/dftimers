@@ -1,39 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   color-scheme: light dark;
   font-family: system-ui;
 
   --bg-color: #f0f0f0;
   --text-color: #000;
-  --toggle-content: '☀️';
+  --toggle-content: "☀️";
 
-  &[data-theme='light'] {
+  &[data-theme="light"] {
     --bg-color: #f0f0f0;
     --text-color: #000;
-    --toggle-content: '☀️';
+    --toggle-content: "☀️";
   }
-  &[data-theme='dark'] {
+  &[data-theme="dark"] {
     --bg-color: #000;
     --text-color: #f0f0f0;
-    --toggle-content: '🌙';
+    --toggle-content: "🌙";
   }
 
   body {
     background: var(--bg-color);
     color: var(--text-color);
-  }  
+  }
 
   #theme-toggle {
     position: fixed;
     top: 5px;
     right: 5px;
     &::after {
-      content: var(--toggle-content)
+      content: var(--toggle-content);
     }
   }
 }
 
 .App {
-
   --df-green: #10f898;
   --df-quality-common: #c4c4c2;
   /* uncommon, rare, epic, legendary, exotic */
@@ -63,18 +66,15 @@ html {
         padding: 0;
         font-size: 24px;
       }
-
     }
   }
 
   .MapTimers {
-
     .currentTime {
       font-weight: bold;
       font-size: 18px;
       margin-bottom: 0.5em;
     }
-
 
     .timers {
       .timer {
@@ -101,86 +101,89 @@ html {
   }
 
   .Collector {
-    .mission {
+    .missions {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 1em;
 
-      h3 {
-        font-weight: bold;
-        font-size: 18px;
-        margin-bottom: 0.5em;
-      }
+      .mission {
+        h3 {
+          font-weight: bold;
+          font-size: 18px;
+          margin: 0 0 0.5em;
+        }
 
-
-      .items {
-        .item {
-
-          border-left: 4px solid transparent;
-          margin-bottom: 4px;
-          padding: 2px 0 2px 0.5em;
-          display: flex;
-          flex-flow: row nowrap;
-          gap: 1em;
-          width: 100%;
-
-          --item-color: transparent;
-          border-color: var(--item-color);
-          box-shadow: inset 100px 0 100px -100px var(--item-color);
-
-          &.common {
-            --item-color: var(--df-quality-common);
-          }
-          &.uncommon {
-            --item-color: var(--df-quality-uncommon);
-          }
-          &.rare {
-            --item-color: var(--df-quality-rare);
-          }
-          &.epic {
-            --item-color: var(--df-quality-epic);
-          }
-          &.legendary {
-            --item-color: var(--df-quality-legendary);
-          }
-          &.exotic {
-            --item-color: var(--df-quality-exotic);
-          }
-
-          .name {
-            flex-grow: 1;
-          }
-
-          .buttons {
+        .items {
+          .item {
+            border-left: 4px solid transparent;
+            margin-bottom: 4px;
+            padding: 2px 0 2px 0.5em;
             display: flex;
             flex-flow: row nowrap;
-            gap: 4px;
-            overflow: hidden;
+            gap: 1em;
+            width: 100%;
 
-            .button {
-              width: 24px;
-              height: 24px;
-              cursor: pointer;
+            --item-color: transparent;
+            border-color: var(--item-color);
+            box-shadow: inset 100px 0 100px -100px var(--item-color);
+
+            &.common {
+              --item-color: var(--df-quality-common);
+            }
+            &.uncommon {
+              --item-color: var(--df-quality-uncommon);
+            }
+            &.rare {
+              --item-color: var(--df-quality-rare);
+            }
+            &.epic {
+              --item-color: var(--df-quality-epic);
+            }
+            &.legendary {
+              --item-color: var(--df-quality-legendary);
+            }
+            &.exotic {
+              --item-color: var(--df-quality-exotic);
+            }
+
+            .name {
+              flex-grow: 1;
+            }
+
+            .buttons {
               display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 32px;
-              color: black;
-              font-weight: bold;
-              user-select: none;
-              
-              &.add {
-                background: var(--df-green);
-              }
-              
-              &.remove {
-                background: var(--df-quality-exotic);
-              }
+              flex-flow: row nowrap;
+              gap: 4px;
+              overflow: hidden;
 
-              & > span {
-                transform: translateY(-4px);
-              }
+              .button {
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                color: black;
+                font-weight: bold;
+                user-select: none;
 
-              &.disabled {
-                cursor: not-allowed;
-                background: var(--df-quality-common);
+                &.add {
+                  background: var(--df-green);
+                }
+
+                &.remove {
+                  background: var(--df-quality-exotic);
+                }
+
+                & > span {
+                  transform: translateY(-4px);
+                }
+
+                &.disabled {
+                  cursor: not-allowed;
+                  background: var(--df-quality-common);
+                }
               }
             }
           }
