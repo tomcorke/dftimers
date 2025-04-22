@@ -7,6 +7,7 @@ import {
   CollectorMissionContextProvider,
   CollectorSection,
 } from "./sections/Collector";
+import KoFi from "./components/KoFi";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <CollectorSection />
         </CollectorMissionContextProvider>
         <MapTimersSection />
+        <KoFi />
       </div>
     </div>
   );

@@ -1,0 +1,37 @@
+$kofi-red: #ff5e5b;
+$kofi-blue: #29abe0;
+$kofi-yellow: #fbaa19;
+$kofi-dark: #434b57;
+
+.kofiContainer {
+  --df-green: #10f898;
+
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+
+  .link {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    max-height: 1.5em;
+    overflow: hidden;
+    text-decoration: none;
+    padding: 0 5px;
+
+    &:active,
+    &:visited {
+      color: white;
+    }
+    &:hover {
+      background: var(--df-green);
+      color: black;
+    }
+
+    span {
+      margin-left: 0.25em;
+    }
+  }
+}
