@@ -16213,7 +16213,7 @@ const MapTimersSection = ()=>{
         className: "section MapTimers",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "Delta Force Timers"
+                children: "Map Timers"
             }, void 0, false, {
                 fileName: "src/sections/MapTimers.tsx",
                 lineNumber: 44,
@@ -19036,14 +19036,16 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                 className: "items",
                 children: mission.items.map((item, itemIndex)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: (0, _classnamesDefault.default)("item", item.quality),
+                        className: (0, _classnamesDefault.default)("item", item.quality, {
+                            complete: item.collected >= item.needed
+                        }),
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 className: "name",
                                 children: item.name
                             }, void 0, false, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 269,
+                                lineNumber: 271,
                                 columnNumber: 15
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19056,7 +19058,7 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 270,
+                                lineNumber: 272,
                                 columnNumber: 15
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19067,7 +19069,7 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                         disabled: item.collected >= item.needed
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 274,
+                                        lineNumber: 276,
                                         columnNumber: 17
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(RemoveButton, {
@@ -19075,13 +19077,13 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                         disabled: item.collected <= 0
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 280,
+                                        lineNumber: 282,
                                         columnNumber: 17
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 273,
+                                lineNumber: 275,
                                 columnNumber: 15
                             }, undefined)
                         ]
@@ -19115,7 +19117,7 @@ const CollectorSection = ()=>{
                 children: "Collector"
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 300,
+                lineNumber: 302,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19125,19 +19127,19 @@ const CollectorSection = ()=>{
                         missionIndex: missionIndex
                     }, mission.name, false, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 304,
+                        lineNumber: 306,
                         columnNumber: 13
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 301,
+                lineNumber: 303,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 299,
+        lineNumber: 301,
         columnNumber: 5
     }, undefined);
 };

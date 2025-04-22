@@ -150,6 +150,15 @@ html {
               flex-grow: 1;
             }
 
+            &.complete {
+              & .progress {
+                color: #000;
+                background: var(--df-green);
+                padding: 0 4px;
+                font-weight: bold;
+              }
+            }
+
             & .buttons {
               flex-flow: row;
               gap: 4px;
