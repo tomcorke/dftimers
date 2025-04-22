@@ -5,13 +5,13 @@ const kofiIcon = new URL(
   import.meta.url
 ).href;
 
-import STYLES from "./KoFi.module.scss";
+import "./KoFi.css";
 
 const KoFi = () => {
   return (
-    <div className={STYLES.kofiContainer}>
+    <div className={"kofiContainer"}>
       <a
-        className={STYLES.link}
+        className={"link"}
         href="https://ko-fi.com/tomcorke"
         /* eslint-disable-next-line react/jsx-no-target-blank */
         target="_blank"
