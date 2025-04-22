@@ -41,7 +41,7 @@ export const MapTimersSection = () => {
 
   return (
     <div className="section MapTimers">
-      <h2>Delta Force Timers</h2>
+      <h2>Map Timers</h2>
       <div className="currentTime">
         Current Time:{" "}
         <DateTimeDisplay secondsFromMidnight={now} withSeconds={true} />
