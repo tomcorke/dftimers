@@ -3,14 +3,19 @@ import "./App.css";
 
 import classNames from "classnames";
 import { MapTimersSection } from "./sections/MapTimers";
-import { CollectorSection } from "./sections/Collector";
+import {
+  CollectorMissionContextProvider,
+  CollectorSection,
+} from "./sections/Collector";
 
 const App = () => {
   return (
     <div className={"App"}>
       <div className="sections">
+        <CollectorMissionContextProvider>
+          <CollectorSection />
+        </CollectorMissionContextProvider>
         <MapTimersSection />
-        {/* <CollectorSection /> */}
       </div>
     </div>
   );

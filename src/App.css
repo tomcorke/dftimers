@@ -1,28 +1,59 @@
 html {
   color-scheme: light dark;
   font-family: system-ui;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+
+  --bg-color: #f0f0f0;
+  --text-color: #000;
+  --toggle-content: '☀️';
+
+  &[data-theme='light'] {
+    --bg-color: #f0f0f0;
+    --text-color: #000;
+    --toggle-content: '☀️';
+  }
+  &[data-theme='dark'] {
+    --bg-color: #000;
+    --text-color: #f0f0f0;
+    --toggle-content: '🌙';
+  }
+
+  body {
+    background: var(--bg-color);
+    color: var(--text-color);
+  }  
+
+  #theme-toggle {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    &::after {
+      content: var(--toggle-content)
+    }
+  }
 }
 
 .App {
 
   --df-green: #10f898;
-  --df-quality-common: #d0d0d0;
+  --df-quality-common: #c4c4c2;
   /* uncommon, rare, epic, legendary, exotic */
   /* green, blue, purple, orange, red */
-  --df-quality-uncommon: #00ff3f;
-  --df-quality-rare: #00bfff;
-  --df-quality-epic: #ff00ff;
-  --df-quality-legendary: #ff7f00;
-  --df-quality-exotic: #ff0000;
+  --df-quality-uncommon: #2aca96;
+  --df-quality-rare: #589fdc;
+  --df-quality-epic: #9a71dc;
+  --df-quality-legendary: #d0814d;
+  --df-quality-exotic: #da5758;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 
   .sections {
     display: flex;
     flex-flow: row wrap;
-    gap: 1em;
+    gap: 2em;
+    padding-top: 40px;
 
     .section {
       /* border: 1px solid red; */
@@ -78,6 +109,7 @@ html {
         margin-bottom: 0.5em;
       }
 
+
       .items {
         .item {
 
@@ -86,7 +118,6 @@ html {
           padding: 2px 0 2px 0.5em;
           display: flex;
           flex-flow: row nowrap;
-          justify-content: space-between;
           gap: 1em;
           width: 100%;
 
@@ -111,6 +142,47 @@ html {
           }
           &.exotic {
             --item-color: var(--df-quality-exotic);
+          }
+
+          .name {
+            flex-grow: 1;
+          }
+
+          .buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 4px;
+            overflow: hidden;
+
+            .button {
+              width: 24px;
+              height: 24px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 32px;
+              color: black;
+              font-weight: bold;
+              user-select: none;
+              
+              &.add {
+                background: var(--df-green);
+              }
+              
+              &.remove {
+                background: var(--df-quality-exotic);
+              }
+
+              & > span {
+                transform: translateY(-4px);
+              }
+
+              &.disabled {
+                cursor: not-allowed;
+                background: var(--df-quality-common);
+              }
+            }
           }
         }
       }
