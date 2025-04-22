@@ -16119,6 +16119,8 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _appCss = require("./App.css");
 var _mapTimers = require("./sections/MapTimers");
 var _collector = require("./sections/Collector");
+var _koFi = require("./components/KoFi");
+var _koFiDefault = parcelHelpers.interopDefault(_koFi);
 const App = ()=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "App",
@@ -16128,28 +16130,33 @@ const App = ()=>{
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorMissionContextProvider), {
                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorSection), {}, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 16,
+                        lineNumber: 17,
                         columnNumber: 11
                     }, undefined)
                 }, void 0, false, {
                     fileName: "src/App.tsx",
-                    lineNumber: 15,
+                    lineNumber: 16,
                     columnNumber: 9
                 }, undefined),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mapTimers.MapTimersSection), {}, void 0, false, {
                     fileName: "src/App.tsx",
-                    lineNumber: 18,
+                    lineNumber: 19,
+                    columnNumber: 9
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _koFiDefault.default), {}, void 0, false, {
+                    fileName: "src/App.tsx",
+                    lineNumber: 20,
                     columnNumber: 9
                 }, undefined)
             ]
         }, void 0, true, {
             fileName: "src/App.tsx",
-            lineNumber: 14,
+            lineNumber: 15,
             columnNumber: 7
         }, undefined)
     }, void 0, false, {
         fileName: "src/App.tsx",
-        lineNumber: 13,
+        lineNumber: 14,
         columnNumber: 5
     }, undefined);
 };
@@ -16162,7 +16169,7 @@ $RefreshReg$(_c, "App");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","./App.css":"6n0o6","./sections/MapTimers":"3aA6j","./sections/Collector":"dkq38","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"6n0o6":[function() {},{}],"3aA6j":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","./App.css":"6n0o6","./sections/MapTimers":"3aA6j","./sections/Collector":"dkq38","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","./components/KoFi":"gUF6J"}],"6n0o6":[function() {},{}],"3aA6j":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$42bd = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 $parcel$ReactRefreshHelpers$42bd.init();
 var prevRefreshReg = globalThis.$RefreshReg$;
@@ -23665,6 +23672,87 @@ var z = /*#__PURE__*/ Object.freeze({
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fBfTr":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("magazine.4af3c98a.webp") + "?" + Date.now();
+
+},{}],"gUF6J":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _koFi = require("./KoFi");
+var _koFiDefault = parcelHelpers.interopDefault(_koFi);
+exports.default = (0, _koFiDefault.default);
+
+},{"./KoFi":"1Zvc8","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1Zvc8":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$8b6f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$8b6f.init();
+var prevRefreshReg = globalThis.$RefreshReg$;
+var prevRefreshSig = globalThis.$RefreshSig$;
+$parcel$ReactRefreshHelpers$8b6f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _koFiModuleScss = require("./KoFi.module.scss");
+var _koFiModuleScssDefault = parcelHelpers.interopDefault(_koFiModuleScss);
+const kofiIcon = new URL(require("3c81b1f1e5092119")).href;
+const KoFi = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: (0, _koFiModuleScssDefault.default).kofiContainer,
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+            className: (0, _koFiModuleScssDefault.default).link,
+            href: "https://ko-fi.com/tomcorke",
+            /* eslint-disable-next-line react/jsx-no-target-blank */ target: "_blank",
+            rel: "noopener noreferrer",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                    height: "36",
+                    style: {
+                        border: "0px",
+                        height: "36px"
+                    },
+                    src: kofiIcon,
+                    alt: "Buy Me a Coffee at ko-fi.com"
+                }, void 0, false, {
+                    fileName: "src/components/KoFi/KoFi.tsx",
+                    lineNumber: 20,
+                    columnNumber: 9
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    children: "Buy me a coffee"
+                }, void 0, false, {
+                    fileName: "src/components/KoFi/KoFi.tsx",
+                    lineNumber: 26,
+                    columnNumber: 9
+                }, undefined)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/KoFi/KoFi.tsx",
+            lineNumber: 13,
+            columnNumber: 7
+        }, undefined)
+    }, void 0, false, {
+        fileName: "src/components/KoFi/KoFi.tsx",
+        lineNumber: 12,
+        columnNumber: 5
+    }, undefined);
+};
+_c = KoFi;
+exports.default = KoFi;
+var _c;
+$RefreshReg$(_c, "KoFi");
+
+  $parcel$ReactRefreshHelpers$8b6f.postlude(module);
+} finally {
+  globalThis.$RefreshReg$ = prevRefreshReg;
+  globalThis.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","./KoFi.module.scss":"eZDVc","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","3c81b1f1e5092119":"j7nYu"}],"eZDVc":[function(require,module,exports,__globalThis) {
+module.exports["kofiContainer"] = `cLxUdG_kofiContainer`;
+module.exports["link"] = `cLxUdG_link`;
+
+},{}],"j7nYu":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("Ko-fi_Icon_RGBforDarkBg_sm.ed8f3255.webp") + "?" + Date.now();
 
 },{}]},["7KwkS","4dmnR"], "4dmnR", "parcelRequire8331", {}, "./", "/", "http://localhost:1234")
 

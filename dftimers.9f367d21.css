@@ -202,4 +202,36 @@ html {
     }
   }
 }
+
+.cLxUdG_kofiContainer {
+  --df-green: #10f898;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
+
+.cLxUdG_kofiContainer .cLxUdG_link {
+  color: #fff;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  max-height: 1.5em;
+  padding: 0 5px;
+  text-decoration: none;
+  display: flex;
+  overflow: hidden;
+}
+
+.cLxUdG_kofiContainer .cLxUdG_link:active, .cLxUdG_kofiContainer .cLxUdG_link:visited {
+  color: #fff;
+}
+
+.cLxUdG_kofiContainer .cLxUdG_link:hover {
+  background: var(--df-green);
+  color: #000;
+}
+
+.cLxUdG_kofiContainer .cLxUdG_link span {
+  margin-left: .25em;
+}
 /*# sourceMappingURL=dftimers.9f367d21.css.map */
