@@ -145,11 +145,13 @@ html {
             flex-flow: row;
             gap: 4px;
             display: flex;
+            overflow: hidden;
 
-            & .addbutton, & .removebutton {
+            & .button {
               cursor: pointer;
-              background: var(--df-green);
               color: #000;
+              -webkit-user-select: none;
+              user-select: none;
               justify-content: center;
               align-items: center;
               width: 24px;
@@ -157,6 +159,14 @@ html {
               font-size: 32px;
               font-weight: bold;
               display: flex;
+
+              &.add {
+                background: var(--df-green);
+              }
+
+              &.remove {
+                background: var(--df-quality-exotic);
+              }
 
               & > span {
                 transform: translateY(-4px);
