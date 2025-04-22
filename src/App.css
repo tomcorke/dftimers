@@ -150,6 +150,15 @@ html {
               flex-grow: 1;
             }
 
+            &.complete {
+              .progress {
+                font-weight: bold;
+                color: black;
+                background: var(--df-green);
+                padding: 0 4px;
+              }
+            }
+
             .buttons {
               display: flex;
               flex-flow: row nowrap;

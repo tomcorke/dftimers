@@ -263,7 +263,9 @@ const CollectorMissionDisplay = ({
         {mission.items.map((item, itemIndex) => {
           return (
             <div
-              className={classNames("item", item.quality)}
+              className={classNames("item", item.quality, {
+                complete: item.collected >= item.needed,
+              })}
               key={`${mission.name}_${item.name}`}
             >
               <div className="name">{item.name}</div>
