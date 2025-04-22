@@ -19118,15 +19118,22 @@ const CollectorSection = ()=>{
                 lineNumber: 300,
                 columnNumber: 7
             }, undefined),
-            collectorMissionStates.map((mission, missionIndex)=>{
-                return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(CollectorMissionDisplay, {
-                    missionIndex: missionIndex
-                }, mission.name, false, {
-                    fileName: "src/sections/Collector.tsx",
-                    lineNumber: 303,
-                    columnNumber: 11
-                }, undefined);
-            })
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "missions",
+                children: collectorMissionStates.map((mission, missionIndex)=>{
+                    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(CollectorMissionDisplay, {
+                        missionIndex: missionIndex
+                    }, mission.name, false, {
+                        fileName: "src/sections/Collector.tsx",
+                        lineNumber: 304,
+                        columnNumber: 13
+                    }, undefined);
+                })
+            }, void 0, false, {
+                fileName: "src/sections/Collector.tsx",
+                lineNumber: 301,
+                columnNumber: 7
+            }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   color-scheme: light dark;
   --bg-color: #f0f0f0;
@@ -93,88 +97,94 @@ html {
   }
 
   & .Collector {
-    & .mission {
-      & h3 {
-        margin-bottom: .5em;
-        font-size: 18px;
-        font-weight: bold;
-      }
+    & .missions {
+      grid-template-columns: auto auto;
+      gap: 1em;
+      display: grid;
 
-      & .items {
-        & .item {
-          --item-color: transparent;
-          border-left: 4px solid #0000;
-          border-color: var(--item-color);
-          width: 100%;
-          box-shadow: inset 100px 0 100px -100px var(--item-color);
-          flex-flow: row;
-          gap: 1em;
-          margin-bottom: 4px;
-          padding: 2px 0 2px .5em;
-          display: flex;
+      & .mission {
+        & h3 {
+          margin: 0 0 .5em;
+          font-size: 18px;
+          font-weight: bold;
+        }
 
-          &.common {
-            --item-color: var(--df-quality-common);
-          }
-
-          &.uncommon {
-            --item-color: var(--df-quality-uncommon);
-          }
-
-          &.rare {
-            --item-color: var(--df-quality-rare);
-          }
-
-          &.epic {
-            --item-color: var(--df-quality-epic);
-          }
-
-          &.legendary {
-            --item-color: var(--df-quality-legendary);
-          }
-
-          &.exotic {
-            --item-color: var(--df-quality-exotic);
-          }
-
-          & .name {
-            flex-grow: 1;
-          }
-
-          & .buttons {
+        & .items {
+          & .item {
+            --item-color: transparent;
+            border-left: 4px solid #0000;
+            border-color: var(--item-color);
+            width: 100%;
+            box-shadow: inset 100px 0 100px -100px var(--item-color);
             flex-flow: row;
-            gap: 4px;
+            gap: 1em;
+            margin-bottom: 4px;
+            padding: 2px 0 2px .5em;
             display: flex;
-            overflow: hidden;
 
-            & .button {
-              cursor: pointer;
-              color: #000;
-              -webkit-user-select: none;
-              user-select: none;
-              justify-content: center;
-              align-items: center;
-              width: 24px;
-              height: 24px;
-              font-size: 32px;
-              font-weight: bold;
+            &.common {
+              --item-color: var(--df-quality-common);
+            }
+
+            &.uncommon {
+              --item-color: var(--df-quality-uncommon);
+            }
+
+            &.rare {
+              --item-color: var(--df-quality-rare);
+            }
+
+            &.epic {
+              --item-color: var(--df-quality-epic);
+            }
+
+            &.legendary {
+              --item-color: var(--df-quality-legendary);
+            }
+
+            &.exotic {
+              --item-color: var(--df-quality-exotic);
+            }
+
+            & .name {
+              flex-grow: 1;
+            }
+
+            & .buttons {
+              flex-flow: row;
+              gap: 4px;
               display: flex;
+              overflow: hidden;
 
-              &.add {
-                background: var(--df-green);
-              }
+              & .button {
+                cursor: pointer;
+                color: #000;
+                -webkit-user-select: none;
+                user-select: none;
+                justify-content: center;
+                align-items: center;
+                width: 24px;
+                height: 24px;
+                font-size: 32px;
+                font-weight: bold;
+                display: flex;
 
-              &.remove {
-                background: var(--df-quality-exotic);
-              }
+                &.add {
+                  background: var(--df-green);
+                }
 
-              & > span {
-                transform: translateY(-4px);
-              }
+                &.remove {
+                  background: var(--df-quality-exotic);
+                }
 
-              &.disabled {
-                cursor: not-allowed;
-                background: var(--df-quality-common);
+                & > span {
+                  transform: translateY(-4px);
+                }
+
+                &.disabled {
+                  cursor: not-allowed;
+                  background: var(--df-quality-common);
+                }
               }
             }
           }
