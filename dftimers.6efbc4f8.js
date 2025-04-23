@@ -16124,37 +16124,39 @@ var _koFiDefault = parcelHelpers.interopDefault(_koFi);
 const App = ()=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "App",
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            className: "sections",
-            children: [
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorMissionContextProvider), {
-                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorSection), {}, void 0, false, {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "sections",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorMissionContextProvider), {
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _collector.CollectorSection), {}, void 0, false, {
+                            fileName: "src/App.tsx",
+                            lineNumber: 17,
+                            columnNumber: 11
+                        }, undefined)
+                    }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 17,
-                        columnNumber: 11
+                        lineNumber: 16,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mapTimers.MapTimersSection), {}, void 0, false, {
+                        fileName: "src/App.tsx",
+                        lineNumber: 19,
+                        columnNumber: 9
                     }, undefined)
-                }, void 0, false, {
-                    fileName: "src/App.tsx",
-                    lineNumber: 16,
-                    columnNumber: 9
-                }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mapTimers.MapTimersSection), {}, void 0, false, {
-                    fileName: "src/App.tsx",
-                    lineNumber: 19,
-                    columnNumber: 9
-                }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _koFiDefault.default), {}, void 0, false, {
-                    fileName: "src/App.tsx",
-                    lineNumber: 20,
-                    columnNumber: 9
-                }, undefined)
-            ]
-        }, void 0, true, {
-            fileName: "src/App.tsx",
-            lineNumber: 15,
-            columnNumber: 7
-        }, undefined)
-    }, void 0, false, {
+                ]
+            }, void 0, true, {
+                fileName: "src/App.tsx",
+                lineNumber: 15,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _koFiDefault.default), {}, void 0, false, {
+                fileName: "src/App.tsx",
+                lineNumber: 21,
+                columnNumber: 7
+            }, undefined)
+        ]
+    }, void 0, true, {
         fileName: "src/App.tsx",
         lineNumber: 14,
         columnNumber: 5
@@ -23694,7 +23696,7 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _koFiCss = require("./KoFi.css");
-const kofiIcon = new URL(require("3c81b1f1e5092119")).href;
+const kofiIcon = new URL(require("2e1715d592ebce8a")).href;
 const KoFi = ()=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "kofiContainer",
@@ -23705,11 +23707,8 @@ const KoFi = ()=>{
             rel: "noopener noreferrer",
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                    height: "36",
-                    style: {
-                        border: "0px",
-                        height: "36px"
-                    },
+                    width: "32",
+                    height: "26",
                     src: kofiIcon,
                     alt: "Buy Me a Coffee at ko-fi.com"
                 }, void 0, false, {
@@ -23746,9 +23745,9 @@ $RefreshReg$(_c, "KoFi");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","3c81b1f1e5092119":"j7nYu","./KoFi.css":"80iLt","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"j7nYu":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("Ko-fi_Icon_RGBforDarkBg_sm.ed8f3255.webp") + "?" + Date.now();
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","./KoFi.css":"80iLt","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","2e1715d592ebce8a":"4dGqD"}],"80iLt":[function() {},{}],"4dGqD":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("kofi_symbol.3a8d9de6.webp") + "?" + Date.now();
 
-},{}],"80iLt":[function() {},{}]},["7KwkS","4dmnR"], "4dmnR", "parcelRequire8331", {}, "./", "/", "http://localhost:1234")
+},{}]},["7KwkS","4dmnR"], "4dmnR", "parcelRequire8331", {}, "./", "/", "http://localhost:1234")
 
 //# sourceMappingURL=dftimers.6efbc4f8.js.map

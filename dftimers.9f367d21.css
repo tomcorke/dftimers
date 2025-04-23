@@ -214,7 +214,7 @@ html {
     flex-flow: row;
     justify-content: center;
     align-items: center;
-    max-height: 1.5em;
+    gap: .5em;
     padding: 0 5px;
     text-decoration: none;
     display: flex;
@@ -227,10 +227,6 @@ html {
     &:hover {
       background: var(--df-green);
       color: #000;
-    }
-
-    & span {
-      margin-left: .25em;
     }
   }
 }
