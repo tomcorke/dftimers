@@ -271,6 +271,16 @@ html {
     &:hover {
       background: var(--df-green);
       color: #000;
+
+      & span {
+        background: none;
+      }
+    }
+
+    & span {
+      background: #000;
+      border-radius: 4px;
+      padding: 2px 12px;
     }
   }
 }
