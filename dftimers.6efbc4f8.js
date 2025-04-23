@@ -18825,6 +18825,7 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _immutabilityHelper = require("immutability-helper");
 var _immutabilityHelperDefault = parcelHelpers.interopDefault(_immutabilityHelper);
+var _collectorCss = require("./Collector.css");
 var _classnames = require("classnames");
 var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
 var _zod = require("zod");
@@ -18902,7 +18903,7 @@ const COLLECTOR_MISSIONS = [
 ];
 const Button = ({ onClick, disabled, className, children })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: (0, _classnamesDefault.default)(className, {
+        className: (0, _classnamesDefault.default)("button", className, {
             disabled
         }),
         onClick: ()=>{
@@ -18912,38 +18913,38 @@ const Button = ({ onClick, disabled, className, children })=>{
             children: children
         }, void 0, false, {
             fileName: "src/sections/Collector.tsx",
-            lineNumber: 121,
+            lineNumber: 123,
             columnNumber: 7
         }, undefined)
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 113,
+        lineNumber: 115,
         columnNumber: 5
     }, undefined);
 };
 _c = Button;
 const AddButton = ({ onClick, disabled })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
-        className: "button add",
+        className: "add",
         onClick: onClick,
         disabled: disabled,
         children: "+"
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 134,
+        lineNumber: 136,
         columnNumber: 5
     }, undefined);
 };
 _c1 = AddButton;
 const RemoveButton = ({ onClick, disabled })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
-        className: "button remove",
+        className: "remove",
         onClick: onClick,
         disabled: disabled,
         children: "\u2212"
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 148,
+        lineNumber: 150,
         columnNumber: 5
     }, undefined);
 };
@@ -19005,7 +19006,7 @@ const CollectorMissionContextProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 230,
+        lineNumber: 232,
         columnNumber: 5
     }, undefined);
 };
@@ -19014,6 +19015,7 @@ _c3 = CollectorMissionContextProvider;
 const CollectorMissionDisplay = ({ missionIndex })=>{
     _s1();
     const { collectorMissionStates, updateCollectorMission } = (0, _react.useContext)(CollectorMissionContext);
+    const [minimised, setMinimised] = (0, _react.useState)(false);
     const mission = collectorMissionStates[missionIndex];
     const updateMissionItem = (0, _react.useCallback)((itemIndex, newValue)=>{
         const newMissionState = (0, _immutabilityHelperDefault.default)(mission, {
@@ -19031,17 +19033,48 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
         missionIndex,
         updateCollectorMission
     ]);
+    const missionComplete = mission.items.every((item)=>item.collected >= item.needed);
+    (0, _react.useEffect)(()=>{
+        if (missionComplete && !minimised) setMinimised(true);
+    }, [
+        missionComplete
+    ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "mission",
+        className: (0, _classnamesDefault.default)("mission", {
+            complete: missionComplete,
+            minimised
+        }),
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
-                children: mission.name
-            }, void 0, false, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "header",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
+                        children: [
+                            mission.name,
+                            missionComplete ? " (COMPLETE)" : ""
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/sections/Collector.tsx",
+                        lineNumber: 280,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
+                        className: "toggle",
+                        onClick: ()=>setMinimised(!minimised),
+                        disabled: false,
+                        children: minimised ? "+" : "\u2212"
+                    }, void 0, false, {
+                        fileName: "src/sections/Collector.tsx",
+                        lineNumber: 284,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 261,
+                lineNumber: 279,
                 columnNumber: 7
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            minimised ? null : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "items",
                 children: mission.items.map((item, itemIndex)=>{
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19054,8 +19087,8 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                 children: item.name
                             }, void 0, false, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 271,
-                                columnNumber: 15
+                                lineNumber: 302,
+                                columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 className: "progress",
@@ -19067,54 +19100,54 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 272,
-                                columnNumber: 15
+                                lineNumber: 303,
+                                columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                className: "buttons",
+                                className: "buttonGroup",
                                 children: [
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(AddButton, {
                                         onClick: ()=>updateMissionItem(itemIndex, item.collected + 1),
                                         disabled: item.collected >= item.needed
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 276,
-                                        columnNumber: 17
+                                        lineNumber: 307,
+                                        columnNumber: 19
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(RemoveButton, {
                                         onClick: ()=>updateMissionItem(itemIndex, item.collected - 1),
                                         disabled: item.collected <= 0
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 282,
-                                        columnNumber: 17
+                                        lineNumber: 313,
+                                        columnNumber: 19
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 275,
-                                columnNumber: 15
+                                lineNumber: 306,
+                                columnNumber: 17
                             }, undefined)
                         ]
                     }, `${mission.name}_${item.name}`, true, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 265,
-                        columnNumber: 13
+                        lineNumber: 296,
+                        columnNumber: 15
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 262,
-                columnNumber: 7
+                lineNumber: 293,
+                columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 260,
+        lineNumber: 273,
         columnNumber: 5
     }, undefined);
 };
-_s1(CollectorMissionDisplay, "YOMd1tr9vPf9FIkABQOI86fuLV4=");
+_s1(CollectorMissionDisplay, "WmpRL0PwUBCLprrc7Abh2ZMq9hU=");
 _c4 = CollectorMissionDisplay;
 const CollectorSection = ()=>{
     _s2();
@@ -19126,7 +19159,7 @@ const CollectorSection = ()=>{
                 children: "Collector"
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 302,
+                lineNumber: 334,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19136,19 +19169,19 @@ const CollectorSection = ()=>{
                         missionIndex: missionIndex
                     }, mission.name, false, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 306,
+                        lineNumber: 338,
                         columnNumber: 13
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 303,
+                lineNumber: 335,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 301,
+        lineNumber: 333,
         columnNumber: 5
     }, undefined);
 };
@@ -19167,7 +19200,7 @@ $RefreshReg$(_c5, "CollectorSection");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","immutability-helper":"UP0Hy","classnames":"Egwmr","zod":"gcE23","29b9053649f0dbfb":"fBfTr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"UP0Hy":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","immutability-helper":"UP0Hy","./Collector.css":"etnTZ","classnames":"Egwmr","zod":"gcE23","29b9053649f0dbfb":"fBfTr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"UP0Hy":[function(require,module,exports,__globalThis) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -19394,7 +19427,7 @@ function invariantMapOrSet(target, command) {
     });
 }
 
-},{}],"gcE23":[function(require,module,exports,__globalThis) {
+},{}],"etnTZ":[function() {},{}],"gcE23":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "BRAND", ()=>BRAND);
@@ -23745,9 +23778,9 @@ $RefreshReg$(_c, "KoFi");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","./KoFi.css":"80iLt","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","2e1715d592ebce8a":"4dGqD"}],"80iLt":[function() {},{}],"4dGqD":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","2e1715d592ebce8a":"4dGqD","./KoFi.css":"80iLt","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"4dGqD":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("kofi_symbol.3a8d9de6.webp") + "?" + Date.now();
 
-},{}]},["7KwkS","4dmnR"], "4dmnR", "parcelRequire8331", {}, "./", "/", "http://localhost:1234")
+},{}],"80iLt":[function() {},{}]},["7KwkS","4dmnR"], "4dmnR", "parcelRequire8331", {}, "./", "/", "http://localhost:1234")
 
 //# sourceMappingURL=dftimers.6efbc4f8.js.map

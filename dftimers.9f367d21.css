@@ -96,105 +96,131 @@ html {
     }
   }
 
-  & .Collector {
-    & .missions {
-      grid-template-columns: auto auto;
-      gap: 1em;
-      display: grid;
+  & .buttonGroup {
+    flex-flow: row;
+    gap: 4px;
+    display: flex;
+    overflow: hidden;
+  }
 
-      & .mission {
+  & .button {
+    cursor: pointer;
+    color: #000;
+    -webkit-user-select: none;
+    user-select: none;
+    background: var(--df-green);
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+
+    &.add {
+      background: var(--df-green);
+    }
+
+    &.remove {
+      background: var(--df-quality-exotic);
+    }
+
+    & > span {
+      transform: translateY(-4px);
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      background: var(--df-quality-common);
+    }
+  }
+}
+
+.Collector {
+  & .missions {
+    grid-template-columns: auto auto;
+    gap: 1em;
+    display: grid;
+
+    & .mission {
+      &.complete {
+        & .header {
+          background: var(--df-green);
+          color: #000;
+          padding-left: 5px;
+        }
+      }
+
+      &.minimised {
+        & .header {
+          & h3 {
+            margin: 0;
+          }
+        }
+      }
+
+      & .header {
+        flex-flow: row;
+        justify-content: space-between;
+        gap: 1em;
+        margin-bottom: .5em;
+        display: flex;
+
         & h3 {
-          margin: 0 0 .5em;
+          margin: 0;
+          padding: 0;
           font-size: 18px;
           font-weight: bold;
         }
+      }
 
-        & .items {
-          & .item {
-            --item-color: transparent;
-            border-left: 4px solid #0000;
-            border-color: var(--item-color);
-            width: 100%;
-            box-shadow: inset 100px 0 100px -100px var(--item-color);
-            flex-flow: row;
-            gap: 1em;
-            margin-bottom: 4px;
-            padding: 2px 0 2px .5em;
-            display: flex;
+      & .items {
+        & .item {
+          --item-color: transparent;
+          border-left: 4px solid #0000;
+          border-color: var(--item-color);
+          width: 100%;
+          box-shadow: inset 100px 0 100px -100px var(--item-color);
+          flex-flow: row;
+          gap: 1em;
+          margin-bottom: 4px;
+          padding: 2px 0 2px .5em;
+          display: flex;
 
-            &.common {
-              --item-color: var(--df-quality-common);
-            }
+          &.common {
+            --item-color: var(--df-quality-common);
+          }
 
-            &.uncommon {
-              --item-color: var(--df-quality-uncommon);
-            }
+          &.uncommon {
+            --item-color: var(--df-quality-uncommon);
+          }
 
-            &.rare {
-              --item-color: var(--df-quality-rare);
-            }
+          &.rare {
+            --item-color: var(--df-quality-rare);
+          }
 
-            &.epic {
-              --item-color: var(--df-quality-epic);
-            }
+          &.epic {
+            --item-color: var(--df-quality-epic);
+          }
 
-            &.legendary {
-              --item-color: var(--df-quality-legendary);
-            }
+          &.legendary {
+            --item-color: var(--df-quality-legendary);
+          }
 
-            &.exotic {
-              --item-color: var(--df-quality-exotic);
-            }
+          &.exotic {
+            --item-color: var(--df-quality-exotic);
+          }
 
-            & .name {
-              flex-grow: 1;
-            }
+          & .name {
+            flex-grow: 1;
+          }
 
-            &.complete {
-              & .progress {
-                color: #000;
-                background: var(--df-green);
-                padding: 0 4px;
-                font-weight: bold;
-              }
-            }
-
-            & .buttons {
-              flex-flow: row;
-              gap: 4px;
-              display: flex;
-              overflow: hidden;
-
-              & .button {
-                cursor: pointer;
-                color: #000;
-                -webkit-user-select: none;
-                user-select: none;
-                justify-content: center;
-                align-items: center;
-                width: 24px;
-                height: 24px;
-                font-size: 32px;
-                font-weight: bold;
-                display: flex;
-
-                &.add {
-                  background: var(--df-green);
-                }
-
-                &.remove {
-                  background: var(--df-quality-exotic);
-                }
-
-                & > span {
-                  transform: translateY(-4px);
-                }
-
-                &.disabled {
-                  cursor: not-allowed;
-                  background: var(--df-quality-common);
-                }
-              }
+          &.complete {
+            & .progress {
+              color: #000;
+              background: var(--df-green);
+              padding: 0 4px;
+              font-weight: bold;
             }
           }
         }
