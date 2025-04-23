@@ -10,6 +10,8 @@ import {
 } from "react";
 import update from "immutability-helper";
 
+import "./Collector.css";
+
 import { MAP_TIMERS, MapTimer } from "./timers/map-timer";
 import classNames from "classnames";
 import { z } from "zod";
@@ -111,7 +113,7 @@ const Button = ({
 }>) => {
   return (
     <div
-      className={classNames(className, { disabled })}
+      className={classNames("button", className, { disabled })}
       onClick={() => {
         if (!disabled) {
           onClick();
@@ -131,7 +133,7 @@ const AddButton = ({
   disabled: boolean;
 }) => {
   return (
-    <Button className="button add" onClick={onClick} disabled={disabled}>
+    <Button className="add" onClick={onClick} disabled={disabled}>
       +
     </Button>
   );
@@ -145,7 +147,7 @@ const RemoveButton = ({
   disabled: boolean;
 }) => {
   return (
-    <Button className="button remove" onClick={onClick} disabled={disabled}>
+    <Button className="remove" onClick={onClick} disabled={disabled}>
       −
     </Button>
   );
@@ -243,6 +245,7 @@ const CollectorMissionDisplay = ({
   const { collectorMissionStates, updateCollectorMission } = useContext(
     CollectorMissionContext
   );
+  const [minimised, setMinimised] = useState(false);
 
   const mission = collectorMissionStates[missionIndex];
 
@@ -256,40 +259,69 @@ const CollectorMissionDisplay = ({
     [mission, missionIndex, updateCollectorMission]
   );
 
+  const missionComplete = mission.items.every(
+    (item) => item.collected >= item.needed
+  );
+
+  useEffect(() => {
+    if (missionComplete && !minimised) {
+      setMinimised(true);
+    }
+  }, [missionComplete]);
+
   return (
-    <div className="mission">
-      <h3>{mission.name}</h3>
-      <div className="items">
-        {mission.items.map((item, itemIndex) => {
-          return (
-            <div
-              className={classNames("item", item.quality, {
-                complete: item.collected >= item.needed,
-              })}
-              key={`${mission.name}_${item.name}`}
-            >
-              <div className="name">{item.name}</div>
-              <div className="progress">
-                {item.progressString} ({item.progressPercent}%)
-              </div>
-              <div className="buttons">
-                <AddButton
-                  onClick={() =>
-                    updateMissionItem(itemIndex, item.collected + 1)
-                  }
-                  disabled={item.collected >= item.needed}
-                />
-                <RemoveButton
-                  onClick={() =>
-                    updateMissionItem(itemIndex, item.collected - 1)
-                  }
-                  disabled={item.collected <= 0}
-                />
-              </div>
-            </div>
-          );
-        })}
+    <div
+      className={classNames("mission", {
+        complete: missionComplete,
+        minimised,
+      })}
+    >
+      <div className="header">
+        <h3>
+          {mission.name}
+          {missionComplete ? " (COMPLETE)" : ""}
+        </h3>
+        <Button
+          className="toggle"
+          onClick={() => setMinimised(!minimised)}
+          disabled={false}
+        >
+          {minimised ? "+" : "−"}
+        </Button>
       </div>
+      {minimised ? null : (
+        <div className="items">
+          {mission.items.map((item, itemIndex) => {
+            return (
+              <div
+                className={classNames("item", item.quality, {
+                  complete: item.collected >= item.needed,
+                })}
+                key={`${mission.name}_${item.name}`}
+              >
+                <div className="name">{item.name}</div>
+                <div className="progress">
+                  {item.progressString} ({item.progressPercent}%)
+                </div>
+                <div className="buttonGroup">
+                  <AddButton
+                    onClick={() =>
+                      updateMissionItem(itemIndex, item.collected + 1)
+                    }
+                    disabled={item.collected >= item.needed}
+                  />
+                  <RemoveButton
+                    onClick={() =>
+                      updateMissionItem(itemIndex, item.collected - 1)
+                    }
+                    disabled={item.collected <= 0}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

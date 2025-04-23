@@ -100,104 +100,42 @@ html {
     }
   }
 
-  .Collector {
-    .missions {
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: 1em;
+  .buttonGroup {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 4px;
+    overflow: hidden;
+  }
 
-      .mission {
-        h3 {
-          font-weight: bold;
-          font-size: 18px;
-          margin: 0 0 0.5em;
-        }
+  .button {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: black;
+    font-weight: bold;
+    user-select: none;
 
-        .items {
-          .item {
-            border-left: 4px solid transparent;
-            margin-bottom: 4px;
-            padding: 2px 0 2px 0.5em;
-            display: flex;
-            flex-flow: row nowrap;
-            gap: 1em;
-            width: 100%;
+    background: var(--df-green);
 
-            --item-color: transparent;
-            border-color: var(--item-color);
-            box-shadow: inset 100px 0 100px -100px var(--item-color);
+    &.add {
+      background: var(--df-green);
+    }
 
-            &.common {
-              --item-color: var(--df-quality-common);
-            }
-            &.uncommon {
-              --item-color: var(--df-quality-uncommon);
-            }
-            &.rare {
-              --item-color: var(--df-quality-rare);
-            }
-            &.epic {
-              --item-color: var(--df-quality-epic);
-            }
-            &.legendary {
-              --item-color: var(--df-quality-legendary);
-            }
-            &.exotic {
-              --item-color: var(--df-quality-exotic);
-            }
+    &.remove {
+      background: var(--df-quality-exotic);
+    }
 
-            .name {
-              flex-grow: 1;
-            }
+    & > span {
+      transform: translateY(-4px);
+    }
 
-            &.complete {
-              .progress {
-                font-weight: bold;
-                color: black;
-                background: var(--df-green);
-                padding: 0 4px;
-              }
-            }
-
-            .buttons {
-              display: flex;
-              flex-flow: row nowrap;
-              gap: 4px;
-              overflow: hidden;
-
-              .button {
-                width: 24px;
-                height: 24px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 32px;
-                color: black;
-                font-weight: bold;
-                user-select: none;
-
-                &.add {
-                  background: var(--df-green);
-                }
-
-                &.remove {
-                  background: var(--df-quality-exotic);
-                }
-
-                & > span {
-                  transform: translateY(-4px);
-                }
-
-                &.disabled {
-                  cursor: not-allowed;
-                  background: var(--df-quality-common);
-                }
-              }
-            }
-          }
-        }
-      }
+    &.disabled {
+      cursor: not-allowed;
+      background: var(--df-quality-common);
     }
   }
 }
