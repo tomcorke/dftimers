@@ -23,6 +23,16 @@
     &:hover {
       background: var(--df-green);
       color: black;
+
+      span {
+        background: none;
+      }
+    }
+
+    span {
+      background: black;
+      padding: 2px 12px;
+      border-radius: 4px;
     }
   }
 }
