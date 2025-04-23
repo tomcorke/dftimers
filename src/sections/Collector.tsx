@@ -18,27 +18,23 @@ import { z } from "zod";
 
 type Quality = "common" | "uncommon" | "rare" | "epic" | "legendary" | "exotic";
 
-const IMAGES = {
-  magazine: new URL(
-    "../images/magazine.png?as=webp&width=100&height=100",
-    import.meta.url
-  ).href,
-};
-
 class CollectorItem {
   name: string;
   quality: Quality;
   needed: number;
   collected: number;
+  newThisSeason: boolean = false;
   constructor(
     name: string,
     quality: Quality,
     needed: number,
+    newThisSeason: boolean = false,
     collected: number = 0
   ) {
     this.name = name;
     this.quality = quality;
     this.needed = needed;
+    this.newThisSeason = newThisSeason;
     this.collected = collected;
   }
   get progressString(): string {
@@ -75,8 +71,8 @@ const COLLECTOR_MISSIONS = [
   new CollectorMission("Collector 3", [
     new CollectorItem("Analog Thermometer", "uncommon", 5),
     new CollectorItem("Military Binoculars", "legendary", 3),
-    new CollectorItem("Biochemical Incubator", "epic", 3),
-    new CollectorItem("Heart Stent", "legendary", 2),
+    new CollectorItem("Biochemical Incubator", "epic", 3, true),
+    new CollectorItem("Heart Stent", "legendary", 2, true),
     new CollectorItem("Ceremonial Knife", "epic", 2),
   ]),
   new CollectorMission("Collector 4", [
@@ -96,7 +92,7 @@ const COLLECTOR_MISSIONS = [
   ]),
   new CollectorMission("Collector 6", [
     new CollectorItem("Smoothbore Gun Exhibit", "exotic", 1),
-    new CollectorItem("Satellite Phone", "legendary", 2),
+    new CollectorItem("Satellite Phone", "legendary", 2, true),
     new CollectorItem("Digital Camera", "legendary", 1),
   ]),
 ];
@@ -168,6 +164,7 @@ const loadCollectorMissionStates = () => {
             item.name,
             item.quality,
             item.needed,
+            item.newThisSeason,
             storedItem || 0
           );
         });
@@ -237,6 +234,10 @@ export const CollectorMissionContextProvider = ({
   );
 };
 
+const NewThisSeasonIndicator = () => {
+  return <div className="newThisSeason">✦</div>;
+};
+
 const CollectorMissionDisplay = ({
   missionIndex,
 }: {
@@ -299,7 +300,10 @@ const CollectorMissionDisplay = ({
                 })}
                 key={`${mission.name}_${item.name}`}
               >
-                <div className="name">{item.name}</div>
+                <div className="name">
+                  {item.name}
+                  {item.newThisSeason ? <NewThisSeasonIndicator /> : null}
+                </div>
                 <div className="progress">
                   {item.progressString} ({item.progressPercent}%)
                 </div>
@@ -341,6 +345,11 @@ export const CollectorSection = () => {
             />
           );
         })}
+      </div>
+      <div className="legend">
+        <div>
+          <NewThisSeasonIndicator /> New items this season
+        </div>
       </div>
     </div>
   );

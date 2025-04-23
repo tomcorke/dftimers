@@ -3,6 +3,7 @@
     display: grid;
     grid-template-columns: auto auto;
     gap: 1em;
+
     .mission {
       &.complete {
         .header {
@@ -69,6 +70,10 @@
 
           .name {
             flex-grow: 1;
+
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 5px;
           }
 
           &.complete {
@@ -81,6 +86,21 @@
           }
         }
       }
+    }
+  }
+
+  .newThisSeason {
+    font-size: 12px;
+    color: gold;
+  }
+
+  .legend {
+    margin-top: 2em;
+
+    & > div {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 0.5em;
     }
   }
 }
