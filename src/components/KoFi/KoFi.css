@@ -11,10 +11,10 @@
     align-items: center;
     justify-content: center;
     color: white;
-    max-height: 1.5em;
     overflow: hidden;
     text-decoration: none;
     padding: 0 5px;
+    gap: 0.5em;
 
     &:active,
     &:visited {
@@ -23,10 +23,6 @@
     &:hover {
       background: var(--df-green);
       color: black;
-    }
-
-    span {
-      margin-left: 0.25em;
     }
   }
 }

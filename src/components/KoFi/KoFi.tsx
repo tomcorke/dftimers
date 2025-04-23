@@ -1,7 +1,7 @@
 import React from "react";
 
 const kofiIcon = new URL(
-  "../../images/Ko-fi_Icon_RGBforDarkBg_sm.png?as=webp",
+  "../../images/kofi_symbol.png?as=webp&width=32&height=26",
   import.meta.url
 ).href;
 
@@ -18,8 +18,8 @@ const KoFi = () => {
         rel="noopener noreferrer"
       >
         <img
-          height="36"
-          style={{ border: "0px", height: "36px" }}
+          width="32"
+          height="26"
           src={kofiIcon}
           alt="Buy Me a Coffee at ko-fi.com"
         />

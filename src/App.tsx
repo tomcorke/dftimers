@@ -17,8 +17,8 @@ const App = () => {
           <CollectorSection />
         </CollectorMissionContextProvider>
         <MapTimersSection />
-        <KoFi />
       </div>
+      <KoFi />
     </div>
   );
 };
