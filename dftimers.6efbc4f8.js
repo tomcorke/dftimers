@@ -18830,18 +18830,17 @@ var _classnames = require("classnames");
 var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
 var _zod = require("zod");
 var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
-const IMAGES = {
-    magazine: new URL(require("29b9053649f0dbfb")).href
-};
 class CollectorItem {
     name;
     quality;
     needed;
     collected;
-    constructor(name, quality, needed, collected = 0){
+    newThisSeason = false;
+    constructor(name, quality, needed, newThisSeason = false, collected = 0){
         this.name = name;
         this.quality = quality;
         this.needed = needed;
+        this.newThisSeason = newThisSeason;
         this.collected = collected;
     }
     get progressString() {
@@ -18876,8 +18875,8 @@ const COLLECTOR_MISSIONS = [
     new CollectorMission("Collector 3", [
         new CollectorItem("Analog Thermometer", "uncommon", 5),
         new CollectorItem("Military Binoculars", "legendary", 3),
-        new CollectorItem("Biochemical Incubator", "epic", 3),
-        new CollectorItem("Heart Stent", "legendary", 2),
+        new CollectorItem("Biochemical Incubator", "epic", 3, true),
+        new CollectorItem("Heart Stent", "legendary", 2, true),
         new CollectorItem("Ceremonial Knife", "epic", 2)
     ]),
     new CollectorMission("Collector 4", [
@@ -18897,7 +18896,7 @@ const COLLECTOR_MISSIONS = [
     ]),
     new CollectorMission("Collector 6", [
         new CollectorItem("Smoothbore Gun Exhibit", "exotic", 1),
-        new CollectorItem("Satellite Phone", "legendary", 2),
+        new CollectorItem("Satellite Phone", "legendary", 2, true),
         new CollectorItem("Digital Camera", "legendary", 1)
     ])
 ];
@@ -18913,12 +18912,12 @@ const Button = ({ onClick, disabled, className, children })=>{
             children: children
         }, void 0, false, {
             fileName: "src/sections/Collector.tsx",
-            lineNumber: 123,
+            lineNumber: 119,
             columnNumber: 7
         }, undefined)
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 115,
+        lineNumber: 111,
         columnNumber: 5
     }, undefined);
 };
@@ -18931,7 +18930,7 @@ const AddButton = ({ onClick, disabled })=>{
         children: "+"
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 136,
+        lineNumber: 132,
         columnNumber: 5
     }, undefined);
 };
@@ -18944,7 +18943,7 @@ const RemoveButton = ({ onClick, disabled })=>{
         children: "\u2212"
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 150,
+        lineNumber: 146,
         columnNumber: 5
     }, undefined);
 };
@@ -18959,7 +18958,7 @@ const loadCollectorMissionStates = ()=>{
             const collectorMissions = COLLECTOR_MISSIONS.map((mission)=>{
                 const items = mission.items.map((item)=>{
                     const storedItem = parsedState.data[mission.name]?.[item.name];
-                    return new CollectorItem(item.name, item.quality, item.needed, storedItem || 0);
+                    return new CollectorItem(item.name, item.quality, item.needed, item.newThisSeason, storedItem || 0);
                 });
                 return new CollectorMission(mission.name, items);
             });
@@ -19006,12 +19005,23 @@ const CollectorMissionContextProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 232,
+        lineNumber: 229,
         columnNumber: 5
     }, undefined);
 };
 _s(CollectorMissionContextProvider, "HGSpKRO9aH7/C5YSGM2tCyFLUfs=");
 _c3 = CollectorMissionContextProvider;
+const NewThisSeasonIndicator = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "newThisSeason",
+        children: "\u2726"
+    }, void 0, false, {
+        fileName: "src/sections/Collector.tsx",
+        lineNumber: 238,
+        columnNumber: 10
+    }, undefined);
+};
+_c4 = NewThisSeasonIndicator;
 const CollectorMissionDisplay = ({ missionIndex })=>{
     _s1();
     const { collectorMissionStates, updateCollectorMission } = (0, _react.useContext)(CollectorMissionContext);
@@ -19055,7 +19065,7 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 280,
+                        lineNumber: 281,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
@@ -19065,13 +19075,13 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                         children: minimised ? "+" : "\u2212"
                     }, void 0, false, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 284,
+                        lineNumber: 285,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 279,
+                lineNumber: 280,
                 columnNumber: 7
             }, undefined),
             minimised ? null : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19084,10 +19094,17 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 className: "name",
-                                children: item.name
-                            }, void 0, false, {
+                                children: [
+                                    item.name,
+                                    item.newThisSeason ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(NewThisSeasonIndicator, {}, void 0, false, {
+                                        fileName: "src/sections/Collector.tsx",
+                                        lineNumber: 305,
+                                        columnNumber: 41
+                                    }, undefined) : null
+                                ]
+                            }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 302,
+                                lineNumber: 303,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19100,7 +19117,7 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 303,
+                                lineNumber: 307,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19111,7 +19128,7 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                         disabled: item.collected >= item.needed
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 311,
                                         columnNumber: 19
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(RemoveButton, {
@@ -19119,36 +19136,36 @@ const CollectorMissionDisplay = ({ missionIndex })=>{
                                         disabled: item.collected <= 0
                                     }, void 0, false, {
                                         fileName: "src/sections/Collector.tsx",
-                                        lineNumber: 313,
+                                        lineNumber: 317,
                                         columnNumber: 19
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/sections/Collector.tsx",
-                                lineNumber: 306,
+                                lineNumber: 310,
                                 columnNumber: 17
                             }, undefined)
                         ]
                     }, `${mission.name}_${item.name}`, true, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 296,
+                        lineNumber: 297,
                         columnNumber: 15
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 293,
+                lineNumber: 294,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 273,
+        lineNumber: 274,
         columnNumber: 5
     }, undefined);
 };
 _s1(CollectorMissionDisplay, "WmpRL0PwUBCLprrc7Abh2ZMq9hU=");
-_c4 = CollectorMissionDisplay;
+_c5 = CollectorMissionDisplay;
 const CollectorSection = ()=>{
     _s2();
     const { collectorMissionStates } = (0, _react.useContext)(CollectorMissionContext);
@@ -19159,7 +19176,7 @@ const CollectorSection = ()=>{
                 children: "Collector"
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 334,
+                lineNumber: 338,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -19169,38 +19186,60 @@ const CollectorSection = ()=>{
                         missionIndex: missionIndex
                     }, mission.name, false, {
                         fileName: "src/sections/Collector.tsx",
-                        lineNumber: 338,
+                        lineNumber: 342,
                         columnNumber: 13
                     }, undefined);
                 })
             }, void 0, false, {
                 fileName: "src/sections/Collector.tsx",
-                lineNumber: 335,
+                lineNumber: 339,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "legend",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(NewThisSeasonIndicator, {}, void 0, false, {
+                            fileName: "src/sections/Collector.tsx",
+                            lineNumber: 351,
+                            columnNumber: 11
+                        }, undefined),
+                        " New items this season"
+                    ]
+                }, void 0, true, {
+                    fileName: "src/sections/Collector.tsx",
+                    lineNumber: 350,
+                    columnNumber: 9
+                }, undefined)
+            }, void 0, false, {
+                fileName: "src/sections/Collector.tsx",
+                lineNumber: 349,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/sections/Collector.tsx",
-        lineNumber: 333,
+        lineNumber: 337,
         columnNumber: 5
     }, undefined);
 };
 _s2(CollectorSection, "k2uxmmspPAYgkL1usabFntdecPo=");
-_c5 = CollectorSection;
-var _c, _c1, _c2, _c3, _c4, _c5;
+_c6 = CollectorSection;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6;
 $RefreshReg$(_c, "Button");
 $RefreshReg$(_c1, "AddButton");
 $RefreshReg$(_c2, "RemoveButton");
 $RefreshReg$(_c3, "CollectorMissionContextProvider");
-$RefreshReg$(_c4, "CollectorMissionDisplay");
-$RefreshReg$(_c5, "CollectorSection");
+$RefreshReg$(_c4, "NewThisSeasonIndicator");
+$RefreshReg$(_c5, "CollectorMissionDisplay");
+$RefreshReg$(_c6, "CollectorSection");
 
   $parcel$ReactRefreshHelpers$7256.postlude(module);
 } finally {
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","immutability-helper":"UP0Hy","./Collector.css":"etnTZ","classnames":"Egwmr","zod":"gcE23","29b9053649f0dbfb":"fBfTr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"UP0Hy":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","immutability-helper":"UP0Hy","./Collector.css":"etnTZ","classnames":"Egwmr","zod":"gcE23","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"UP0Hy":[function(require,module,exports,__globalThis) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -23705,10 +23744,7 @@ var z = /*#__PURE__*/ Object.freeze({
     ZodError: ZodError
 });
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fBfTr":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("magazine.4af3c98a.webp") + "?" + Date.now();
-
-},{}],"gUF6J":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"gUF6J":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _koFi = require("./KoFi");

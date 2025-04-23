@@ -212,7 +212,10 @@ html {
           }
 
           & .name {
+            flex-flow: row;
             flex-grow: 1;
+            gap: 5px;
+            display: flex;
           }
 
           &.complete {
@@ -225,6 +228,21 @@ html {
           }
         }
       }
+    }
+  }
+
+  & .newThisSeason {
+    color: gold;
+    font-size: 12px;
+  }
+
+  & .legend {
+    margin-top: 2em;
+
+    & > div {
+      flex-flow: row;
+      gap: .5em;
+      display: flex;
     }
   }
 }
