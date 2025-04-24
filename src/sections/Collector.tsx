@@ -15,6 +15,7 @@ import "./Collector.css";
 import { MAP_TIMERS, MapTimer } from "./timers/map-timer";
 import classNames from "classnames";
 import { z } from "zod";
+import { useStoredState } from "../helpers/useStoredState";
 
 type Quality = "common" | "uncommon" | "rare" | "epic" | "legendary" | "exotic";
 
@@ -254,7 +255,11 @@ const CollectorMissionDisplay = ({
   const { collectorMissionStates, updateCollectorMission } = useContext(
     CollectorMissionContext
   );
-  const [minimised, setMinimised] = useState(false);
+  const [minimised, setMinimised] = useStoredState(
+    `collector_mission_minimised__${missionIndex}`,
+    false,
+    z.boolean()
+  );
 
   const mission = collectorMissionStates[missionIndex];
 
@@ -344,28 +349,47 @@ const CollectorMissionDisplay = ({
 export const CollectorSection = () => {
   const { collectorMissionStates } = useContext(CollectorMissionContext);
 
+  const [minimised, setMinimised] = useStoredState(
+    `collector_section_minimised`,
+    false,
+    z.boolean()
+  );
+
   return (
     <div className="section Collector">
-      <h2>Collector</h2>
-      <div className="missions">
-        {collectorMissionStates.map((mission, missionIndex) => {
-          return (
-            <CollectorMissionDisplay
-              key={mission.name}
-              missionIndex={missionIndex}
-            />
-          );
-        })}
+      <div className="header">
+        <h2>Collector</h2>
+        <Button
+          className="toggle"
+          onClick={() => setMinimised(!minimised)}
+          disabled={false}
+        >
+          {minimised ? "+" : "−"}
+        </Button>
       </div>
-      <div className="legend">
-        <div>
-          <NewThisSeasonIndicator /> New items this season
-        </div>
-        <div>
-          <RequiresExtractionIndicator /> Requires extraction with item, not
-          submission of unbound item
-        </div>
-      </div>
+      {minimised ? null : (
+        <>
+          <div className="missions">
+            {collectorMissionStates.map((mission, missionIndex) => {
+              return (
+                <CollectorMissionDisplay
+                  key={mission.name}
+                  missionIndex={missionIndex}
+                />
+              );
+            })}
+          </div>
+          <div className="legend">
+            <div>
+              <NewThisSeasonIndicator /> New items this season
+            </div>
+            <div>
+              <RequiresExtractionIndicator /> Requires extraction with item, not
+              submission of unbound item
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

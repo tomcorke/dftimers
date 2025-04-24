@@ -59,9 +59,24 @@ html {
     padding-top: 40px;
 
     .section {
-      /* border: 1px solid red; */
+      min-width: 300px;
 
-      h2 {
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+
+      > .header {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        margin: 0 0 1em;
+
+        > h2 {
+          margin: 0;
+        }
+      }
+
+      & > h2 {
         margin: 0 0 1em;
         padding: 0;
         font-size: 24px;
