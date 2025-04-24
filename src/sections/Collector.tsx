@@ -24,17 +24,20 @@ class CollectorItem {
   needed: number;
   collected: number;
   newThisSeason: boolean = false;
+  requiresExtraction: boolean = false;
   constructor(
     name: string,
     quality: Quality,
     needed: number,
     newThisSeason: boolean = false,
+    requiresExtraction: boolean = false,
     collected: number = 0
   ) {
     this.name = name;
     this.quality = quality;
     this.needed = needed;
     this.newThisSeason = newThisSeason;
+    this.requiresExtraction = requiresExtraction;
     this.collected = collected;
   }
   get progressString(): string {
@@ -73,7 +76,7 @@ const COLLECTOR_MISSIONS = [
     new CollectorItem("Military Binoculars", "legendary", 3),
     new CollectorItem("Biochemical Incubator", "epic", 3, true),
     new CollectorItem("Heart Stent", "legendary", 2, true),
-    new CollectorItem("Ceremonial Knife", "epic", 2),
+    new CollectorItem("Ceremonial Knife", "epic", 2, false, true),
   ]),
   new CollectorMission("Collector 4", [
     new CollectorItem("Ahsarah Specialty Lantern", "epic", 3),
@@ -81,7 +84,7 @@ const COLLECTOR_MISSIONS = [
     new CollectorItem("Ahsarah Specialty Wine Cup", "legendary", 2),
     new CollectorItem("Ahsarah Specialty Flask", "epic", 3),
     new CollectorItem("Ahsarah Specialty Ceramics", "uncommon", 3),
-    new CollectorItem("LEDX", "legendary", 2),
+    new CollectorItem("LEDX", "legendary", 2, false, true),
   ]),
   new CollectorMission("Collector 5", [
     new CollectorItem("Empress Earring", "epic", 1),
@@ -165,6 +168,7 @@ const loadCollectorMissionStates = () => {
             item.quality,
             item.needed,
             item.newThisSeason,
+            item.requiresExtraction,
             storedItem || 0
           );
         });
@@ -238,6 +242,10 @@ const NewThisSeasonIndicator = () => {
   return <div className="newThisSeason">✦</div>;
 };
 
+const RequiresExtractionIndicator = () => {
+  return <div className="requiresExtraction">✦</div>;
+};
+
 const CollectorMissionDisplay = ({
   missionIndex,
 }: {
@@ -303,6 +311,9 @@ const CollectorMissionDisplay = ({
                 <div className="name">
                   {item.name}
                   {item.newThisSeason ? <NewThisSeasonIndicator /> : null}
+                  {item.requiresExtraction ? (
+                    <RequiresExtractionIndicator />
+                  ) : null}
                 </div>
                 <div className="progress">
                   {item.progressString} ({item.progressPercent}%)
@@ -349,6 +360,10 @@ export const CollectorSection = () => {
       <div className="legend">
         <div>
           <NewThisSeasonIndicator /> New items this season
+        </div>
+        <div>
+          <RequiresExtractionIndicator /> Requires extraction with item, not
+          submission of unbound item
         </div>
       </div>
     </div>

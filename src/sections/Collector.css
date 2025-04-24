@@ -94,6 +94,11 @@
     color: gold;
   }
 
+  .requiresExtraction {
+    font-size: 12px;
+    color: cyan;
+  }
+
   .legend {
     margin-top: 2em;
 
@@ -101,6 +106,17 @@
       display: flex;
       flex-flow: row nowrap;
       gap: 0.5em;
+    }
+  }
+}
+
+[data-theme="light"] {
+  .Collector {
+    .newThisSeason {
+      color: orangered;
+    }
+    .requiresExtraction {
+      color: blueviolet;
     }
   }
 }

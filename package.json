@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "source": "src/index.html",
   "scripts": {
-    "start": "cross-env TEMP=E:\\temp parcel",
-    "build": "cross-env TEMP=E:\\temp parcel build",
+    "clean": "rimraf dist && rimraf .parcel-cache",
+    "start": "npm run clean && cross-env TEMP=E:\\temp parcel",
+    "build": "npm run clean && cross-env TEMP=E:\\temp parcel build",
     "deploy": "npm run build && gh-pages -d dist --branch publish --cname dftimers.corke.dev"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "immutability-helper": "^3.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "rimraf": "^6.0.1",
     "zod": "^3.24.3"
   },
   "devDependencies": {
