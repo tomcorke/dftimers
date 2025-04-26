@@ -73,7 +73,7 @@ export class MapTimer {
     if (nextTimeSpan) {
       nextTimeSpanEndSeconds = nextTimeSpan.endHour * 3600;
     }
-    if (!nextTimeSpanEndSeconds === undefined) {
+    if (nextTimeSpanEndSeconds === undefined) {
       throw new Error("No next time span found");
     }
     return nextTimeSpanEndSeconds;
