@@ -88,7 +88,7 @@ const COLLECTOR_MISSIONS = [
     new CollectorItem("LEDX", "legendary", 2, false, true),
   ]),
   new CollectorMission("Collector 5", [
-    new CollectorItem("Empress Earring", "epic", 1),
+    new CollectorItem("LOcal Specialty Jewelry", "legendary", 1),
     new CollectorItem("Encrypted Router", "epic", 2),
     new CollectorItem("EV Battery", "epic", 2),
     new CollectorItem("SLR Camera", "legendary", 2),
