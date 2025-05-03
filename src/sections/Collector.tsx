@@ -88,16 +88,16 @@ const COLLECTOR_MISSIONS = [
     new CollectorItem("LEDX", "legendary", 2, false, true),
   ]),
   new CollectorMission("Collector 5", [
-    new CollectorItem("LOcal Specialty Jewelry", "legendary", 1),
+    new CollectorItem("Local Specialty Jewelry", "legendary", 1),
     new CollectorItem("Encrypted Router", "epic", 2),
     new CollectorItem("EV Battery", "epic", 2),
-    new CollectorItem("SLR Camera", "legendary", 2),
+    new CollectorItem("Digital Camera", "legendary", 2),
     new CollectorItem("Military Trajectory Computer", "legendary", 1),
   ]),
   new CollectorMission("Collector 6", [
     new CollectorItem("Smoothbore Gun Exhibit", "exotic", 1),
     new CollectorItem("Satellite Phone", "legendary", 2, true),
-    new CollectorItem("Digital Camera", "legendary", 1),
+    new CollectorItem("SLR Camera", "legendary", 1),
   ]),
 ];
 
