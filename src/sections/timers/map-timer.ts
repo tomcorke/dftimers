@@ -109,21 +109,27 @@ const intervals = (
 };
 
 export const MAP_TIMERS: MapTimer[] = [
-  new MapTimer("Space City: Normal", intervals(0, 2, 2)),
-  new MapTimer("Brakkesh: Normal", intervals(2, 2, 2)),
-  new MapTimer("Space City: Hard", [
+  new MapTimer("Space City: Normal", intervals(0, 1, 1)),
+  new MapTimer("Space City: Hard", intervals(1, 1, 1)),
+  new MapTimer("Brakkesh: Normal", [
+    { startHour: 1, endHour: 2 },
+    { startHour: 5, endHour: 6 },
+    { startHour: 13, endHour: 14 },
+    { startHour: 17, endHour: 18 },
+    { startHour: 21, endHour: 22 },
+  ]),
+  new MapTimer("Zero Dam: Long Night", [
     { startHour: 0, endHour: 1 },
+    { startHour: 2, endHour: 3 },
     { startHour: 4, endHour: 5 },
+    { startHour: 6, endHour: 7 },
     { startHour: 8, endHour: 9 },
+    { startHour: 12, endHour: 13 },
+    { startHour: 18, endHour: 19 },
     { startHour: 20, endHour: 21 },
+    { startHour: 22, endHour: 23 },
   ]),
-  new MapTimer("Zero Dam: Night (Normal)", [
-    { startHour: 1, endHour: 3 },
-    { startHour: 5, endHour: 7 },
-    { startHour: 17, endHour: 19 },
-    { startHour: 21, endHour: 23 },
-  ]),
-  new MapTimer("Layali: Normal", [
+  new MapTimer("Layali Grove: Normal", [
     { startHour: 3, endHour: 4 },
     { startHour: 7, endHour: 8 },
     { startHour: 19, endHour: 20 },

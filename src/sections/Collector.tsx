@@ -320,9 +320,7 @@ const CollectorMissionDisplay = ({
                     <RequiresExtractionIndicator />
                   ) : null}
                 </div>
-                <div className="progress">
-                  {item.progressString} ({item.progressPercent}%)
-                </div>
+                <div className="progress">{item.progressString}</div>
                 <div className="buttonGroup">
                   <AddButton
                     onClick={() =>
