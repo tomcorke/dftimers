@@ -85,6 +85,10 @@ html {
   }
 
   .MapTimers {
+    display: flex;
+    flex-flow: column;
+    gap: 1em;
+
     .currentTime {
       font-weight: bold;
       font-size: 18px;
@@ -110,6 +114,50 @@ html {
 
         .time {
           font-size: 18px;
+        }
+      }
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns:
+        [name-start] 1fr [name-end hours-start] repeat(24, auto)
+        [hours-end];
+      grid-template-rows: [header-start] 1fr [header-end maps-start] auto [maps-end];
+      gap: 2px;
+      align-items: center;
+
+      .hour-key {
+        font-size: 8px;
+        width: 10px;
+        height: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.live {
+          color: var(--df-green);
+          font-weight: bold;
+        }
+      }
+
+      .name {
+        margin-right: 0.5em;
+        text-align: right;
+        max-height: 10px;
+        font-size: 12px;
+        transform: translateY(-4px);
+      }
+
+      .hour {
+        display: block;
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: grey;
+
+        &.live {
+          background: var(--df-green);
         }
       }
     }

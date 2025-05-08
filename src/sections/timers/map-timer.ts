@@ -34,7 +34,7 @@ export class MapTimer {
       const startTimeSeconds = time.startHour * 3600;
       const endTimeSeconds = time.endHour * 3600;
       return (
-        (startTimeSeconds < currentTimeSecondsUTC &&
+        (startTimeSeconds <= currentTimeSecondsUTC &&
           endTimeSeconds > currentTimeSecondsUTC) ||
         startTimeSeconds > currentTimeSecondsUTC
       );
@@ -84,13 +84,14 @@ export class MapTimer {
     return this.nextOrCurrentTimeSpanEndSeconds(now) - now;
   }
 
-  isLive(): boolean {
-    const now = MapTimer.nowSecondsUTC();
+  isLive(simTime?: number): boolean {
+    const realNow = MapTimer.nowSecondsUTC();
+    const now = simTime ?? realNow;
     const nextTimeSpan = this.nextOrCurrentTimeSpan(now);
     if (nextTimeSpan) {
       const startTimeSeconds = nextTimeSpan.startHour * 3600;
       const endTimeSeconds = nextTimeSpan.endHour * 3600;
-      return startTimeSeconds < now && endTimeSeconds > now;
+      return startTimeSeconds <= now && endTimeSeconds > now;
     }
     return false;
   }
@@ -118,7 +119,7 @@ export const MAP_TIMERS: MapTimer[] = [
     { startHour: 17, endHour: 18 },
     { startHour: 21, endHour: 22 },
   ]),
-  new MapTimer("Zero Dam: Long Night", [
+  new MapTimer("Zero Dam: Night", [
     { startHour: 0, endHour: 1 },
     { startHour: 2, endHour: 3 },
     { startHour: 4, endHour: 5 },
