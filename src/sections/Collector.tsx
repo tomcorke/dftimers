@@ -84,8 +84,8 @@ const COLLECTOR_MISSIONS = [
     new CollectorItem("Gas Tank", "rare", 4),
   ]),
   new CollectorMission("Collector 5", [
-    new CollectorItem("Golden Laurel Crown", "legendary", 1),
-    new CollectorItem("Cryptex", "legendary", 1),
+    new CollectorItem("Golden Laurel Crown", "legendary", 1, true),
+    new CollectorItem("Cryptex", "legendary", 1, true),
     new CollectorItem("Luxury Mechanical Watch", "exotic", 1),
   ]),
   new CollectorMission("Collector 6", [
@@ -356,6 +356,17 @@ export const CollectorSection = () => {
     z.boolean()
   );
 
+  const anyNewSeasonItems = useMemo(() => {
+    return collectorMissionStates.some((mission) =>
+      mission.items.some((item) => item.newThisSeason)
+    );
+  }, [collectorMissionStates]);
+  const anyItemRequiresExtraction = useMemo(() => {
+    return collectorMissionStates.some((mission) =>
+      mission.items.some((item) => item.requiresExtraction)
+    );
+  }, [collectorMissionStates]);
+
   return (
     <div className="section Collector">
       <div className="header">
@@ -381,13 +392,17 @@ export const CollectorSection = () => {
             })}
           </div>
           <div className="legend">
-            <div>
-              <NewThisSeasonIndicator /> New items this season
-            </div>
-            <div>
-              <RequiresExtractionIndicator /> Requires extraction with item, not
-              submission of unbound item
-            </div>
+            {anyNewSeasonItems ? (
+              <div>
+                <NewThisSeasonIndicator /> New items this season
+              </div>
+            ) : null}
+            {anyItemRequiresExtraction ? (
+              <div>
+                <RequiresExtractionIndicator /> Requires extraction with item,
+                not submission of unbound item
+              </div>
+            ) : null}
           </div>
         </>
       )}
