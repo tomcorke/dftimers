@@ -3,13 +3,24 @@ type TimeSpan = {
   endHour: number;
 };
 
+type SimpleTimeSpan = [number, number];
+
+const toTimeSpans = (times: (TimeSpan | SimpleTimeSpan)[]): TimeSpan[] => {
+  return times.map((time) => {
+    if (Array.isArray(time)) {
+      return { startHour: time[0], endHour: time[1] };
+    }
+    return time;
+  });
+};
+
 export class MapTimer {
   name: string;
   times: TimeSpan[];
 
-  constructor(name: string, times: TimeSpan[]) {
+  constructor(name: string, times: (TimeSpan | SimpleTimeSpan)[]) {
     this.name = name;
-    this.times = times;
+    this.times = toTimeSpans(times);
   }
 
   static nowSeconds(): number {
@@ -110,30 +121,39 @@ const intervals = (
 };
 
 export const MAP_TIMERS: MapTimer[] = [
-  new MapTimer("Space City: Normal", intervals(0, 1, 1)),
-  new MapTimer("Space City: Hard", intervals(1, 1, 1)),
+  new MapTimer("Zero Dam: Normal", [{ startHour: 0, endHour: 24 }]),
+  new MapTimer("Layali Grove: Normal", [{ startHour: 0, endHour: 24 }]),
+  new MapTimer("Space City: Normal", [
+    [0, 2],
+    [4, 6],
+    [10, 15],
+    [16, 18],
+    [22, 24],
+  ]),
+  new MapTimer("Space City: Hard", [
+    [2, 4],
+    [6, 8],
+    [10, 12],
+    [15, 16],
+    [18, 20],
+    [22, 24],
+  ]),
   new MapTimer("Brakkesh: Normal", [
-    { startHour: 1, endHour: 2 },
-    { startHour: 5, endHour: 6 },
-    { startHour: 13, endHour: 14 },
-    { startHour: 17, endHour: 18 },
-    { startHour: 21, endHour: 22 },
+    [2, 4],
+    [8, 10],
+    [14, 16],
+    [20, 22],
   ]),
   new MapTimer("Zero Dam: Night", [
-    { startHour: 0, endHour: 1 },
-    { startHour: 2, endHour: 3 },
-    { startHour: 4, endHour: 5 },
-    { startHour: 6, endHour: 7 },
-    { startHour: 8, endHour: 9 },
-    { startHour: 12, endHour: 13 },
-    { startHour: 18, endHour: 19 },
-    { startHour: 20, endHour: 21 },
-    { startHour: 22, endHour: 23 },
+    [6, 8],
+    [18, 20],
   ]),
-  new MapTimer("Layali Grove: Normal", [
-    { startHour: 3, endHour: 4 },
-    { startHour: 7, endHour: 8 },
-    { startHour: 19, endHour: 20 },
-    { startHour: 23, endHour: 24 },
+  new MapTimer("Tide Prison: Hard", [
+    [0, 2],
+    [4, 6],
+    [8, 10],
+    [12, 14],
+    [16, 18],
+    [20, 22],
   ]),
 ];

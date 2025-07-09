@@ -115,26 +115,24 @@ export const MapTimersSection = () => {
           );
         })}
         {MAP_TIMERS.map((timer) => {
-          return (
-            <>
-              <div key={timer.name} className="name">
-                {abbreviate(timer.name)}
-              </div>
-              {HOURS.map((hour) => {
-                const simTime = hour * 3600;
-                const isLive = timer.isLive(simTime);
-                return (
-                  <div
-                    key={hour}
-                    data-hour={hour}
-                    data-sim-time={simTime}
-                    data-current-hour={currentHour}
-                    className={classNames("hour", { live: isLive })}
-                  />
-                );
-              })}
-            </>
-          );
+          return [
+            <div key={`${timer.name}_name`} className="name">
+              {abbreviate(timer.name)}
+            </div>,
+            HOURS.map((hour) => {
+              const simTime = hour * 3600;
+              const isLive = timer.isLive(simTime);
+              return (
+                <div
+                  key={`${timer.name}_hour_${hour}`}
+                  data-hour={hour}
+                  data-sim-time={simTime}
+                  data-current-hour={currentHour}
+                  className={classNames("hour", { live: isLive })}
+                />
+              );
+            }),
+          ];
         })}
       </div>
     </div>
