@@ -58,6 +58,8 @@ class CollectorMission {
   }
 }
 
+const SEASON_ID = "5";
+
 const COLLECTOR_MISSIONS = [
   new CollectorMission("Collector 1", [
     new CollectorItem("Any [Tool & Material]", "epic", 5),
@@ -92,6 +94,10 @@ const COLLECTOR_MISSIONS = [
   ]),
 ];
 
+type ButtonOnClickProps = {
+  shift: boolean;
+};
+
 const Button = ({
   onClick,
   disabled,
@@ -99,15 +105,15 @@ const Button = ({
   children,
 }: PropsWithChildren<{
   className: string;
-  onClick: () => void;
+  onClick: (props: ButtonOnClickProps) => void;
   disabled: boolean;
 }>) => {
   return (
     <div
       className={classNames("button", className, { disabled })}
-      onClick={() => {
+      onClick={(e) => {
         if (!disabled) {
-          onClick();
+          onClick({ shift: e.shiftKey });
         }
       }}
     >
@@ -120,7 +126,7 @@ const AddButton = ({
   onClick,
   disabled,
 }: {
-  onClick: () => void;
+  onClick: (props: ButtonOnClickProps) => void;
   disabled: boolean;
 }) => {
   return (
@@ -134,7 +140,7 @@ const RemoveButton = ({
   onClick,
   disabled,
 }: {
-  onClick: () => void;
+  onClick: (props: ButtonOnClickProps) => void;
   disabled: boolean;
 }) => {
   return (
@@ -314,14 +320,20 @@ const CollectorMissionDisplay = ({
                 <div className="progress">{item.progressString}</div>
                 <div className="buttonGroup">
                   <AddButton
-                    onClick={() =>
-                      updateMissionItem(itemIndex, item.collected + 1)
+                    onClick={({ shift }) =>
+                      updateMissionItem(
+                        itemIndex,
+                        shift ? item.needed : item.collected + 1
+                      )
                     }
                     disabled={item.collected >= item.needed}
                   />
                   <RemoveButton
-                    onClick={() =>
-                      updateMissionItem(itemIndex, item.collected - 1)
+                    onClick={({ shift }) =>
+                      updateMissionItem(
+                        itemIndex,
+                        shift ? 0 : item.collected - 1
+                      )
                     }
                     disabled={item.collected <= 0}
                   />
