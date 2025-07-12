@@ -58,7 +58,7 @@ class CollectorMission {
   }
 }
 
-const SEASON_ID = "5";
+const SEASON_ID = "Season 5";
 
 const COLLECTOR_MISSIONS = [
   new CollectorMission("Collector 1", [
@@ -150,7 +150,32 @@ const RemoveButton = ({
   );
 };
 
-const storageSchema = z.record(z.string(), z.record(z.string(), z.number()));
+const oldStorageSchema = z.record(z.string(), z.record(z.string(), z.number()));
+const newFlatStorageSchema = z.record(z.string(), z.number());
+
+const storageSchema = oldStorageSchema.or(newFlatStorageSchema);
+
+const getComplexItemKey = (missionName: string, itemName: string) => {
+  return `${SEASON_ID}_${missionName}_${itemName}`.replace(/\s+/g, "_");
+};
+
+const ensureNewStorageFormat = (
+  data: z.infer<typeof storageSchema>
+): z.infer<typeof newFlatStorageSchema> => {
+  const oldParsedData = oldStorageSchema.safeParse(data);
+  if (oldParsedData.success) {
+    // Convert old format to new flat format
+    const newData: Record<string, number> = {};
+    for (const [missionName, items] of Object.entries(oldParsedData.data)) {
+      for (const [itemName, collected] of Object.entries(items)) {
+        const complexItemKey = getComplexItemKey(missionName, itemName);
+        newData[complexItemKey] = collected;
+      }
+    }
+    return newData;
+  }
+  return data as z.infer<typeof newFlatStorageSchema>;
+};
 
 const loadCollectorMissionStates = () => {
   const baseState = COLLECTOR_MISSIONS;
@@ -158,9 +183,12 @@ const loadCollectorMissionStates = () => {
     const storedState = localStorage.getItem("collector") || "{}";
     const parsedState = storageSchema.safeParse(JSON.parse(storedState));
     if (parsedState.success) {
+      const newParsedData = ensureNewStorageFormat(parsedState.data);
+
       const collectorMissions = COLLECTOR_MISSIONS.map((mission) => {
         const items = mission.items.map((item) => {
-          const storedItem = parsedState.data[mission.name]?.[item.name];
+          const itemKey = getComplexItemKey(mission.name, item.name);
+          const storedItem = newParsedData[itemKey];
           return new CollectorItem(
             item.name,
             item.quality,
@@ -206,12 +234,14 @@ export const CollectorMissionContextProvider = ({
       "collector",
       JSON.stringify(
         collectorMissionStates.reduce((acc, mission) => {
-          acc[mission.name] = mission.items.reduce((acc, item) => {
-            acc[item.name] = item.collected;
-            return acc;
-          }, {} as Record<string, number>);
-          return acc;
-        }, {} as Record<string, Record<string, number>>)
+          return {
+            ...acc,
+            ...mission.items.reduce((missionAcc, item) => {
+              const itemKey = getComplexItemKey(mission.name, item.name);
+              return { ...missionAcc, [itemKey]: item.collected };
+            }, {} as Record<string, number>),
+          };
+        }, {} as Record<string, number>)
       )
     );
   }, [collectorMissionStates]);
