@@ -1,6 +1,6 @@
 import { use, useEffect, useState } from "react";
 
-import { MAP_TIMERS, MapTimer } from "./timers/map-timer";
+import { MAP_TIMERS, MapTimer } from "./data/map-timers";
 import classNames from "classnames";
 
 const DateTimeDisplay = ({

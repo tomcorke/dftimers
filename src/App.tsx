@@ -2,11 +2,11 @@ import { use, useEffect, useState } from "react";
 import "./App.css";
 
 import classNames from "classnames";
-import { MapTimersSection } from "./sections/MapTimers";
+import { MapTimersSection } from "./sections/MapTimerDisplay";
 import {
   CollectorMissionContextProvider,
   CollectorSection,
-} from "./sections/Collector";
+} from "./sections/CollectorDisplay";
 import KoFi from "./components/KoFi";
 
 const App = () => {

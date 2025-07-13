@@ -126,7 +126,7 @@ export const MAP_TIMERS: MapTimer[] = [
   new MapTimer("Space City: Normal", [
     [0, 2],
     [4, 6],
-    [10, 15],
+    [10, 14],
     [16, 18],
     [22, 24],
   ]),
@@ -134,7 +134,7 @@ export const MAP_TIMERS: MapTimer[] = [
     [2, 4],
     [6, 8],
     [10, 12],
-    [15, 16],
+    [14, 16],
     [18, 20],
     [22, 24],
   ]),
