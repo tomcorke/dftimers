@@ -101,7 +101,7 @@ export const MapTimersSection = () => {
       </div>
 
       <div className="timeline">
-        <div></div>
+        <div>UTC</div>
         {HOURS.map((hour) => {
           return (
             <div
