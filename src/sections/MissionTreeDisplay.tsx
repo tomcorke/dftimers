@@ -192,7 +192,7 @@ export const MissionTreeSection = () => {
     };
   }, [missionStates]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!canvasRef.current) return;
 
     const clientWidth = canvasRef.current.offsetWidth;
