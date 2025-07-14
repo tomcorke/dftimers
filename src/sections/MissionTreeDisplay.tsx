@@ -82,8 +82,8 @@ export const MissionTreeContextProvider = ({
 
 // Draw functions
 
-const rowHeight = 35;
-const colWidth = 50;
+const rowHeight = 28;
+const colWidth = 37;
 const boxSize = 20;
 const connectOffset = 3;
 
