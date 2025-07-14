@@ -1,0 +1,35 @@
+.MissionTree {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 4px;
+
+  .row {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+
+    .mission {
+      width: 25px;
+      height: 18px;
+      background: grey;
+      color: white;
+      overflow: hidden;
+      font-size: 12px;
+      white-space: nowrap;
+      padding: 2px;
+      position: relative;
+      cursor: pointer;
+
+      &.isCompleted {
+        background: var(--df-green);
+        color: black;
+      }
+
+      &.empty {
+        background: none;
+      }
+    }
+  }
+}

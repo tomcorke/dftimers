@@ -8,6 +8,10 @@ import {
   CollectorSection,
 } from "./sections/CollectorDisplay";
 import KoFi from "./components/KoFi";
+import {
+  MissionTreeContextProvider,
+  MissionTreeSection,
+} from "./sections/MissionTreeDisplay";
 
 const App = () => {
   return (
@@ -17,6 +21,9 @@ const App = () => {
           <CollectorSection />
         </CollectorMissionContextProvider>
         <MapTimersSection />
+        <MissionTreeContextProvider>
+          <MissionTreeSection />
+        </MissionTreeContextProvider>
       </div>
       <KoFi />
     </div>

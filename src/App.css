@@ -57,6 +57,7 @@ html {
     flex-flow: row wrap;
     gap: 2em;
     padding-top: 40px;
+    justify-content: center;
 
     .section {
       min-width: 300px;
