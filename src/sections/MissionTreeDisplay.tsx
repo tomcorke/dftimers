@@ -198,6 +198,7 @@ export const MissionTreeSection = () => {
     // Set HTML width and height to match displayed width and height
     canvasRef.current.width = canvasRef.current.offsetWidth;
     canvasRef.current.height = canvasRef.current.offsetHeight;
+    console.log(canvasRef.current.width, canvasRef.current.offsetWidth);
 
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
