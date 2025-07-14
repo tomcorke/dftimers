@@ -52,9 +52,9 @@ const ironEvidence = mainMission("Iron Evidence").follows(shadowIdentity);
 const pathOfRedemptionTravelLight = mainMission("Path of Redemption: Travel Light").follows(ironEvidence);
 const pathOfRedemptionTheLongRoad = mainMission("Path of Redemption: The Long Road").follows(pathOfRedemptionTravelLight);
 const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTheLongRoad);
-const unknownMainMissionB = mainMission("Unknown Main Mission B").follows(pathOfRedemptionNoLongerAlone);
-const unknownMainMissionC = mainMission("Unknown Main Mission C").follows(unknownMainMissionB);
-const unknownFinalMainMission = mainMission("Unknown Final Main Mission").follows(unknownMainMissionC);
+const lostContact = mainMission("Lost Contact").follows(pathOfRedemptionNoLongerAlone);
+const pathOfRedemptionKnockingOnTheDoor = mainMission("Path of Redemption: Knocking on the Door").follows(lostContact);
+const pathofRedemptionFlyHighInTheDark = mainMission("Path of Redemption: Fly High in the Dark").follows(pathOfRedemptionKnockingOnTheDoor);
 
 // Collectors
 const collector1 = sideMission("Collector - 1").follows(handledWithEase);
@@ -109,7 +109,7 @@ const gritYourTeeth = sideMission("Grit Your Teeth").follows(mostWanted);
 const rockSolid = sideMission("Rock Solid").follows(gritYourTeeth);
 const fatalTrick = sideMission("Fatal Trick").follows(rockSolid);
 const switcheroo = sideMission("Switcheroo").follows(fatalTrick);
-const unknownSideMission = sideMission("Unknown Side Mission").follows(switcheroo);
+const universalBenchmark = sideMission("Universal Benchmark").follows(switcheroo);
 
 // from most wanted:
 // extreme warrior, thunder strike 1, thunder strike 2, escape fund, unbroken spirit
