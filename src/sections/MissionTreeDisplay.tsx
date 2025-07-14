@@ -195,19 +195,20 @@ export const MissionTreeSection = () => {
   useLayoutEffect(() => {
     if (!canvasRef.current) return;
 
+    const clientWidth = canvasRef.current.offsetWidth;
+    const clientHeight = canvasRef.current.offsetHeight;
+
     // Set HTML width and height to match displayed width and height
-    canvasRef.current.width = canvasRef.current.offsetWidth;
-    canvasRef.current.height = canvasRef.current.offsetHeight;
-    console.log(canvasRef.current.width, canvasRef.current.offsetWidth);
+    canvasRef.current.width = clientWidth;
+    canvasRef.current.height = clientHeight;
 
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
 
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    ctx.clearRect(0, 0, clientWidth, clientHeight);
 
-    const canvasOffsetX =
-      canvasRef.current.width / 2 - colWidth * (maxMissionDepth / 2);
-    const canvasOffsetY = canvasRef.current.height / 2;
+    const canvasOffsetX = clientWidth / 2 - colWidth * (maxMissionDepth / 2);
+    const canvasOffsetY = clientHeight / 2;
 
     if (canvasOffsetX < 0) {
       return;
