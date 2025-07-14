@@ -192,6 +192,7 @@ export const MissionTreeSection = () => {
   }, [missionStates]);
 
   useEffect(() => {
+    console.log(canvasRef.current);
     if (!canvasRef.current) return;
 
     // Set HTML width and height to match displayed width and height
