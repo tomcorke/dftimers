@@ -50,11 +50,11 @@ const silentAssassin = mainMission("Silent Assassin").follows(haavkEmployeeBenef
 const shadowIdentity = mainMission("Shadow Identity").follows(silentAssassin);
 const ironEvidence = mainMission("Iron Evidence").follows(shadowIdentity);
 const pathOfRedemptionTravelLight = mainMission("Path of Redemption: Travel Light").follows(ironEvidence);
-const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTravelLight);
+const pathOfRedemptionTheLongRoad = mainMission("Path of Redemption: The Long Road").follows(pathOfRedemptionTravelLight);
+const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTheLongRoad);
 const unknownMainMissionB = mainMission("Unknown Main Mission B").follows(pathOfRedemptionNoLongerAlone);
 const unknownMainMissionC = mainMission("Unknown Main Mission C").follows(unknownMainMissionB);
-const unknownMainMissionD = mainMission("Unknown Main Mission D").follows(unknownMainMissionC);
-const unknownFinalMainMission = mainMission("Unknown Main Mission E").follows(unknownMainMissionD);
+const unknownFinalMainMission = mainMission("Unknown Final Main Mission").follows(unknownMainMissionC);
 
 // Collectors
 const collector1 = sideMission("Collector - 1").follows(handledWithEase);
@@ -134,5 +134,7 @@ const goldenGunner2 = sideMission("Golden Gunner - 2").follows(goldenGunner1);
 const goldenGunner3 = sideMission("Golden Gunner - 3").follows(goldenGunner2);
 const goldenGunner4 = sideMission("Golden Gunner - 4").follows(goldenGunner3);
 const goldenGunner5 = sideMission("Golden Gunner - 5").follows(goldenGunner4);
+const goldenGunner6 = sideMission("Golden Gunner - 6").follows(goldenGunner5);
+const goldenGunner7 = sideMission("Golden Gunner - 7").follows(goldenGunner6);
 
 export const ROOT_MISSION = firingPoint;
