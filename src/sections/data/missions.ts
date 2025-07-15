@@ -53,7 +53,7 @@ const pathOfRedemptionTravelLight = mainMission("Path of Redemption: Travel Ligh
 const pathOfRedemptionTheLongRoad = mainMission("Path of Redemption: The Long Road").follows(pathOfRedemptionTravelLight);
 const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTheLongRoad);
 const lostContact = mainMission("Lost Contact").follows(pathOfRedemptionNoLongerAlone);
-const pathOfRedemptionTheFirstKnock = mainMission("Path of Redemption: TheFirstKnock").follows(lostContact);
+const pathOfRedemptionTheFirstKnock = mainMission("Path of Redemption: The First Knock").follows(lostContact);
 const pathofRedemptionFlyHighInTheDark = mainMission("Path of Redemption: Fly High in the Dark").follows(pathOfRedemptionTheFirstKnock);
 
 // Collectors
