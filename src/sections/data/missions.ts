@@ -53,8 +53,8 @@ const pathOfRedemptionTravelLight = mainMission("Path of Redemption: Travel Ligh
 const pathOfRedemptionTheLongRoad = mainMission("Path of Redemption: The Long Road").follows(pathOfRedemptionTravelLight);
 const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTheLongRoad);
 const lostContact = mainMission("Lost Contact").follows(pathOfRedemptionNoLongerAlone);
-const pathOfRedemptionKnockingOnTheDoor = mainMission("Path of Redemption: Knocking on the Door").follows(lostContact);
-const pathofRedemptionFlyHighInTheDark = mainMission("Path of Redemption: Fly High in the Dark").follows(pathOfRedemptionKnockingOnTheDoor);
+const pathOfRedemptionTheFirstKnock = mainMission("Path of Redemption: TheFirstKnock").follows(lostContact);
+const pathofRedemptionFlyHighInTheDark = mainMission("Path of Redemption: Fly High in the Dark").follows(pathOfRedemptionTheFirstKnock);
 
 // Collectors
 const collector1 = sideMission("Collector - 1").follows(handledWithEase);
@@ -78,13 +78,8 @@ const homelandDefense2 = sideMission("Homeland Defense - 2", 2).follows(homeland
 const homelandDefense3 = sideMission("Homeland Defense - 3", 2).follows(homelandDefense2);
 const touristOpenRoad = sideMission("Tourist: Open Road", 2).follows(homelandDefense3);
 
-// Broad knowledge
 // from clearing the shadows:
-// broad knowledge 1
-// broad knowledge 2
-// broad knowledge 3
-// 4
-// 5
+// broad knowledge 1, 2, 3, 4, 5
 const broadKnowledge1 = sideMission("Broad Knowledge - 1", -2).follows(clearingTheShadows);
 const broadKnowledge2 = sideMission("Broad Knowledge - 2", -2).follows(broadKnowledge1);
 const broadKnowledge3 = sideMission("Broad Knowledge - 3", -2).follows(broadKnowledge2);
@@ -92,11 +87,7 @@ const broadKnowledge4 = sideMission("Broad Knowledge - 4", -2).follows(broadKnow
 const broadKnowledge5 = sideMission("Broad Knowledge - 5", -2).follows(broadKnowledge4);
 
 // from clearing the shadows:
-// clearing the shadows: zero dam
-// probe the shadows
-// unraveling the web
-// exposing the shadows: zero dam
-// tourist: bridging the divide
+// clearing the shadows: zero dam, probe the shadows, unraveling the web, exposing the shadows: zero dam, tourist: bridging the divide
 const clearingTheShadowsZeroDam = sideMission("Clearing the Shadows: Zero Dam", 2).follows(clearingTheShadows);
 const probeTheShadows = sideMission("Probe the Shadows", 2).follows(clearingTheShadowsZeroDam);
 const unravelingTheWeb = sideMission("Unraveling the Web", 2).follows(probeTheShadows);
@@ -109,7 +100,7 @@ const gritYourTeeth = sideMission("Grit Your Teeth").follows(mostWanted);
 const rockSolid = sideMission("Rock Solid").follows(gritYourTeeth);
 const fatalTrick = sideMission("Fatal Trick").follows(rockSolid);
 const switcheroo = sideMission("Switcheroo").follows(fatalTrick);
-const universalBenchmark = sideMission("Universal Benchmark").follows(switcheroo);
+const masterBenchmark = sideMission("Master Benchmark").follows(switcheroo);
 
 // from most wanted:
 // extreme warrior, thunder strike 1, thunder strike 2, escape fund, unbroken spirit
