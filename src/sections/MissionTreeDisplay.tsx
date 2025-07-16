@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Mission, ROOT_MISSION } from "./data/missions";
+import { FINAL_MISSION, Mission, ROOT_MISSION } from "./data/missions";
 import "./MissionTree.css";
 
 import classNames from "classnames";
@@ -146,6 +146,43 @@ const drawNode = (
   }
 };
 
+const drawLock = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+  ctx.fillStyle = "#fff";
+  const left = x - 6;
+  const right = x + 6;
+  const top = y - 2;
+  const bottom = y + 8;
+
+  const holeLeft = x - 2;
+  const holeRight = x + 2;
+  const holeTop = y;
+  const holeBottom = y + 6;
+
+  const arcLeft = x - 4;
+  const arcRight = x + 4;
+
+  ctx.beginPath();
+  ctx.moveTo(holeLeft, y);
+  ctx.lineTo(left, y);
+  ctx.lineTo(left, top);
+  ctx.lineTo(right, top);
+  ctx.lineTo(right, bottom);
+  ctx.lineTo(left, bottom);
+  ctx.lineTo(left, y);
+  ctx.lineTo(holeLeft, y);
+  ctx.lineTo(holeLeft, holeBottom);
+  ctx.lineTo(holeRight, holeBottom);
+  ctx.lineTo(holeRight, holeTop);
+  ctx.lineTo(holeLeft, holeTop);
+  ctx.fill();
+
+  ctx.strokeStyle = "#fff";
+  ctx.beginPath();
+  ctx.moveTo(x, top);
+  ctx.arc(x, top, 4, 0 - Math.PI, 0);
+  ctx.stroke();
+};
+
 let maxMissionDepth = 0;
 const updateMaxDepth = (m: Mission, depth: number) => {
   maxMissionDepth = Math.max(maxMissionDepth, depth);
@@ -172,6 +209,12 @@ export const MissionTreeSection = () => {
     (ctx: CanvasRenderingContext2D, hoveredNode?: Mission) => {}
   );
 
+  const allOtherMissionsCompleted = Array.from(
+    Object.entries(missionStates)
+  ).every(([name, completed]) => name === FINAL_MISSION.name || completed);
+
+  const finalMissionLocked = !allOtherMissionsCompleted;
+
   useEffect(() => {
     drawMissionNodes.current = (
       ctx: CanvasRenderingContext2D,
@@ -183,6 +226,9 @@ export const MissionTreeSection = () => {
 
         const isCompleted = getMissionState(name);
         drawNode(ctx, x, y, { isHovered, isCompleted });
+        if (mission === FINAL_MISSION && finalMissionLocked) {
+          drawLock(ctx, x, y);
+        }
       }
     };
     toggleMissionState.current = (missionName: string) => {
@@ -194,108 +240,127 @@ export const MissionTreeSection = () => {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-
-    const clientWidth = canvasRef.current.offsetWidth;
-    const clientHeight = canvasRef.current.offsetHeight;
-
-    // Set HTML width and height to match displayed width and height
-    canvasRef.current.width = clientWidth;
-    canvasRef.current.height = clientHeight;
-
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
 
-    ctx.clearRect(0, 0, clientWidth, clientHeight);
+    if (!canvasRef.current.dataset.init) {
+      const clientWidth = canvasRef.current.offsetWidth;
+      const clientHeight = canvasRef.current.offsetHeight;
 
-    const canvasOffsetX = clientWidth / 2 - colWidth * (maxMissionDepth / 2);
-    const canvasOffsetY = clientHeight / 2;
+      // Set HTML width and height to match displayed width and height
+      canvasRef.current.width = clientWidth;
+      canvasRef.current.height = clientHeight;
 
-    if (canvasOffsetX < 0) {
-      return;
-    }
+      ctx.clearRect(0, 0, clientWidth, clientHeight);
 
-    ctx.save();
-    ctx.translate(canvasOffsetX, canvasOffsetY);
+      const canvasOffsetX = clientWidth / 2 - colWidth * (maxMissionDepth / 2);
+      const canvasOffsetY = clientHeight / 2;
 
-    let queue: { mission: Mission; x: number; y: number }[] = [
-      { mission: ROOT_MISSION, x: 0, y: 0 },
-    ];
+      if (canvasOffsetX < 0) {
+        return;
+      }
 
-    while (queue.length > 0) {
-      const { mission, x, y } = queue.shift()!;
+      ctx.save();
+      ctx.translate(canvasOffsetX, canvasOffsetY);
 
-      // Draw the mission box
-      addMissionNode(mission, x, y);
+      let queue: { mission: Mission; x: number; y: number }[] = [
+        { mission: ROOT_MISSION, x: 0, y: 0 },
+      ];
 
-      // Draw the mission name
-      // ctx.fillStyle = "black";
-      // ctx.fillText(mission.name, x + 5, y +15);
+      while (queue.length > 0) {
+        const { mission, x, y } = queue.shift()!;
 
-      // Draw lines to children
-      const children = mission.children;
-      if (children.length > 0) {
-        const childX = x + colWidth;
+        // Draw the mission box
+        addMissionNode(mission, x, y);
 
-        const mainChildren = children.filter((c) => c.flags.main);
-        const sideChildren = children.filter((c) => !c.flags.main);
+        // Draw the mission name
+        // ctx.fillStyle = "black";
+        // ctx.fillText(mission.name, x + 5, y +15);
 
-        if (mission.flags.main) {
-          if (mainChildren.length > 0) {
-            const mainChild = mainChildren[0];
+        // Draw lines to children
+        const children = mission.children;
+        if (children.length > 0) {
+          const childX = x + colWidth;
+
+          const mainChildren = children.filter((c) => c.flags.main);
+          const sideChildren = children.filter((c) => !c.flags.main);
+
+          if (mission.flags.main) {
+            if (mainChildren.length > 0) {
+              const mainChild = mainChildren[0];
+              const childY = y;
+              drawConnectingLine(ctx, x, y, childX, childY);
+              queue.push({ mission: mainChild, x: childX, y: childY });
+            }
+
+            if (sideChildren.length > 0) {
+              const offsets: number[] = [-1, 1, -2, 2];
+              sideChildren.forEach((sideChild, index) => {
+                const childX = x + colWidth;
+                const thisOffset =
+                  sideChild.flags.offset ?? offsets[index % offsets.length];
+                const childY = y + thisOffset * rowHeight;
+                drawConnectingLine(ctx, x, y, childX, childY);
+                queue.push({ mission: sideChild, x: childX, y: childY });
+              });
+            }
+          } else {
+            const child = mission.children[0];
             const childY = y;
             drawConnectingLine(ctx, x, y, childX, childY);
-            queue.push({ mission: mainChild, x: childX, y: childY });
+            queue.push({ mission: child, x: childX, y: childY });
           }
-
-          if (sideChildren.length > 0) {
-            const offsets: number[] = [-1, 1, -2, 2];
-            sideChildren.forEach((sideChild, index) => {
-              const childX = x + colWidth;
-              const thisOffset =
-                sideChild.flags.offset ?? offsets[index % offsets.length];
-              const childY = y + thisOffset * rowHeight;
-              drawConnectingLine(ctx, x, y, childX, childY);
-              queue.push({ mission: sideChild, x: childX, y: childY });
-            });
-          }
-        } else {
-          const child = mission.children[0];
-          const childY = y;
-          drawConnectingLine(ctx, x, y, childX, childY);
-          queue.push({ mission: child, x: childX, y: childY });
         }
       }
+
+      canvasRef.current.addEventListener("mousemove", (e) => {
+        const mouseX = e.offsetX - canvasOffsetX;
+        const mouseY = e.offsetY - canvasOffsetY;
+
+        const hoveredNode = getHoveredNode(mouseX, mouseY);
+        if (hoveredNode) {
+          canvasRef.current!.style.cursor = "pointer";
+          setHoveredMission(hoveredNode.mission);
+        } else {
+          setHoveredMission(null);
+          canvasRef.current!.style.cursor = "default";
+        }
+
+        drawMissionNodes.current(ctx, hoveredNode?.mission);
+      });
+
+      canvasRef.current.addEventListener("click", (e) => {
+        const mouseX = e.offsetX - canvasOffsetX;
+        const mouseY = e.offsetY - canvasOffsetY;
+
+        const hoveredNode = getHoveredNode(mouseX, mouseY);
+
+        if (hoveredNode) {
+          // If shift is pressed, toggle everything up to this mission in the tree
+          if (e.shiftKey) {
+            let current: Mission | null = hoveredNode.mission;
+            let newState = toggleMissionState.current(current.name);
+            while (current) {
+              setMissionState(current.name, newState);
+              current = current.parent;
+            }
+            setTimeout(() => drawMissionNodes.current(ctx), 100);
+            return;
+          }
+
+          const newState = toggleMissionState.current(hoveredNode.mission.name);
+          drawNode(ctx, hoveredNode.x, hoveredNode.y, {
+            isHovered: true,
+            isCompleted: newState,
+          });
+          setTimeout(() => {
+            drawMissionNodes.current(ctx);
+          }, 100);
+        }
+      });
+
+      canvasRef.current.dataset.init = "true";
     }
-
-    canvasRef.current.addEventListener("mousemove", (e) => {
-      const mouseX = e.offsetX - canvasOffsetX;
-      const mouseY = e.offsetY - canvasOffsetY;
-
-      const hoveredNode = getHoveredNode(mouseX, mouseY);
-      if (hoveredNode) {
-        canvasRef.current!.style.cursor = "pointer";
-        setHoveredMission(hoveredNode.mission);
-      } else {
-        setHoveredMission(null);
-        canvasRef.current!.style.cursor = "default";
-      }
-
-      drawMissionNodes.current(ctx, hoveredNode?.mission);
-    });
-
-    canvasRef.current.addEventListener("click", (e) => {
-      const mouseX = e.offsetX - canvasOffsetX;
-      const mouseY = e.offsetY - canvasOffsetY;
-
-      const hoveredNode = getHoveredNode(mouseX, mouseY);
-      if (hoveredNode) {
-        const newState = toggleMissionState.current(hoveredNode.mission.name);
-        drawNode(ctx, hoveredNode.x, hoveredNode.y, {
-          isHovered: true,
-          isCompleted: newState,
-        });
-      }
-    });
 
     drawMissionNodes.current(ctx);
   }, []);

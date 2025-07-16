@@ -129,3 +129,4 @@ const goldenGunner6 = sideMission("Golden Gunner - 6").follows(goldenGunner5);
 const goldenGunner7 = sideMission("Golden Gunner - 7").follows(goldenGunner6);
 
 export const ROOT_MISSION = firingPoint;
+export const FINAL_MISSION = pathofRedemptionFlyHighInTheDark;
