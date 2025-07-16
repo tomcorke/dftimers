@@ -84,7 +84,7 @@ const broadKnowledge1 = sideMission("Broad Knowledge - 1", -2).follows(clearingT
 const broadKnowledge2 = sideMission("Broad Knowledge - 2", -2).follows(broadKnowledge1);
 const broadKnowledge3 = sideMission("Broad Knowledge - 3", -2).follows(broadKnowledge2);
 const broadKnowledge4 = sideMission("Broad Knowledge - 4", -2).follows(broadKnowledge3);
-const broadKnowledge5 = sideMission("Broad Knowledge - 5", -2).follows(broadKnowledge4);
+const swiftStorm = sideMission("Swift Storm", -2).follows(broadKnowledge4);
 
 // from clearing the shadows:
 // clearing the shadows: zero dam, probe the shadows, unraveling the web, exposing the shadows: zero dam, tourist: bridging the divide
