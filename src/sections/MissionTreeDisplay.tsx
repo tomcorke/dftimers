@@ -178,7 +178,6 @@ const drawLock = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
 
   ctx.strokeStyle = "#fff";
   ctx.beginPath();
-  ctx.moveTo(x, top);
   ctx.arc(x, top, 4, 0 - Math.PI, 0);
   ctx.stroke();
 };
