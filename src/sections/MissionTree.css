@@ -36,4 +36,13 @@
       }
     }
   }
+
+  .missionStats {
+    &.complete {
+      background-color: var(--df-green);
+      color: black;
+      padding: 5px;
+      font-weight: bold;
+    }
+  }
 }

@@ -372,6 +372,8 @@ export const MissionTreeSection = () => {
     (m) => m
   ).length;
 
+  const allMissionsComplete = completedMissions === totalMissions;
+
   return (
     <div className="MissionTree">
       <canvas
@@ -396,7 +398,11 @@ export const MissionTreeSection = () => {
           </div>
         </div>
       ) : (
-        <div className={"missionStats"}>
+        <div
+          className={classNames("missionStats", {
+            complete: allMissionsComplete,
+          })}
+        >
           Completed Missions: {completedMissions}/{totalMissions} (
           {((completedMissions / totalMissions) * 100).toFixed(1)}%)
         </div>
