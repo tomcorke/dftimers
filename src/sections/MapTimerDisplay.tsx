@@ -7,10 +7,12 @@ const DateTimeDisplay = ({
   secondsFromMidnight,
   withSeconds = false,
   withOffset = true,
+  withOffsetDisplay = false,
 }: {
   secondsFromMidnight: number;
   withSeconds?: boolean;
   withOffset?: boolean;
+  withOffsetDisplay?: boolean;
 }) => {
   const offsetHours = withOffset ? MapTimer.offsetHours() : 0;
   const adjustedSecondsFromMidnight = secondsFromMidnight - offsetHours * 3600;
@@ -20,10 +22,18 @@ const DateTimeDisplay = ({
   }
   const minutes = Math.floor((adjustedSecondsFromMidnight % 3600) / 60);
   const seconds = adjustedSecondsFromMidnight % 60;
+
+  const invertedOffset = 0 - offsetHours;
+  const offsetDisplay =
+    withOffsetDisplay && invertedOffset !== 0
+      ? ` (UTC${invertedOffset >= 0 ? "+" : ""}${invertedOffset})`
+      : "";
+
   return (
     <span>
       {hours.toString().padStart(2, "0")}:{minutes.toString().padStart(2, "0")}
       {withSeconds ? `:${seconds.toString().padStart(2, "0")}` : ""}
+      {offsetDisplay}
     </span>
   );
 };
@@ -64,44 +74,55 @@ export const MapTimersSection = () => {
       <h2>Map Timers</h2>
       <div className="currentTime">
         Current Time:{" "}
-        <DateTimeDisplay secondsFromMidnight={now} withSeconds={true} />
+        <DateTimeDisplay
+          secondsFromMidnight={now}
+          withSeconds={true}
+          withOffsetDisplay={true}
+        />
       </div>
 
       <div className={"timers"}>
         {MAP_TIMERS.map((timer) => {
-          const isLive = timer.isLive();
+          const isOpen = timer.isLive();
+
+          const nextStart = timer.nextOrCurrentTimeSpanStartSeconds(now);
+          const nextEnd = timer.nextOrCurrentTimeSpanEndSeconds(now);
+          const is24h = Math.abs(nextEnd - nextStart) === 86400;
+
           return (
             <div
               key={timer.name}
-              className={classNames("timer", { live: isLive })}
+              className={classNames("timer", { live: isOpen })}
             >
               <h3>
                 {timer.name}
-                {isLive ? " (LIVE)" : ""}
+                {isOpen && !is24h ? " (OPEN)" : ""}
               </h3>
-              <div className={"time"}>
-                {isLive ? "Current" : "Next"}:{" "}
-                <DateTimeDisplay
-                  secondsFromMidnight={timer.nextOrCurrentTimeSpanStartSeconds(
-                    now
-                  )}
-                  withOffset={true}
-                />{" "}
-                -{" "}
-                <DateTimeDisplay
-                  secondsFromMidnight={timer.nextOrCurrentTimeSpanEndSeconds(
-                    now
-                  )}
-                  withOffset={true}
-                />
-              </div>
+              {!is24h && (
+                <div className={"time"}>
+                  {isOpen ? "Current" : "Next"}:{" "}
+                  <DateTimeDisplay
+                    secondsFromMidnight={timer.nextOrCurrentTimeSpanStartSeconds(
+                      now
+                    )}
+                    withOffset={true}
+                  />{" "}
+                  -{" "}
+                  <DateTimeDisplay
+                    secondsFromMidnight={timer.nextOrCurrentTimeSpanEndSeconds(
+                      now
+                    )}
+                    withOffset={true}
+                  />
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
       <div className="timeline">
-        <div>UTC</div>
+        <div className="name">UTC</div>
         {HOURS.map((hour) => {
           return (
             <div
