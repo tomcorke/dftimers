@@ -54,7 +54,7 @@ const pathOfRedemptionTheLongRoad = mainMission("Path of Redemption: The Long Ro
 const pathOfRedemptionNoLongerAlone = mainMission("Path of Redemption: No Longer Alone").follows(pathOfRedemptionTheLongRoad);
 const lostContact = mainMission("Lost Contact").follows(pathOfRedemptionNoLongerAlone);
 const pathOfRedemptionTheFirstKnock = mainMission("Path of Redemption: The First Knock").follows(lostContact);
-const pathofRedemptionFlyHighInTheDark = mainMission("Path of Redemption: Fly High in the Dark").follows(pathOfRedemptionTheFirstKnock);
+const pathofRedemptionNightExtraction = mainMission("Path of Redemption: Night Extraction").follows(pathOfRedemptionTheFirstKnock);
 
 // Collectors
 const collector1 = sideMission("Collector - 1").follows(handledWithEase);
@@ -129,4 +129,4 @@ const goldenGunner6 = sideMission("Golden Gunner - 6").follows(goldenGunner5);
 const goldenGunner7 = sideMission("Golden Gunner - 7").follows(goldenGunner6);
 
 export const ROOT_MISSION = firingPoint;
-export const FINAL_MISSION = pathofRedemptionFlyHighInTheDark;
+export const FINAL_MISSION = pathofRedemptionNightExtraction;
