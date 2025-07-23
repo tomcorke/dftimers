@@ -12,7 +12,8 @@
   }
 
   .missionDisplay {
-    width: 400px;
+    min-width: 400px;
+    max-width: 800px;
     padding: 1em;
     display: flex;
     flex-flow: column nowrap;
@@ -28,6 +29,58 @@
     }
 
     .name {
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+
+    .description {
+      .condition {
+        color: red;
+        background: rgba(255, 0, 0, 0.2);
+        padding: 0.5em;
+        margin-bottom: 0.5em;
+      }
+
+      .quality-indicator {
+        display: inline-block;
+        width: 0.75em;
+        height: 0.75em;
+        margin: 0 0.1em 0 0.25em;
+        &.green {
+          background: var(--df-quality-uncommon);
+        }
+        &.blue {
+          background: var(--df-quality-rare);
+        }
+        &.purple {
+          background: var(--df-quality-epic);
+        }
+        &.gold {
+          background: var(--df-quality-legendary);
+        }
+        &.red {
+          background: var(--df-quality-exotic);
+        }
+      }
+
+      ul {
+        margin: 0;
+
+        li {
+          margin-bottom: 0.5em;
+          list-style-type: square;
+        }
+      }
+
+      & em {
+        color: var(--df-green);
+        color: gold;
+        font-weight: bold;
+        font-style: normal;
+      }
+      & strong {
+        color: gold;
+      }
     }
 
     .status {

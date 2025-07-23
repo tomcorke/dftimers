@@ -1,29 +1,28 @@
 import {
   createContext,
   PropsWithChildren,
-  use,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
-} from "react";
-import update from "immutability-helper";
+} from 'react';
+import update from 'immutability-helper';
 
-import "./Collector.css";
+import './Collector.css';
 
-import classNames from "classnames";
-import { z } from "zod";
-import { useStoredState } from "../helpers/useStoredState";
+import classNames from 'classnames';
+import { z } from 'zod';
+import { useStoredState } from '../helpers/useStoredState';
 import {
   COLLECTOR_MISSIONS,
   CollectorItem,
   CollectorMission,
   getComplexItemKey,
-} from "./data/collector";
+} from './data/collector';
 
 type ButtonOnClickProps = {
-  shift: boolean;
+  shift: boolean
 };
 
 const Button = ({
@@ -32,13 +31,13 @@ const Button = ({
   className,
   children,
 }: PropsWithChildren<{
-  className: string;
-  onClick: (props: ButtonOnClickProps) => void;
-  disabled: boolean;
+  className: string
+  onClick: (props: ButtonOnClickProps) => void
+  disabled: boolean
 }>) => {
   return (
     <div
-      className={classNames("button", className, { disabled })}
+      className={classNames('button', className, { disabled })}
       onClick={(e) => {
         if (!disabled) {
           onClick({ shift: e.shiftKey });
@@ -54,8 +53,8 @@ const AddButton = ({
   onClick,
   disabled,
 }: {
-  onClick: (props: ButtonOnClickProps) => void;
-  disabled: boolean;
+  onClick: (props: ButtonOnClickProps) => void
+  disabled: boolean
 }) => {
   return (
     <Button className="add" onClick={onClick} disabled={disabled}>
@@ -68,8 +67,8 @@ const RemoveButton = ({
   onClick,
   disabled,
 }: {
-  onClick: (props: ButtonOnClickProps) => void;
-  disabled: boolean;
+  onClick: (props: ButtonOnClickProps) => void
+  disabled: boolean
 }) => {
   return (
     <Button className="remove" onClick={onClick} disabled={disabled}>
@@ -84,7 +83,7 @@ const newFlatStorageSchema = z.record(z.string(), z.number());
 const storageSchema = oldStorageSchema.or(newFlatStorageSchema);
 
 const ensureNewStorageFormat = (
-  data: z.infer<typeof storageSchema>
+  data: z.infer<typeof storageSchema>,
 ): z.infer<typeof newFlatStorageSchema> => {
   const oldParsedData = oldStorageSchema.safeParse(data);
   if (oldParsedData.success) {
@@ -104,7 +103,7 @@ const ensureNewStorageFormat = (
 const loadCollectorMissionStates = () => {
   const baseState = COLLECTOR_MISSIONS;
   try {
-    const storedState = localStorage.getItem("collector") || "{}";
+    const storedState = localStorage.getItem('collector') || '{}';
     const parsedState = storageSchema.safeParse(JSON.parse(storedState));
     if (parsedState.success) {
       const newParsedData = ensureNewStorageFormat(parsedState.data);
@@ -119,43 +118,45 @@ const loadCollectorMissionStates = () => {
             item.needed,
             item.newThisSeason,
             item.requiresExtraction,
-            storedItem || 0
+            storedItem || 0,
           );
         });
         return new CollectorMission(mission.name, items);
       });
       return collectorMissions;
-    } else {
-      console.error("Invalid stored state", parsedState.error);
+    }
+    else {
+      console.error('Invalid stored state', parsedState.error);
       return baseState;
     }
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
     return baseState;
   }
 };
 
 const CollectorMissionContext = createContext<{
-  collectorMissionStates: CollectorMission[];
+  collectorMissionStates: CollectorMission[]
   updateCollectorMission: (
-    missionIndex: number,
-    newMissionState: CollectorMission
-  ) => void;
+  missionIndex: number,
+  newMissionState: CollectorMission
+  ) => void
 }>({
-  collectorMissionStates: [],
-  updateCollectorMission: () => {},
-});
+      collectorMissionStates: [],
+      updateCollectorMission: () => {},
+    });
 
 export const CollectorMissionContextProvider = ({
   children,
-}: PropsWithChildren<{}>) => {
+}: PropsWithChildren<object>) => {
   const [collectorMissionStates, setCollectorMissionStates] = useState(
-    loadCollectorMissionStates()
+    loadCollectorMissionStates(),
   );
 
   useEffect(() => {
     localStorage.setItem(
-      "collector",
+      'collector',
       JSON.stringify(
         collectorMissionStates.reduce((acc, mission) => {
           return {
@@ -165,20 +166,20 @@ export const CollectorMissionContextProvider = ({
               return { ...missionAcc, [itemKey]: item.collected };
             }, {} as Record<string, number>),
           };
-        }, {} as Record<string, number>)
-      )
+        }, {} as Record<string, number>),
+      ),
     );
   }, [collectorMissionStates]);
 
   const updateCollectorMission = useCallback(
     (missionIndex: number, newMissionState: CollectorMission) => {
-      setCollectorMissionStates((prevState) =>
+      setCollectorMissionStates(prevState =>
         update(prevState, {
           [missionIndex]: { $set: newMissionState },
-        })
+        }),
       );
     },
-    []
+    [],
   );
 
   return (
@@ -201,15 +202,15 @@ const RequiresExtractionIndicator = () => {
 const CollectorMissionDisplay = ({
   missionIndex,
 }: {
-  missionIndex: number;
+  missionIndex: number
 }) => {
   const { collectorMissionStates, updateCollectorMission } = useContext(
-    CollectorMissionContext
+    CollectorMissionContext,
   );
   const [minimised, setMinimised] = useStoredState(
     `collector_mission_minimised__${missionIndex}`,
     false,
-    z.boolean()
+    z.boolean(),
   );
 
   const mission = collectorMissionStates[missionIndex];
@@ -221,11 +222,11 @@ const CollectorMissionDisplay = ({
       });
       updateCollectorMission(missionIndex, newMissionState);
     },
-    [mission, missionIndex, updateCollectorMission]
+    [mission, missionIndex, updateCollectorMission],
   );
 
   const missionComplete = mission.items.every(
-    (item) => item.collected >= item.needed
+    item => item.collected >= item.needed,
   );
 
   useEffect(() => {
@@ -236,7 +237,7 @@ const CollectorMissionDisplay = ({
 
   return (
     <div
-      className={classNames("mission", {
+      className={classNames('mission', {
         complete: missionComplete,
         minimised,
       })}
@@ -244,59 +245,61 @@ const CollectorMissionDisplay = ({
       <div className="header">
         <h3>
           {mission.name}
-          {missionComplete ? " (COMPLETE)" : ""}
+          {missionComplete ? ' (COMPLETE)' : ''}
         </h3>
         <Button
           className="toggle"
           onClick={() => setMinimised(!minimised)}
           disabled={false}
         >
-          {minimised ? "+" : "−"}
+          {minimised ? '+' : '−'}
         </Button>
       </div>
-      {minimised ? null : (
-        <div className="items">
-          {mission.items.map((item, itemIndex) => {
-            return (
-              <div
-                className={classNames("item", item.quality, {
-                  complete: item.collected >= item.needed,
-                })}
-                key={`${mission.name}_${item.name}`}
-              >
-                <div className="name">
-                  {item.name}
-                  {item.newThisSeason ? <NewThisSeasonIndicator /> : null}
-                  {item.requiresExtraction ? (
-                    <RequiresExtractionIndicator />
-                  ) : null}
-                </div>
-                <div className="progress">{item.progressString}</div>
-                <div className="buttonGroup">
-                  <AddButton
-                    onClick={({ shift }) =>
-                      updateMissionItem(
-                        itemIndex,
-                        shift ? item.needed : item.collected + 1
-                      )
-                    }
-                    disabled={item.collected >= item.needed}
-                  />
-                  <RemoveButton
-                    onClick={({ shift }) =>
-                      updateMissionItem(
-                        itemIndex,
-                        shift ? 0 : item.collected - 1
-                      )
-                    }
-                    disabled={item.collected <= 0}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {minimised
+        ? null
+        : (
+            <div className="items">
+              {mission.items.map((item, itemIndex) => {
+                return (
+                  <div
+                    className={classNames('item', item.quality, {
+                      complete: item.collected >= item.needed,
+                    })}
+                    key={`${mission.name}_${item.name}`}
+                  >
+                    <div className="name">
+                      {item.name}
+                      {item.newThisSeason ? <NewThisSeasonIndicator /> : null}
+                      {item.requiresExtraction
+                        ? (
+                            <RequiresExtractionIndicator />
+                          )
+                        : null}
+                    </div>
+                    <div className="progress">{item.progressString}</div>
+                    <div className="buttonGroup">
+                      <AddButton
+                        onClick={({ shift }) =>
+                          updateMissionItem(
+                            itemIndex,
+                            shift ? item.needed : item.collected + 1,
+                          )}
+                        disabled={item.collected >= item.needed}
+                      />
+                      <RemoveButton
+                        onClick={({ shift }) =>
+                          updateMissionItem(
+                            itemIndex,
+                            shift ? 0 : item.collected - 1,
+                          )}
+                        disabled={item.collected <= 0}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
     </div>
   );
 };
@@ -307,17 +310,17 @@ export const CollectorSection = () => {
   const [minimised, setMinimised] = useStoredState(
     `collector_section_minimised`,
     false,
-    z.boolean()
+    z.boolean(),
   );
 
   const anyNewSeasonItems = useMemo(() => {
-    return collectorMissionStates.some((mission) =>
-      mission.items.some((item) => item.newThisSeason)
+    return collectorMissionStates.some(mission =>
+      mission.items.some(item => item.newThisSeason),
     );
   }, [collectorMissionStates]);
   const anyItemRequiresExtraction = useMemo(() => {
-    return collectorMissionStates.some((mission) =>
-      mission.items.some((item) => item.requiresExtraction)
+    return collectorMissionStates.some(mission =>
+      mission.items.some(item => item.requiresExtraction),
     );
   }, [collectorMissionStates]);
 
@@ -330,36 +333,46 @@ export const CollectorSection = () => {
           onClick={() => setMinimised(!minimised)}
           disabled={false}
         >
-          {minimised ? "+" : "−"}
+          {minimised ? '+' : '−'}
         </Button>
       </div>
-      {minimised ? null : (
-        <>
-          <div className="missions">
-            {collectorMissionStates.map((mission, missionIndex) => {
-              return (
-                <CollectorMissionDisplay
-                  key={mission.name}
-                  missionIndex={missionIndex}
-                />
-              );
-            })}
-          </div>
-          <div className="legend">
-            {anyNewSeasonItems ? (
-              <div>
-                <NewThisSeasonIndicator /> New items this season
+      {minimised
+        ? null
+        : (
+            <>
+              <div className="missions">
+                {collectorMissionStates.map((mission, missionIndex) => {
+                  return (
+                    <CollectorMissionDisplay
+                      key={mission.name}
+                      missionIndex={missionIndex}
+                    />
+                  );
+                })}
               </div>
-            ) : null}
-            {anyItemRequiresExtraction ? (
-              <div>
-                <RequiresExtractionIndicator /> Requires extraction with item,
-                not submission of unbound item
+              <div className="legend">
+                {anyNewSeasonItems
+                  ? (
+                      <div>
+                        <NewThisSeasonIndicator />
+                        {' '}
+                        New items this season
+                      </div>
+                    )
+                  : null}
+                {anyItemRequiresExtraction
+                  ? (
+                      <div>
+                        <RequiresExtractionIndicator />
+                        {' '}
+                        Requires extraction with item,
+                        not submission of unbound item
+                      </div>
+                    )
+                  : null}
               </div>
-            ) : null}
-          </div>
-        </>
-      )}
+            </>
+          )}
     </div>
   );
 };

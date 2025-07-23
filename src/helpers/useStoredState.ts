@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import z from "zod";
+import { useEffect, useState } from 'react';
+import z from 'zod';
 
 export const useStoredState = <Z extends z.ZodTypeAny, T extends z.infer<Z>>(
   key: string,
   initialValue: T,
-  zodSchema: Z
+  zodSchema: Z,
 ) => {
   // Initial load from storage
   const storedValue = localStorage.getItem(key);

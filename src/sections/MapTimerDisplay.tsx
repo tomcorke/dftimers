@@ -1,7 +1,7 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { MAP_TIMERS, MapTimer } from "./data/map-timers";
-import classNames from "classnames";
+import { MAP_TIMERS, MapTimer } from './data/map-timers';
+import classNames from 'classnames';
 
 const DateTimeDisplay = ({
   secondsFromMidnight,
@@ -9,10 +9,10 @@ const DateTimeDisplay = ({
   withOffset = true,
   withOffsetDisplay = false,
 }: {
-  secondsFromMidnight: number;
-  withSeconds?: boolean;
-  withOffset?: boolean;
-  withOffsetDisplay?: boolean;
+  secondsFromMidnight: number
+  withSeconds?: boolean
+  withOffset?: boolean
+  withOffsetDisplay?: boolean
 }) => {
   const offsetHours = withOffset ? MapTimer.offsetHours() : 0;
   const adjustedSecondsFromMidnight = secondsFromMidnight - offsetHours * 3600;
@@ -24,15 +24,17 @@ const DateTimeDisplay = ({
   const seconds = adjustedSecondsFromMidnight % 60;
 
   const invertedOffset = 0 - offsetHours;
-  const offsetDisplay =
-    withOffsetDisplay && invertedOffset !== 0
-      ? ` (UTC${invertedOffset >= 0 ? "+" : ""}${invertedOffset})`
-      : "";
+  const offsetDisplay
+    = withOffsetDisplay && invertedOffset !== 0
+      ? ` (UTC${invertedOffset >= 0 ? '+' : ''}${invertedOffset})`
+      : '';
 
   return (
     <span>
-      {hours.toString().padStart(2, "0")}:{minutes.toString().padStart(2, "0")}
-      {withSeconds ? `:${seconds.toString().padStart(2, "0")}` : ""}
+      {hours.toString().padStart(2, '0')}
+      :
+      {minutes.toString().padStart(2, '0')}
+      {withSeconds ? `:${seconds.toString().padStart(2, '0')}` : ''}
       {offsetDisplay}
     </span>
   );
@@ -43,14 +45,14 @@ const HOURS = Array.from({ length: 24 }, (_, i) => i);
 // Abbreviate names like so:
 // "Space City: Normal" -> "SC: Normal"
 const abbreviate = (name: string) => {
-  const parts = name.split(":");
+  const parts = name.split(':');
   if (parts.length > 1) {
     const firstPart = parts[0].trim();
     const secondPart = parts[1].trim();
     const firstPartAbbr = firstPart
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase())
-      .join("");
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase())
+      .join('');
     return `${firstPartAbbr}: ${secondPart}`;
   }
   return name;
@@ -73,7 +75,8 @@ export const MapTimersSection = () => {
     <div className="section MapTimers">
       <h2>Map Timers</h2>
       <div className="currentTime">
-        Current Time:{" "}
+        Current Time:
+        {' '}
         <DateTimeDisplay
           secondsFromMidnight={now}
           withSeconds={true}
@@ -81,7 +84,7 @@ export const MapTimersSection = () => {
         />
       </div>
 
-      <div className={"timers"}>
+      <div className="timers">
         {MAP_TIMERS.map((timer) => {
           const isOpen = timer.isLive();
 
@@ -92,25 +95,29 @@ export const MapTimersSection = () => {
           return (
             <div
               key={timer.name}
-              className={classNames("timer", { live: isOpen })}
+              className={classNames('timer', { live: isOpen })}
             >
               <h3>
                 {timer.name}
-                {isOpen && !is24h ? " (OPEN)" : ""}
+                {isOpen && !is24h ? ' (OPEN)' : ''}
               </h3>
               {!is24h && (
-                <div className={"time"}>
-                  {isOpen ? "Current" : "Next"}:{" "}
+                <div className="time">
+                  {isOpen ? 'Current' : 'Next'}
+                  :
+                  {' '}
                   <DateTimeDisplay
                     secondsFromMidnight={timer.nextOrCurrentTimeSpanStartSeconds(
-                      now
+                      now,
                     )}
                     withOffset={true}
-                  />{" "}
-                  -{" "}
+                  />
+                  {' '}
+                  -
+                  {' '}
                   <DateTimeDisplay
                     secondsFromMidnight={timer.nextOrCurrentTimeSpanEndSeconds(
-                      now
+                      now,
                     )}
                     withOffset={true}
                   />
@@ -127,7 +134,7 @@ export const MapTimersSection = () => {
           return (
             <div
               key={hour}
-              className={classNames("hour-key", {
+              className={classNames('hour-key', {
                 live: hour === currentHour,
               })}
             >
@@ -149,7 +156,7 @@ export const MapTimersSection = () => {
                   data-hour={hour}
                   data-sim-time={simTime}
                   data-current-hour={currentHour}
-                  className={classNames("hour", { live: isLive })}
+                  className={classNames('hour', { live: isLive })}
                 />
               );
             }),

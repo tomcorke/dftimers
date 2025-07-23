@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
 const kofiIcon = new URL(
-  "../../images/kofi_symbol.png?as=webp&width=32&height=26",
-  import.meta.url
+  '../../images/kofi_symbol.png?as=webp&width=32&height=26',
+  import.meta.url,
 ).href;
 
-import "./KoFi.css";
+import './KoFi.css';
 
 const KoFi = () => {
   return (
-    <div className={"kofiContainer"}>
+    <div className="kofiContainer">
       <a
-        className={"link"}
+        className="link"
         href="https://ko-fi.com/tomcorke"
         /* eslint-disable-next-line react/jsx-no-target-blank */
         target="_blank"

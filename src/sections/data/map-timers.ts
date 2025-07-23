@@ -1,6 +1,6 @@
 type TimeSpan = {
-  startHour: number;
-  endHour: number;
+  startHour: number
+  endHour: number
 };
 
 type SimpleTimeSpan = [number, number];
@@ -30,9 +30,7 @@ export class MapTimer {
 
   static nowSecondsUTC(): number {
     const now = new Date();
-    return (
-      now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds()
-    );
+    return now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
   }
 
   static offsetHours(): number {
@@ -44,11 +42,7 @@ export class MapTimer {
     const nextTimeSpan = this.times.find((time) => {
       const startTimeSeconds = time.startHour * 3600;
       const endTimeSeconds = time.endHour * 3600;
-      return (
-        (startTimeSeconds <= currentTimeSecondsUTC &&
-          endTimeSeconds > currentTimeSecondsUTC) ||
-        startTimeSeconds > currentTimeSecondsUTC
-      );
+      return (startTimeSeconds <= currentTimeSecondsUTC && endTimeSeconds > currentTimeSecondsUTC) || startTimeSeconds > currentTimeSecondsUTC;
     });
 
     if (nextTimeSpan) {
@@ -73,7 +67,7 @@ export class MapTimer {
       nextTimeSpanStartSeconds = nextTimeSpan.startHour * 3600;
     }
     if (nextTimeSpanStartSeconds === undefined) {
-      throw new Error("No next time span found");
+      throw new Error('No next time span found');
     }
     return nextTimeSpanStartSeconds;
   }
@@ -85,7 +79,7 @@ export class MapTimer {
       nextTimeSpanEndSeconds = nextTimeSpan.endHour * 3600;
     }
     if (nextTimeSpanEndSeconds === undefined) {
-      throw new Error("No next time span found");
+      throw new Error('No next time span found');
     }
     return nextTimeSpanEndSeconds;
   }
@@ -108,12 +102,9 @@ export class MapTimer {
   }
 }
 
-const intervals = (
-  start: number,
-  duration: number,
-  gap: number
-): TimeSpan[] => {
-  let times: TimeSpan[] = [];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const intervals = (start: number, duration: number, gap: number): TimeSpan[] => {
+  const times: TimeSpan[] = [];
   for (let i = start; i < 24; i += duration + gap) {
     times.push({ startHour: i, endHour: i + duration });
   }
@@ -121,16 +112,16 @@ const intervals = (
 };
 
 export const MAP_TIMERS: MapTimer[] = [
-  new MapTimer("Zero Dam: Normal", [{ startHour: 0, endHour: 24 }]),
-  new MapTimer("Layali Grove: Normal", [{ startHour: 0, endHour: 24 }]),
-  new MapTimer("Space City: Normal", [
+  new MapTimer('Zero Dam: Normal', [{ startHour: 0, endHour: 24 }]),
+  new MapTimer('Layali Grove: Normal', [{ startHour: 0, endHour: 24 }]),
+  new MapTimer('Space City: Normal', [
     [0, 2],
     [4, 6],
     [10, 14],
     [16, 18],
     [22, 24],
   ]),
-  new MapTimer("Space City: Hard", [
+  new MapTimer('Space City: Hard', [
     [2, 4],
     [6, 8],
     [10, 12],
@@ -138,17 +129,17 @@ export const MAP_TIMERS: MapTimer[] = [
     [18, 20],
     [22, 24],
   ]),
-  new MapTimer("Brakkesh: Normal", [
+  new MapTimer('Brakkesh: Normal', [
     [2, 4],
     [8, 10],
     [14, 16],
     [20, 22],
   ]),
-  new MapTimer("Zero Dam: Night", [
+  new MapTimer('Zero Dam: Night', [
     [6, 8],
     [18, 20],
   ]),
-  new MapTimer("Tide Prison: Hard", [
+  new MapTimer('Tide Prison: Hard', [
     [0, 2],
     [4, 6],
     [8, 10],
