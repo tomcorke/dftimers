@@ -500,7 +500,7 @@ const sniperEliteCQBMarksman = sideMission('Sniper Elite: CQB Marksman')
 // from iron evidence:
 // golden gunner 1, 2, 3, 4, 5
 const goldenGunner1 = sideMission('Golden Gunner - 1')
-  .objective('Submit _K416 Assault Rifle_ x1 modified as required.')
+  .objective('Submit _K437 Assault Rifle_ x1 modified as required.')
   .follows(ironEvidence);
 
 const goldenGunner2 = sideMission('Golden Gunner - 2')
