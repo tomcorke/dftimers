@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FINAL_MISSION, Mission, ROOT_MISSION } from './data/missions';
+import { FINAL_MISSION, Mission, ROOT_MISSION } from '../data/missions';
 import './MissionTree.css';
 
 import classNames from 'classnames';

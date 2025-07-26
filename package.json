@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "source": "src/index.html",
   "scripts": {
+    "build-metadata": "node src/scripts/build-metadata.ts",
     "clean": "rimraf dist && rimraf .parcel-cache",
-    "start": "npm run clean && cross-env TEMP=E:\\temp parcel",
-    "build": "npm run clean && cross-env TEMP=E:\\temp parcel build",
+    "start": "npm run clean && npm run build-metadata && cross-env TEMP=E:\\temp parcel",
+    "build": "npm run clean && npm run build-metadata && cross-env TEMP=E:\\temp parcel build",
     "deploy": "npm run build && gh-pages -d dist --branch publish --cname dftimers.corke.dev",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
@@ -43,6 +44,7 @@
     "jiti": "^2.4.2",
     "parcel": "^2.15.4",
     "sharp": "^0.33.5",
+    "simple-git": "^3.28.0",
     "typescript-eslint": "^8.38.0"
   }
 }

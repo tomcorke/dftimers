@@ -19,7 +19,7 @@ import {
   CollectorItem,
   CollectorMission,
   getComplexItemKey,
-} from './data/collector';
+} from '../data/collector';
 
 type ButtonOnClickProps = {
   shift: boolean
