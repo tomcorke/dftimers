@@ -210,5 +210,9 @@ html {
     gap: 1em;
     font-size: 12px;
     opacity: 0.5;
+
+    .git-sha {
+      font-weight: bold;
+    }
   }
 }
