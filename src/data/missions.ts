@@ -494,7 +494,7 @@ const sniperEliteCQBMarksman = sideMission('Sniper Elite: CQB Marksman')
   .withoutDying()
   .objective('In {nh}, use _P90 Submachine Gun_ to kill _1 enemy operator_.')
   .objective('In {nh}, use _K416 Assault Rifle_ to kill _1 enemy operator_.')
-  .objective('In {nh}, use _SCD Sniper Rifle_ to kill _1 enemy operator_.')
+  .objective('In {nh}, use _SVD Sniper Rifle_ to kill _1 enemy operator_.')
   .follows(sniperElite4);
 
 // from iron evidence:
