@@ -102,49 +102,7 @@ export class MapTimer {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const intervals = (start: number, duration: number, gap: number): TimeSpan[] => {
-  const times: TimeSpan[] = [];
-  for (let i = start; i < 24; i += duration + gap) {
-    times.push({ startHour: i, endHour: i + duration });
-  }
-  return times;
+export type MapTimerDef = {
+  title: string
+  timers: MapTimer[]
 };
-
-export const MAP_TIMERS: MapTimer[] = [
-  new MapTimer('Zero Dam: Normal', [{ startHour: 0, endHour: 24 }]),
-  new MapTimer('Layali Grove: Normal', [{ startHour: 0, endHour: 24 }]),
-  new MapTimer('Space City: Normal', [
-    [0, 2],
-    [4, 6],
-    [10, 14],
-    [16, 18],
-    [22, 24],
-  ]),
-  new MapTimer('Space City: Hard', [
-    [2, 4],
-    [6, 8],
-    [10, 12],
-    [14, 16],
-    [18, 20],
-    [22, 24],
-  ]),
-  new MapTimer('Brakkesh: Normal', [
-    [2, 4],
-    [8, 10],
-    [14, 16],
-    [20, 22],
-  ]),
-  new MapTimer('Zero Dam: Night', [
-    [6, 8],
-    [18, 20],
-  ]),
-  new MapTimer('Tide Prison: Hard', [
-    [0, 2],
-    [4, 6],
-    [8, 10],
-    [12, 14],
-    [16, 18],
-    [20, 22],
-  ]),
-];

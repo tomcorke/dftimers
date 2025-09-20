@@ -5,6 +5,7 @@
   "source": "src/index.html",
   "scripts": {
     "build-metadata": "node src/scripts/build-metadata.ts",
+    "generate-data-components": "node src/scripts/generate-data-components.ts",
     "clean": "rimraf dist && rimraf .parcel-cache",
     "start": "npm run clean && npm run build-metadata && cross-env TEMP=E:\\temp parcel",
     "build": "npm run clean && npm run build-metadata && cross-env TEMP=E:\\temp parcel build",
@@ -34,6 +35,7 @@
     "@parcel/transformer-sass": "^2.14.4",
     "@stylistic/eslint-plugin": "^5.2.2",
     "@types/lodash": "^4.17.20",
+    "@types/node": "^24.3.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "cross-env": "^7.0.3",

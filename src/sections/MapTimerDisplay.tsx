@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { MAP_TIMERS, MapTimer } from '../data/map-timers';
+import { MapTimer } from '../data/map-timers';
 import classNames from 'classnames';
+import { MAP_TIMERS_BREAK } from '../data/map-timers-break';
+import { MAP_TIMERS_WILDFIRE } from '../data/map-timers-wildire';
 
 const DateTimeDisplay = ({
   secondsFromMidnight,
@@ -71,9 +73,13 @@ export const MapTimersSection = () => {
 
   const currentHour = Math.floor(now / 3600);
 
+  const MAP_TIMERS = MAP_TIMERS_BREAK;
+
   return (
     <div className="section MapTimers">
-      <h2>Map Timers</h2>
+      <h2>
+        {MAP_TIMERS.title}
+      </h2>
       <div className="currentTime">
         Current Time:
         {' '}
@@ -85,7 +91,7 @@ export const MapTimersSection = () => {
       </div>
 
       <div className="timers">
-        {MAP_TIMERS.map((timer) => {
+        {MAP_TIMERS.timers.map((timer) => {
           const isOpen = timer.isLive();
 
           const nextStart = timer.nextOrCurrentTimeSpanStartSeconds(now);
@@ -142,7 +148,7 @@ export const MapTimersSection = () => {
             </div>
           );
         })}
-        {MAP_TIMERS.map((timer) => {
+        {MAP_TIMERS.timers.map((timer) => {
           return [
             <div key={`${timer.name}_name`} className="name">
               {abbreviate(timer.name)}
