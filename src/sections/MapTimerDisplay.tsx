@@ -73,7 +73,7 @@ export const MapTimersSection = () => {
 
   const currentHour = Math.floor(now / 3600);
 
-  const MAP_TIMERS = MAP_TIMERS_BREAK;
+  const MAP_TIMERS = MAP_TIMERS_WILDFIRE;
 
   return (
     <div className="section MapTimers">
