@@ -6,11 +6,11 @@ import { MapTimersSection } from './sections/MapTimerDisplay';
 //   CollectorSection,
 // } from './sections/CollectorDisplay';
 import KoFi from './components/KoFi';
-// import {
-//   MissionTreeContextProvider,
-//   MissionTreeSection,
-// } from './sections/MissionTreeDisplay';
+import {
+  MissionTreeSection,
+} from './sections/MissionTreeDisplay';
 import { Metadata } from './components/Metadata';
+import { MissionTreeContextProvider } from './sections/MissionTreeContext';
 
 const App = () => {
   return (
@@ -20,9 +20,9 @@ const App = () => {
           <CollectorSection />
         </CollectorMissionContextProvider> */}
         <MapTimersSection />
-        {/* <MissionTreeContextProvider>
+        <MissionTreeContextProvider>
           <MissionTreeSection />
-        </MissionTreeContextProvider> */}
+        </MissionTreeContextProvider>
       </div>
       <Metadata />
       <KoFi />

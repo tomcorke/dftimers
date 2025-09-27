@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { MapTimer } from '../data/map-timers';
 import classNames from 'classnames';
-import { MAP_TIMERS_BREAK } from '../data/map-timers-break';
+// import { MAP_TIMERS_BREAK } from '../data/map-timers-break';
 import { MAP_TIMERS_WILDFIRE } from '../data/map-timers-wildire';
 
 const DateTimeDisplay = ({
@@ -61,7 +61,7 @@ const abbreviate = (name: string) => {
 };
 
 export const MapTimersSection = () => {
-  const [now, setNow] = useState(MapTimer.nowSecondsUTC());
+  const [now, setNow] = useState(() => MapTimer.nowSecondsUTC());
 
   useEffect(() => {
     const interval = setInterval(() => {
