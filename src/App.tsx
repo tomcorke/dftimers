@@ -11,6 +11,7 @@ import {
 } from './sections/MissionTreeDisplay';
 import { Metadata } from './components/Metadata';
 import { MissionTreeContextProvider } from './sections/MissionTreeContext';
+import { OtherProjects } from './components/OtherProjects';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         </MissionTreeContextProvider>
       </div>
       <Metadata />
+      <OtherProjects />
       <KoFi />
     </div>
   );

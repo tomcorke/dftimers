@@ -6,23 +6,27 @@ html {
   color-scheme: light dark;
   font-family: system-ui;
 
-  --bg-color: #f0f0f0;
-  --text-color: #000;
+  --bg-color: #181818;
+  --bg-color-alt: #000;
+  --text-color: #f0f0f0;
   --toggle-content: "☀️";
 
   &[data-theme="light"] {
     --bg-color: #f0f0f0;
+    --bg-color-alt: #fff;
     --text-color: #000;
     --toggle-content: "☀️";
   }
   &[data-theme="dark"] {
-    --bg-color: #000;
+    --bg-color: #181818;
+    --bg-color-alt: #000;
     --text-color: #f0f0f0;
     --toggle-content: "🌙";
   }
 
   body {
     background: var(--bg-color);
+    background: linear-gradient(180deg, var(--bg-color), var(--bg-color-alt) 100%);
     color: var(--text-color);
 
     min-height: 1400px;
