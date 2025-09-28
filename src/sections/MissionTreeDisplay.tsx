@@ -236,7 +236,6 @@ export const MissionTreeSection = () => {
         const mission = queue.shift()!;
         const parentChildIndex = mission.parent?.children.indexOf(mission) || 0;
         const offset = mission.offset || MISSION_DISPLAY_OFFSETS[parentChildIndex % MISSION_DISPLAY_OFFSETS.length];
-        console.log({ mission: mission.name, parent: mission.parent?.name, parentOffset: mission.parent ? missionNodes.get(mission.parent)?.offset : undefined, parentChildIndex, offset });
 
         // Get x and y position of this mission's parent
         // and calculate new x and y for this mission based on parent position + y offset
@@ -374,21 +373,23 @@ export const MissionTreeSection = () => {
             </div>
           )
         : (
-            <div
-              className={classNames('missionStats', {
-                complete: allMissionsComplete,
-              })}
-            >
-              Completed Missions:
-              {' '}
-              {completedMissions}
-              /
-              {totalMissions}
-              {' '}
-              (
-              {((completedMissions / totalMissions) * 100).toFixed(1)}
-              %)
-            </div>
+            <>
+              <div
+                className={classNames('missionStats', {
+                  complete: allMissionsComplete,
+                })}
+              >
+                Completed Missions:
+                {' '}
+                {completedMissions}
+                /
+                {totalMissions}
+                {' '}
+                (
+                {((completedMissions / totalMissions) * 100).toFixed(1)}
+                %)
+              </div>
+            </>
           )}
     </div>
   );

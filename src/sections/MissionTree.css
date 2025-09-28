@@ -39,6 +39,11 @@
         background: rgba(255, 0, 0, 0.2);
         padding: 0.5em;
         margin-bottom: 0.5em;
+
+        p {
+          padding: 0;
+          margin: 0;
+        }
       }
 
       .quality-indicator {
@@ -64,7 +69,8 @@
       }
 
       ul {
-        margin: 0;
+        margin: 0 2em 1em;
+        padding: 0;
 
         li {
           margin-bottom: 0.5em;

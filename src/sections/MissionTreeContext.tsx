@@ -88,7 +88,7 @@ export const MissionTreeContextProvider = ({
   }, []);
 
   useEffect(() => {
-    console.log('saving mission states', missionStates);
+    console.log('saving mission states');
     localStorage.setItem('missions', JSON.stringify(missionStates));
   }, [missionStates]);
 

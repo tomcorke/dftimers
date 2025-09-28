@@ -1,55 +1,16 @@
 import EventEmitter from 'events';
+import { missionDescriptionReplacements } from './mission-text-utils';
 
 type MissionType = 'main' | 'side' | 'dummy' | 'computed';
 
-type MissionFlags = { type?: MissionType, offset?: number };
-
-const replacements = {
-  '{nh}': '**any Normal / Hard operation**',
-  '{zd}': '**any Zero Dam Normal / Eternal Night operation**',
-  '{space}': '**any Space City Normal / Hard operation**',
-  '{space or brakkesh}': '**any Space City / Brakkesh Normal / Hard operations**',
-  '{special}':
-    'special class enemies (Shieldbearer, Sniper, Rocketeer, Machine Gunner, Flamethrower, or Boss Guard)',
-  '{ahsarah special}':
-    'Ahsarah special class enemies (Shieldbearer, Sniper, Rocketeer, Machine Gunner, Flamethrower, Boss Guard)',
-  '{haavk special}':
-    'Haavk special class enemies (Shieldbearer, Sniper, Machine Gunner, or Flamethrower)',
-  '{green}': '<div class="quality-indicator green"></div>',
-  '{blue}': '<div class="quality-indicator blue"></div>',
-  '{purple}': '<div class="quality-indicator purple"></div>',
-  '{gold}': '<div class="quality-indicator gold"></div>',
-  '{red}': '<div class="quality-indicator red"></div>',
-  '{common}': '<div class="quality-indicator green"></div>',
-  '{rare}': '<div class="quality-indicator blue"></div>',
-  '{epic}': '<div class="quality-indicator purple"></div>',
-  '{legendary}': '<div class="quality-indicator gold"></div>',
-  '{exotic}': '<div class="quality-indicator red"></div>',
-  '{purchase}': '(purchase from the T&E Lab Supply Station)',
-};
-
-const missionDescriptionReplacements = (raw: string) => {
-  const replaced = Object.entries(replacements)
-    .reduce((acc, [from, to]) => {
-      let newAcc = acc;
-      while (newAcc.includes(from)) {
-        newAcc = newAcc.replace(from, to);
-      }
-      return newAcc;
-    }, raw);
-
-  const unhandledPattern = /\{[^}]+}/g;
-  if (unhandledPattern.test(replaced)) {
-    throw Error(`Unhandled pattern in mission description: ${replaced}`);
-  }
-  return replaced;
-};
+type MissionFlags = { type: MissionType, offset?: number };
 
 export class Mission extends EventEmitter {
   name: string;
   description?: string = undefined;
   children: Mission[];
-  private flags: MissionFlags;
+  type: MissionType;
+  offset: number = 0;
   parent: Mission | null = null;
   stars: number = 0;
   locked: boolean = false;
@@ -59,26 +20,30 @@ export class Mission extends EventEmitter {
 
   constructor(name: string,
     children: Mission[] = [],
-    flags: MissionFlags = {}) {
+    flags: MissionFlags) {
     super();
     this.name = name;
     this.children = children;
-    this.flags = flags;
+    this.type = flags.type;
+    this.offset = flags.offset ?? 0;
   }
 
-  get isMainMission() { return this.flags.type === 'main'; }
-  get isSideMission() { return this.flags.type === 'side'; }
-  get isDummyMission() { return this.flags.type === 'dummy'; }
-  get isComputedMission() { return this.flags.type === 'computed'; }
+  get isMainMission() { return this.type === 'main'; }
+  get isSideMission() { return this.type === 'side'; }
+  get isDummyMission() { return this.type === 'dummy'; }
+  get isComputedMission() { return this.type === 'computed'; }
 
-  get offset() { return this.flags.offset ?? 0; }
+  setOffset(value: number) {
+    this.offset = value;
+    return this;
+  }
 
   get isRealMission() {
-    return this.flags.type === 'main' || this.flags.type === 'side';
+    return this.type === 'main' || this.type === 'side';
   }
 
-  private withCondition(condition: string) {
-    this.description = (this.description ?? '') + `\n<div class="condition">❗ ${condition}</div>\n `;
+  withCondition(condition: string) {
+    this.description = (this.description ?? '') + `\n<div class="condition">\n\n❗ ${condition}\n\n</div>\n`;
     return this;
   }
 
@@ -106,10 +71,23 @@ export class Mission extends EventEmitter {
     return this.withCondition(`Entry gear value must be >=${value} Tekniq Alloys.`);
   }
 
+  withEquippedItemsOnEntry(...items: string[]) {
+    this.withCondition(`Must be equipped with ${items.map(item => missionDescriptionReplacements(item)).join(', ')} when entering the match.`);
+    console.log(this.description);
+    return this;
+  }
+
   objective(objectiveDescription?: string) {
     if (objectiveDescription) {
       const replacedDescription = missionDescriptionReplacements(objectiveDescription);
       this.description = (this.description ? `${this.description}\n- ${replacedDescription}` : `- ${replacedDescription}`);
+    }
+    return this;
+  }
+
+  objectives(...objectiveDescriptions: string[]) {
+    for (const desc of objectiveDescriptions) {
+      this.objective(desc);
     }
     return this;
   }
@@ -177,10 +155,14 @@ export const computedMission = (name: string, dependencies: Mission[], computeFu
   return mission;
 };
 
-export const createMissions = (type: 'main' | 'side', namePrefix: string, ...names: string[]) => {
+export const createMissions = (type: 'main' | 'side', namePrefix: string, ...missionsOrNames: (string | Mission)[]) => {
   const constructor = type === 'main' ? mainMission : sideMission;
-  const missions = names.map((name) => {
-    return constructor(`${namePrefix} - ${name}`);
+  const missions = missionsOrNames.map((m) => {
+    if (m instanceof Mission) {
+      m.name = `${namePrefix} - ${m.name}`;
+      return m;
+    }
+    return constructor(`${namePrefix} - ${m}`);
   });
 
   for (let i = 1; i < missions.length; i++) {
