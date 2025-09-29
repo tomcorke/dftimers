@@ -5,10 +5,15 @@
   align-items: center;
   gap: 4px;
 
+  .scrollContainer {
+    max-width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
   .missionTreeCanvas {
-    width: 100%;
+    width: 1400px;
     height: 250px;
-    max-width: 2000px;
   }
 
   .missionDisplay {

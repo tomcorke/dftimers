@@ -381,12 +381,14 @@ export const MissionTreeSection = () => {
 
   return (
     <div className="MissionTree">
-      <canvas
-        ref={canvasRef}
-        width="2000"
-        height="200"
-        className="missionTreeCanvas"
-      />
+      <div className="scrollContainer">
+        <canvas
+          ref={canvasRef}
+          width="2000"
+          height="200"
+          className="missionTreeCanvas"
+        />
+      </div>
       {hoveredMission
         ? (
             <div
