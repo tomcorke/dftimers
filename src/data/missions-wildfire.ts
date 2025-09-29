@@ -583,8 +583,9 @@ phase4StartGate.follows(phase3LastMission);
 const [, phase4FirstMission, phase4LastMission] = createMissions(
   'main',
   'Phase 4 - Final Phase: Silent Scream',
-  m('Silent Scream - 1')
-    .objectives(),
+  m('Apex Benchmark')
+    .objectives('In {nh}, complete _3 {flagship}_.')
+    .withoutDying(),
   m('Silent Scream - 2')
     .objectives(),
   m('Silent Scream - 3')
