@@ -384,15 +384,19 @@ const [, phase3FirstMission, phase3LastMission] = createMissions(
       'In {nh}, extract 1 time.'),
   m('Bedside')
     .objectives('In {space}, {goto} in _the CEO Office outer suite in the Central Zone_ and obtain the mission item {gold} _Altered Prison ID Card_.',
-      'In {space}, extrat 1 time from the _Helicopter/Rocket Extraction Point_.')
+      'In {space}, extract 1 time from the _Helicopter/Rocket Extraction Point_.')
     .inASingleMatch()
     .withEquippedItemsOnEntry('{gold} _Anti-Jamming Device_'),
   m('Broken Chains')
     .objectives('In {nh}, extract 1 time _(earnings >= 1,250,000)_.'),
   m('Total Suppression')
-    .objectives(),
-  m('Unknown - 8')
-    .objectives(),
+    .objectives('In {zd}, kill _2 enemy operators_ in total.',
+      'In {br}, kill _2 enemy operators_ in total.',
+      'In {space}, kill _2 enemy operators_ in total.'),
+  m('Morning Roll Call')
+    .objectives('In {nh}, kill _3 enemy operators_.',
+      'In {nh}, complete _1 {flagship}_.')
+    .inASingleMatch(),
 );
 phase3FirstMission.follows(phase3StartGate);
 phase3LastMission.setStars(10);
@@ -402,19 +406,25 @@ const [, phase3_gunner, phase3_gunner_last] = createMissions(
   'side',
   'Phase 3 - Combat Specialist: Golden Gunner',
   m('Golden Gunner - 1')
-    .objectives(),
+    .objectives('Submit _KC17 Assault Rifle_ x1 modified as required.'),
   m('Golden Gunner - 2')
-    .objectives(),
+    .objectives('In {nh}, use _KC17 Assault Rifle_ to kill _3 enemy operators_.')
+    .withEntryValue('750,000'),
   m('Golden Gunner - 3')
-    .objectives(),
+    .objectives('Submit _AKM Assault Rifle_ x1 modified as required.'),
   m('Golden Gunner - 4')
-    .objectives(),
+    .objectives('In {nh}, use _AKM Assault Rifle_ to kill _3 enemy operators_.')
+    .withEntryValue('750,000'),
   m('Golden Gunner - 5')
-    .objectives(),
+    .objectives('Submit _PKM General Machine Gun_ x1 modified as required.'),
   m('Golden Gunner - 6')
-    .objectives(),
+    .objectives('In {nh}, use _PKM General Machine Gun_ to kill _3 enemy operators_.')
+    .withEntryValue('750,000'),
   m('Golden Gunner - 7')
-    .objectives(),
+    .objectives('In {nh}, use _KC17 Assault Rifle_ to kill _1 enemy operator_.',
+      'In {nh}, use _AKM Assault Rifle_ to kill _1 enemy operator_.',
+      'In {nh}, use _PKM General Machine Gun_ to kill _1 enemy operator_.')
+    .withoutDying(),
 );
 phase3_gunner.follows(phase3StartGate);
 phase3_gunner_last.setStars(5);
@@ -424,15 +434,18 @@ const [, phase3_sniper, phase3_sniper_last] = createMissions(
   'side',
   'Phase 3 - Combat Specialist: Sniper Elite',
   m('Sniper Elite - 1')
-    .objectives(),
+    .objectives('In {nh}, use _any marksman rifle_ to kill _3 enemy operators_ in total.'),
   m('Sniper Elite - 2')
-    .objectives(),
+    .objectives('In {nh}, use any firearm equipped with _variable magnification scope_ to kill _3 enemy operators_ in total.'),
   m('Sniper Elite - 3')
-    .objectives(),
+    .objectives('In {nh}, use {red} _7.62x54R SNB_ or {gold} _7.62x54R BT_ to kill _3 enemy operators_ in total.'),
   m('Sniper Elite - 4')
-    .objectives(),
+    .objectives('In {nh}, use _any sniper rifle_ to kill _3 enemy operators_ from _beyond 30m_.'),
   m('Sniper Elite - 5')
-    .objectives(),
+    .objectives('In {nh}, use _M700 Sniper Rifle_ to kill _1 enemy operator_.',
+      'In {nh}, use _PSG-1 Marksman Rifle_ to kill _1 enemy operator_.',
+      'In {nh}, use _any pistol_ to kill _1 enemy operator_.')
+    .withoutDying(),
 );
 phase3_sniper.follows(phase3StartGate);
 phase3_sniper_last.setStars(5);
@@ -442,15 +455,18 @@ const [, phase3_sector, phase3_sector_last] = createMissions(
   'side',
   'Phase 3 - Bat Specialist: Sector Hunter',
   m('Sector Hunter: Dam')
-    .objectives(),
+    .objectives('In {zd}, kill _3 operators_ in total within the specified area _in the central Dam sector_.'),
   m('Sector Hunter: Grove')
-    .objectives(),
+    .objectives('In {nh}, kill _3 enemy operators_.')
+    .inASingleMatch(),
   m('Sector Hunter: New Tower of Babel')
-    .objectives(),
+    .objectives('In {br}, kill _3 operators_ in total within the specified area _in southern Brakkesh_.'),
   m('Sector Hunter: Central District')
-    .objectives(),
+    .objectives('In {space}, kill _3 operators_ in total within the specified area _in central Space City_.'),
   m('Eternal Heart: Return')
-    .objectives(),
+    .objectives('In {nh}, kill _2 enemy operators_.')
+    .withoutVest()
+    .withoutDying(),
 );
 phase3_sector.follows(phase3StartGate);
 phase3_sector_last.setStars(4);
@@ -460,35 +476,56 @@ const [, phase3_grandtour, phase3_grandtour_last] = createMissions(
   'side',
   'Phase 3 - Ability Expert: Patrol the World',
   m('Grand Tour: Dam')
-    .objectives(),
+    .objectives('In {zd}, investigate the specified location _on the second floor of the Visitor Center_ within the _first 15 min_ of the match.'),
   m('Grand Tour: Grove')
-    .objectives(),
+    .objectives('In {nh}, extract 1 time _(earnings >=1,250,000)_.',
+      'In {nh}, kill _2 enemy operators_.')
+    .inASingleMatch(),
   m('Grand Tour: Space City')
-    .objectives(),
+    .objectives(
+      'In {space}, investigate the specified location _in the Dormitory Area_ within the _first 15 min_ of the match.',
+      'In {space}, investigate the specified location _on the first floor of Central Command Zone_ within the _first 15 min_ of the match.',
+      'In {space}, investigate the specified location _in the printing workshop of Industrial Zone_ within the _first 15 min_ of the match.',
+      'In {space}, investigate the specified location _at the horizontal test track_ within the _first 15 min_ of the match.',
+    )
+    .inASingleMatch(),
   m('Grand Tour: Brakkesh')
-    .objectives(),
+    .objectives(
+      'In {br}, investigate the specified location _at the front desk of Brakkesh Grand Hammam_ within the _first 15 min_ of the match.',
+      'In {br}, investigate the specified location _at the front desk of Lanting Hotel_ within the _first 15 min_ of the match.',
+      'In {br}, investigate the specified location _inside Ahsarah Camp_ within the _first 15 min_ of the match.',
+      'In {br}, investigate the specified location _at the statue in front of the Museum_ within the _first 15 min_ of the match.',
+      'In {br}, investigate the specified location _at the pyramid sculpture outside the New Tower of Babel_ within the _first 15 min_ of the match.',
+    )
+    .inASingleMatch(),
   m('Ultimate Standard: Return')
-    .objectives(),
+    .objectives('In {nh}, complete _3 tasks_.',
+      'In {nh}, complete _1 {flagship}_.',
+      'In {nh}, extract 1 time.')
+    .inASingleMatch(),
 );
 phase3_grandtour.follows(phase3StartGate);
 phase3_grandtour_last.setStars(4);
 
-// add
-
-// Additional Phase 3 spare side stories from attachments
 const [phase3_escapist_missions, phase3_escapist_spare, phase3_escapist_last] = createMissions(
   'side',
   'Phase 3 - Escapist\'s Trick: Jack of All Trades',
   m('Escapist\'s Trick: Out of Pocket')
-    .objectives(),
+    .objectives('In {zd}, extract 1 time from the _River Bank Paid Extraction Point_.',
+      'In {ln}, extract 1 time from the _Shoreline Paid Extraction Point_.'),
   m('Escapist\'s Arts: Slip Through the Cracks')
-    .objectives(),
+    .objectives('In {zd}, extract 1 time from the _Dam Top/Maintenance Tunnel (Bagless Extraction Point)_.',
+      'In {br}, extract 1 time from the _Path to Grove (Bagless Extraction Point}_.',
+      'In {space}, extract 1 time from the _Test Track Extraction Point (Bagless Extraction Point)_.'),
   m('Escapist\'s Trick: Baton Pass')
-    .objectives(),
+    .objectives('In {br}, successfully extract 1 time from _Hammam Powered Extraction Point/Outside the New Tower of Babel Powered Extraction Point_.',
+      'In {space}, extract 1 time from the _Helicopter Powered Extraction Point_.')
+    .withoutDying(),
   m('Escapist\'s Trick: Big Score')
-    .objectives(),
+    .objectives('In {space}, extract 1 time from the _Rocket Extraction Point_ (requires activation through Operation Ascended).',
+      'In {br}, extract 1 time from the _Helipad Doctor Extraction Point_ (requires activation through Operation Asylum).'),
   m('Escapist\'s Trick: Supreme Solo')
-    .objectives(),
+    .objectives('In {br}, extract 1 time from the _New Tower of Babel Rooftop Extraction Point_.'),
 );
 phase3_escapist_spare.follows(phase3StartGate);
 phase3_escapist_missions.forEach(m => m.setLocked(true));
@@ -498,15 +535,18 @@ const [phase3_encyclopedic_missions, phase3_encyclopedic_cont, phase3_encycloped
   'side',
   'Phase 3 - Encyclopedic Insight: Broad Knowledge (cont.)',
   m('Broad Knowledge - 6')
-    .objectives(),
+    .objectives('In {nh}, extract with a total of 5 {purple} Purple or better _Medical Item collectibles_.'),
   m('Broad Knowledge - 7')
-    .objectives(),
+    .objectives('In {nh}, extract with a total of 5 {purple} Purple or better _Energy Fuel collectibles_.'),
   m('Broad Knowledge - 8')
-    .objectives(),
+    .objectives('In {nh}, extract with a total of 5 {purple} Purple or better _Household collectibles_.'),
   m('Broad Knowledge - 9')
-    .objectives(),
+    .objectives('In {nh}, extract with a total of 5 {gold} Gold or better _Electronic Productt collectibles_.'),
   m('Broad Knowledge - 10')
-    .objectives(),
+    .objectives('In {nh}, extract with a total of 3 {purple} Purple or better _Craftwork collectibles_.',
+      'In {nh}, extract with a total of 3 {purple} Purple or better _Tool & Material collectibles_.',
+      'In {nh}, extract with a total of 3 {purple} Purple or better _Intel collectibles_.')
+    .withoutDying(),
 );
 phase3_encyclopedic_cont.follows(phase3StartGate);
 phase3_encyclopedic_missions.forEach(m => m.setLocked(true));
@@ -516,15 +556,15 @@ const [phase3_collector_missions, phase3_collector, phase3_collector_last] = cre
   'side',
   'Phase 3 - Path to the Great Collector',
   m('Shadow of Stealth')
-    .objectives(),
+    .objectives('In {nh}, open _5 Courier Cartons_ for the first time.'),
   m('Personal Belongings')
-    .objectives(),
+    .objectives('In {nh}, open _5 Premium Suitcases_ for the first time.'),
   m('Box Affection')
-    .objectives(),
+    .objectives('In {nh}, open _5 Flight Cases_ for the first time.'),
   m('Boundless Link')
-    .objectives(),
+    .objectives('In {nh}, hack _5 Hacker Computers_ for the first time.'),
   m('Code of Thieves')
-    .objectives(),
+    .objectives('In {nh}, open _5 safes_ for the first time.'),
 );
 phase3_collector.follows(phase3StartGate);
 phase3_collector_missions.forEach(m => m.setLocked(true));
