@@ -2,7 +2,7 @@ const replacements = {
   '{nh}': '**any Normal / Hard operation**',
   '{zd}': '**any Zero Dam Normal / Eternal Night operation**',
   '{space}': '**any Space City Normal / Hard operation**',
-  '{br}': '**Brakkesh Normal/Hard Operation**',
+  '{br}': '**any Brakkesh Normal/Hard Operation**',
   '{ln}': '**Layali Grove Normal operation**',
   '{space or brakkesh}': '**any Space City / Brakkesh Normal / Hard operations**',
   '{special}':

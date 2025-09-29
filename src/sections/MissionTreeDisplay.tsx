@@ -65,19 +65,32 @@ const drawNode = (
   // fillStyle = isHovered ? (isCompleted ? "#c00" : "#cc0") : fillStyle;
   ctx.fillStyle = fillStyle;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const top = y - boxSize / 2;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const left = x - boxSize / 2;
+  const bottom = y + boxSize / 2;
+  const right = x + boxSize / 2;
+
   if (mission.isRealMission) {
     ctx.fillRect(x - boxSize / 2, y - boxSize / 2, boxSize, boxSize);
 
-    // Draw stars for mission
     if (mission.stars > 0) {
-      // draw number in the center
-      // using green if mission is not completed, black if it is
-      // bold font
       ctx.fillStyle = mission.completed ? '#000' : '#10f898';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = 'bold 14px Arial';
       ctx.fillText(mission.stars.toString(), x, y);
+    }
+
+    if (!mission.description) {
+      ctx.fillStyle = '#f00';
+      ctx.beginPath();
+      ctx.moveTo(right, bottom);
+      ctx.lineTo(x, bottom);
+      ctx.lineTo(right, y);
+      ctx.closePath();
+      ctx.fill();
     }
 
     if (mission.locked) {
@@ -344,6 +357,26 @@ export const MissionTreeSection = () => {
           </Markdown>
         </div>
       )
+    : (
+        <div className="description">
+          <div className="information">
+            Mission description coming soon
+          </div>
+        </div>
+      );
+
+  const starsDescription = hoveredMission && hoveredMission.stars > 0
+    ? (
+        <div className="description">
+          Completing this mission will reward
+          {' '}
+          ⭐
+          {' '}
+          {hoveredMission.stars}
+          {' '}
+          stars towards unlocking the next phase of missions.
+        </div>
+      )
     : null;
 
   return (
@@ -363,6 +396,7 @@ export const MissionTreeSection = () => {
             >
               <div className="name">{hoveredMission.name}</div>
               {reactDescription}
+              {starsDescription}
               <div
                 className={classNames('status', {
                   completed: hoveredMissionCompleted,

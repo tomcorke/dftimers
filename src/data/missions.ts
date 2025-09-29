@@ -47,12 +47,19 @@ export class Mission extends EventEmitter {
     return this;
   }
 
+  withInformation(info: string) {
+    this.description = (this.description ?? '') + `\n<div class="information"><span>ℹ️</span> ${info}\n\n</div>\n`;
+    return this;
+  }
+
   withoutDying() {
-    return this.withCondition('If extraction fails during the mission, the mission progress will be reset.');
+    return this
+      .withCondition('If extraction fails during the mission, the mission progress will be reset.')
+      .withInformation('You can be downed and revived, and you can die after the mission is fully complete, but failing to extract with any objectives incomplete will reset the mission progress.');
   }
 
   inASingleMatch() {
-    return this.withCondition('Complete all mission objectives in a single match, or the mission progress will be reset.');
+    return this.withCondition('Complete all mission objectives _in a single match_, or the mission progress will be reset.');
   }
 
   tourist() {
@@ -64,11 +71,12 @@ export class Mission extends EventEmitter {
   }
 
   withoutVest() {
-    return this.withCondition('Must not be equipped with any ballistic vests when entering the match.');
+    return this.withCondition('Must not be equipped with any ballistic vests when entering the match.')
+      .withInformation('You can equip a vest after entering the match, and enter the match with it in your backpack.');
   }
 
   withEntryValue(value: string) {
-    return this.withCondition(`Entry gear value must be >=${value} Tekniq Alloys.`);
+    return this.withCondition(`Entry gear value must be _>=${value}_ Tekniq Alloys.`);
   }
 
   withEquippedItemsOnEntry(...items: string[]) {

@@ -34,16 +34,23 @@
     }
 
     .description {
-      .condition {
+      .condition, .information {
         color: red;
         background: rgba(255, 0, 0, 0.2);
         padding: 0.5em;
         margin-bottom: 0.5em;
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0.5em;
 
         p {
           padding: 0;
           margin: 0;
         }
+      }
+      .information {
+        color: white;
+        background: rgba(50,50,255,0.5);
       }
 
       .quality-indicator {
