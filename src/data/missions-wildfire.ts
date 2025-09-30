@@ -330,7 +330,6 @@ const [phase2_encyclopedic_missions, phase2_encyclopedic, phase2_encyclopedic_la
     .inASingleMatch(),
 );
 phase2_encyclopedic.follows(phase2StartGate);
-phase2_encyclopedic_missions.forEach(m => m.setLocked(true));
 phase2_encyclopedic_last.setStars(3);
 
 const [phase2_deepenemy_missions, phase2_deepenemy, phase2_deepenemy_last] = createMissions(
@@ -349,7 +348,6 @@ const [phase2_deepenemy_missions, phase2_deepenemy, phase2_deepenemy_last] = cre
     .objectives('In {nh}, kill _any boss_ 1 time (including Reis, Saeed, Desmoulins, Raven, Warden)_.'),
 );
 phase2_deepenemy.follows(phase2StartGate);
-phase2_deepenemy_missions.forEach(m => m.setLocked(true));
 phase2_deepenemy_last.setStars(2);
 
 const phase3StartGate = computedMission('Phase 3 Start Gate',
@@ -528,7 +526,7 @@ const [phase3_escapist_missions, phase3_escapist_spare, phase3_escapist_last] = 
     .objectives('In {br}, extract 1 time from the _New Tower of Babel Rooftop Extraction Point_.'),
 );
 phase3_escapist_spare.follows(phase3StartGate);
-phase3_escapist_missions.forEach(m => m.setLocked(true));
+phase3_escapist_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
 phase3_escapist_last.setStars(3);
 
 const [phase3_encyclopedic_missions, phase3_encyclopedic_cont, phase3_encyclopedic_last] = createMissions(
@@ -549,7 +547,7 @@ const [phase3_encyclopedic_missions, phase3_encyclopedic_cont, phase3_encycloped
     .withoutDying(),
 );
 phase3_encyclopedic_cont.follows(phase3StartGate);
-phase3_encyclopedic_missions.forEach(m => m.setLocked(true));
+phase3_escapist_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
 phase3_encyclopedic_last.setStars(3);
 
 const [phase3_collector_missions, phase3_collector, phase3_collector_last] = createMissions(
@@ -567,7 +565,7 @@ const [phase3_collector_missions, phase3_collector, phase3_collector_last] = cre
     .objectives('In {nh}, open _5 safes_ for the first time.'),
 );
 phase3_collector.follows(phase3StartGate);
-phase3_collector_missions.forEach(m => m.setLocked(true));
+phase3_escapist_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
 phase3_collector_last.setStars(3);
 
 const phase4StartGate = computedMission('Phase 4 Start Gate',
@@ -586,14 +584,26 @@ const [, phase4FirstMission, phase4LastMission] = createMissions(
   m('Apex Benchmark')
     .objectives('In {nh}, complete _3 {flagship}_.')
     .withoutDying(),
-  m('Silent Scream - 2')
+  m('Home Sweet Home')
     .objectives(),
-  m('Silent Scream - 3')
+  m('Silent Witness')
     .objectives(),
-  m('Silent Scream - 4')
+  m('Hat Trick')
     .objectives(),
-  m('Silent Scream - 5')
-    .objectives(),
+  m('Ground Zero')
+    .objectives(
+      'In {nh}, kill _1 operator_.',
+      'In {nh}, kill _1 Ahsarah Shieldbearer_.',
+      'In {nh}, kill _1 Ahsarah Rocketeer_.',
+      'In {nh}, kill _1 Ahsarah Machine Gunner_.',
+      'In {nh}, kill _1 Ahsarah Sniper_.',
+      'In {nh}, kill _1 Ahsarah Flamethrower_.',
+      'In {nh}, kill _1 Haavk Shieldbearer_.',
+      'In {nh}, kill _1 Haavk Machine Gunner_.',
+      'In {nh}, kill _1 Haavk Sniper_.',
+      'In {nh}, kill _1 Haavk Flamethrower_.',
+    )
+    .withoutDying(),
   m('Silent Scream - 6')
     .objectives(),
   m('Silent Scream - 7')
