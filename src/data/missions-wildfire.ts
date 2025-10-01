@@ -593,7 +593,8 @@ const [, phase4FirstMission, phase4LastMission] = createMissions(
       'In {nh}, complete _1 {flagship}_.')
     .inASingleMatch(),
   m('Hat Trick')
-    .objectives(),
+    .objectives('In {nh}, extract _3 times_ _(earnings >=1,000,000 per operation)_.')
+    .withoutDying(),
   m('Ground Zero')
     .objectives(
       'In {nh}, kill _1 operator_.',

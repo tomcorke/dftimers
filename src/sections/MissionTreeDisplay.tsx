@@ -45,8 +45,14 @@ const drawConnectingLine = (
 ) => {
   ctx.strokeStyle = 'grey';
   ctx.beginPath();
-  ctx.moveTo(x + boxSize / 2 + connectOffset, y);
-  ctx.lineTo(childX - connectOffset - boxSize / 2, childY);
+  const fromX = x + boxSize / 2 + connectOffset;
+  const fromY = y;
+  const toX = childX - boxSize / 2 - connectOffset;
+  const toY = childY;
+  // const midX = (fromX + toX) / 2;
+  ctx.moveTo(fromX, fromY);
+  // ctx.lineTo(toX, toY);
+  ctx.bezierCurveTo(fromX, toY, fromX, toY, toX, toY);
   ctx.stroke();
   ctx.fillStyle = 'lightgrey';
   ctx.fillRect(x + boxSize / 2 + connectOffset, y - 1, 2, 2);
