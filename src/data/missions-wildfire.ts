@@ -547,7 +547,7 @@ const [phase3_encyclopedic_missions, phase3_encyclopedic_cont, phase3_encycloped
     .withoutDying(),
 );
 phase3_encyclopedic_cont.follows(phase3StartGate);
-phase3_escapist_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
+phase3_encyclopedic_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
 phase3_encyclopedic_last.setStars(3);
 
 const [phase3_collector_missions, phase3_collector, phase3_collector_last] = createMissions(
@@ -565,7 +565,7 @@ const [phase3_collector_missions, phase3_collector, phase3_collector_last] = cre
     .objectives('In {nh}, open _5 safes_ for the first time.'),
 );
 phase3_collector.follows(phase3StartGate);
-phase3_escapist_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
+phase3_collector_missions.forEach(m => m.setLocked(new Date() < new Date('2025-10-07T00:00:00Z')));
 phase3_collector_last.setStars(3);
 
 const phase4StartGate = computedMission('Phase 4 Start Gate',
