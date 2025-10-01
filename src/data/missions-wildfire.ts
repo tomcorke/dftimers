@@ -589,7 +589,9 @@ const [, phase4FirstMission, phase4LastMission] = createMissions(
       'In {nh}, extract 1 time _(earnings >= 1,250,000)_.')
     .withoutDying(),
   m('Silent Witness')
-    .objectives(),
+    .objectives('In {nh}, complete _3 tasks_.',
+      'In {nh}, complete _1 {flagship}_.')
+    .inASingleMatch(),
   m('Hat Trick')
     .objectives(),
   m('Ground Zero')

@@ -231,7 +231,8 @@ export const MissionTreeSection = () => {
       ctx.clearRect(0, 0, clientWidth, clientHeight);
 
       const canvasOffsetX = clientWidth / 2 - colWidth * (maxMissionDepth / 2);
-      const canvasOffsetY = 20; // clientHeight / 2;
+      const canvasOffsetY = 20; // wildfire
+      // const canvasOffsetY = clientHeight / 2; // break
 
       if (canvasOffsetX < 0) {
         return;
