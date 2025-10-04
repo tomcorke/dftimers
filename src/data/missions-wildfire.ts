@@ -278,7 +278,7 @@ const [, phase2_edge, phase2_edge_last] = createMissions(
     .objectives('In {nh}, use any firearm with _Accuracy >=99_ to kill _2 enemy operators_ in total as _any Assault/Recon Operator_.'),
   m('Search and Eliminate - 4')
     .objectives('In {nh}, kill _2 enemy operators_ in total as _Nox/Tempest_.',
-      'In {nh}, extract 1 time _(earnings >= 750,000) as _Luna/Hackclaw_.'),
+      'In {nh}, extract 1 time _(earnings >= 750,000)_ as _Luna/Hackclaw_.'),
   m('Search and Eliminate - 5')
     .objectives('In {nh}, complete _1 {flagship}_ as _any Assault/Recon Operator_.',
       'In {nh}, successfully extract 1 time as _any Assault/Recon Operator_.')
@@ -345,7 +345,7 @@ const [phase2_deepenemy_missions, phase2_deepenemy, phase2_deepenemy_last] = cre
   m('Losing Two Birds to One Stone')
     .objectives('In {nh}, kill _6 bosses in total (including Reis, Saeed, Desmoulins, Raven, Warden\'s escort or vehicle)_.'),
   m('No Regrets')
-    .objectives('In {nh}, kill _any boss_ 1 time (including Reis, Saeed, Desmoulins, Raven, Warden)_.'),
+    .objectives('In {nh}, kill _any boss 1 time (including Reis, Saeed, Desmoulins, Raven, Warden)_.'),
 );
 phase2_deepenemy.follows(phase2StartGate);
 phase2_deepenemy_last.setStars(2);

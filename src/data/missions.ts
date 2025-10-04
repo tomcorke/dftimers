@@ -87,6 +87,9 @@ export class Mission extends EventEmitter {
 
   objective(objectiveDescription?: string) {
     if (objectiveDescription) {
+      if (objectiveDescription.split('').filter(c => c === '_').length % 2 !== 0) {
+        throw Error(`Warning: Objective description "${objectiveDescription}" for mission "${this.name}" has unbalanced underscores for italics.`);
+      }
       const replacedDescription = missionDescriptionReplacements(objectiveDescription);
       this.description = (this.description ? `${this.description}\n- ${replacedDescription}` : `- ${replacedDescription}`);
     }
