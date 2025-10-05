@@ -55,7 +55,7 @@ export class Mission extends EventEmitter {
   withoutDying() {
     return this
       .withCondition('If extraction fails during the mission, the mission progress will be reset.')
-      .withInformation('You can be downed and revived, and you can die after the mission is fully complete, but failing to extract with any objectives incomplete will reset the mission progress.');
+      .withInformation('If you die in a mission after completing all objectives, the mission will still be completed.');
   }
 
   inASingleMatch() {
@@ -63,7 +63,8 @@ export class Mission extends EventEmitter {
   }
 
   tourist() {
-    return this.withCondition('Must not be equipped with any helmets, weapons, chest rigs or backpacks when entering the match.');
+    return this.withCondition('Must not be equipped with any helmets, weapons, chest rigs or backpacks when entering the match.')
+      .withInformation('You can equip any equipment after entering the match, so find a friend to bring you some gear.');
   }
 
   withoutMeds() {
@@ -81,7 +82,6 @@ export class Mission extends EventEmitter {
 
   withEquippedItemsOnEntry(...items: string[]) {
     this.withCondition(`Must be equipped with ${items.map(item => missionDescriptionReplacements(item)).join(', ')} when entering the match.`);
-    console.log(this.description);
     return this;
   }
 

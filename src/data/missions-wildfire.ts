@@ -609,12 +609,16 @@ const [, phase4FirstMission, phase4LastMission] = createMissions(
       'In {nh}, kill _1 Haavk Flamethrower_.',
     )
     .withoutDying(),
-  m('Silent Scream - 6')
-    .objectives(),
-  m('Silent Scream - 7')
-    .objectives(),
-  m('Silent Scream - 8')
-    .objectives(),
+  m('The Departed')
+    .objectives('In {nh}, kill _3 enemy operators_.',
+      'In {nh}, complete _1 {flagship}_.',
+      'In {nh}, extract 1 time _(earnings >= 1,250,000)_.')
+    .inASingleMatch()
+    .withCondition(`This mission is locked until you have completed:
+
+- All other phase 4 missions
+- At least 2 Collector missions
+- At least 2 Fate Contracts`),
 );
 phase4FirstMission.follows(phase4StartGate);
 
