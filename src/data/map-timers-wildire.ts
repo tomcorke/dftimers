@@ -1,9 +1,12 @@
 import { MapTimer, MapTimerDef } from './map-timers';
 
+const day = 24;
+
 export const MAP_TIMERS_WILDFIRE: MapTimerDef = {
   title: 'Season 6: Wildfire',
   timers: [
     new MapTimer('Zero Dam: Normal', [{ startHour: 0, endHour: 24 }]),
+    new MapTimer('Layali Grove: Normal', [{ startWeekHour: 5 * day, endWeekHour: 8 * day }]),
     new MapTimer('Brakkesh: Normal', [
       [2, 4],
       [6, 8],

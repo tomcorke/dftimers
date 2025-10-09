@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { format, addSeconds, setHours, setMinutes, setSeconds } from 'date-fns';
 
 import { MapTimer } from '../data/map-timers';
 import classNames from 'classnames';
@@ -18,8 +19,11 @@ const DateTimeDisplay = ({
 }) => {
   const offsetHours = withOffset ? MapTimer.offsetHours() : 0;
   const adjustedSecondsFromMidnight = secondsFromMidnight - offsetHours * 3600;
+  const currentDate = new Date(Date.now());
+  const displayDate = addSeconds(setSeconds(setMinutes(setHours(currentDate, 0), 0), 0), adjustedSecondsFromMidnight);
+  const dayDisplay = currentDate.getDay() !== displayDate.getDay() ? `${format(displayDate, 'E')} ` : '';
   let hours = Math.floor(adjustedSecondsFromMidnight / 3600);
-  if (hours >= 24) {
+  while (hours >= 24) {
     hours -= 24;
   }
   const minutes = Math.floor((adjustedSecondsFromMidnight % 3600) / 60);
@@ -33,6 +37,7 @@ const DateTimeDisplay = ({
 
   return (
     <span>
+      {dayDisplay}
       {hours.toString().padStart(2, '0')}
       :
       {minutes.toString().padStart(2, '0')}
@@ -61,11 +66,11 @@ const abbreviate = (name: string) => {
 };
 
 export const MapTimersSection = () => {
-  const [now, setNow] = useState(() => MapTimer.nowSecondsUTC());
+  const [now, setNow] = useState(() => MapTimer.nowWeeklySecondsUTC());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNow(MapTimer.nowSecondsUTC());
+      setNow(MapTimer.nowWeeklySecondsUTC());
     }, 1000);
 
     return () => clearInterval(interval);

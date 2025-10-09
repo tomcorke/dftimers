@@ -5,7 +5,7 @@ import {
   useState,
 } from 'react';
 import { Mission } from '../data/missions';
-import { ROOT_MISSION, FINAL_MISSION, MISSION_DISPLAY_OFFSETS } from '../data/missions-wildfire';
+import { ROOT_MISSION, MISSION_DISPLAY_OFFSETS } from '../data/missions-wildfire';
 import './MissionTree.css';
 
 import classNames from 'classnames';
@@ -200,12 +200,6 @@ export const MissionTreeSection = () => {
     (ctx: CanvasRenderingContext2D, hoveredNode?: Mission) => void
       >(() => {});
 
-  const allOtherMissionsCompleted = Array.from(
-    Object.entries(missionsByName), // Change here
-  ).every(([name, mission]) => name === FINAL_MISSION.name || mission.completed);
-
-  const finalMissionLocked = !allOtherMissionsCompleted;
-
   useEffect(() => {
     drawMissionNodes.current = (
       ctx: CanvasRenderingContext2D,
@@ -214,9 +208,6 @@ export const MissionTreeSection = () => {
       for (const [mission, { x, y }] of missionNodes.entries()) {
         const isHovered = hoveredNode == mission;
         drawNode(ctx, x, y, mission, isHovered);
-        if (mission === FINAL_MISSION && finalMissionLocked) {
-          drawLock(ctx, x, y);
-        }
       }
     };
   }, [missionsByName]);
