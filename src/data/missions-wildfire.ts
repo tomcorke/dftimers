@@ -539,7 +539,7 @@ const [phase3_encyclopedic_missions, phase3_encyclopedic_cont, phase3_encycloped
   m('Broad Knowledge - 8')
     .objectives('In {nh}, extract with a total of 5 {purple} Purple or better _Household collectibles_.'),
   m('Broad Knowledge - 9')
-    .objectives('In {nh}, extract with a total of 5 {gold} Gold or better _Electronic Productt collectibles_.'),
+    .objectives('In {nh}, extract with a total of 5 {gold} Gold or better _Electronic Product collectibles_.'),
   m('Broad Knowledge - 10')
     .objectives('In {nh}, extract with a total of 3 {purple} Purple or better _Craftwork collectibles_.',
       'In {nh}, extract with a total of 3 {purple} Purple or better _Tool & Material collectibles_.',
