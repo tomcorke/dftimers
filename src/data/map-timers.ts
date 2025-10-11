@@ -11,138 +11,83 @@ type TimeSpan = DailyTimeSpan | WeeklyTimeSpan;
 
 type SimpleTimeSpan = [number, number];
 
-const toTimeSpans = (times: (TimeSpan | SimpleTimeSpan)[]): TimeSpan[] => {
-  return times.map((time) => {
+const getOffsetHours = (): number => {
+  const now = new Date();
+  return 0 - now.getTimezoneOffset() / 60;
+};
+
+const toTimeSpans = (times: (TimeSpan | SimpleTimeSpan)[]): WeeklyTimeSpan[] => {
+  // Time spans are defined in UTC
+  // so they need to be offset to the user's local time zone.
+  const offset = getOffsetHours();
+
+  const normalisedTimes = times.map((time) => {
     if (Array.isArray(time)) {
-      return { startHour: time[0], endHour: time[1] };
+      return { startHour: time[0] + offset, endHour: time[1] + offset };
     }
-    return time;
+    else if ('startHour' in time) {
+      return { startHour: time.startHour + offset, endHour: time.endHour + offset };
+    }
+    else if ('startWeekHour' in time) {
+      return { startWeekHour: time.startWeekHour + offset, endWeekHour: time.endWeekHour + offset };
+    }
+    throw Error('Unexpected time span format');
   });
-};
 
-const isInDailyTimeSpan = (timeSpan: DailyTimeSpan, currentDailyTimeSeconds: number): boolean => {
-  const startTimeSeconds = timeSpan.startHour * 3600;
-  const endTimeSeconds = timeSpan.endHour * 3600;
-  return (startTimeSeconds <= currentDailyTimeSeconds && endTimeSeconds > currentDailyTimeSeconds);
-};
+  const normalisedDailyTimes = normalisedTimes.filter((time): time is DailyTimeSpan => 'startHour' in time);
+  const normalisedWeeklyTimes = normalisedTimes.filter((time): time is WeeklyTimeSpan => 'startWeekHour' in time);
 
-const isInWeeklyTimeSpan = (timeSpan: WeeklyTimeSpan, currentWeeklyTimeSeconds: number): boolean => {
-  const startTimeSeconds = timeSpan.startWeekHour * 3600;
-  const endTimeSeconds = timeSpan.endWeekHour * 3600;
-  const nextWeekCurrentTimeSeconds = currentWeeklyTimeSeconds + 7 * 24 * 3600;
-  console.log(`isInWeeklyTimeSpan: currentWeeklyTimeSeconds=${currentWeeklyTimeSeconds}, nextWeekCurrentTimeSeconds=${nextWeekCurrentTimeSeconds}, startTimeSeconds=${startTimeSeconds}, endTimeSeconds=${endTimeSeconds}`);
-  return (startTimeSeconds <= currentWeeklyTimeSeconds && endTimeSeconds > currentWeeklyTimeSeconds)
-    || (startTimeSeconds <= nextWeekCurrentTimeSeconds && endTimeSeconds > nextWeekCurrentTimeSeconds);
-};
+  // start at hour 0 in a week
+  // end at hout 7 * 24
+  for (let day = 0; day < 7; day++) {
+    const dayStartHour = day * 24;
 
-const isInTimeSpan = (timeSpan: TimeSpan, currentWeeklyTimeSeconds: number): boolean => {
-  const currentDailyTimeSeconds = currentWeeklyTimeSeconds % (24 * 3600);
-  if ('startHour' in timeSpan) {
-    return isInDailyTimeSpan(timeSpan, currentDailyTimeSeconds);
+    for (const time of normalisedDailyTimes) {
+      const startHour = dayStartHour + time.startHour;
+      const endHour = dayStartHour + time.endHour;
+      normalisedWeeklyTimes.push({ startWeekHour: startHour, endWeekHour: endHour });
+    }
   }
-  else if ('startWeekHour' in timeSpan) {
-    return isInWeeklyTimeSpan(timeSpan, currentWeeklyTimeSeconds);
-  }
-  return false;
+
+  return normalisedWeeklyTimes.sort((a, b) => a.startWeekHour - b.startWeekHour);
 };
 
 export class MapTimer {
   name: string;
-  times: TimeSpan[];
+  times: WeeklyTimeSpan[];
 
   constructor(name: string, times: (TimeSpan | SimpleTimeSpan)[]) {
     this.name = name;
     this.times = toTimeSpans(times);
+
+    console.log(this.times);
   }
 
-  static nowWeeklySeconds(): number {
-    const now = new Date();
-    const dayOfWeek = now.getDay(); // 0 (Sun) to 6 (Sat)
-    return dayOfWeek * 24 * 3600 + now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  isLive(weekHour: number): boolean {
+    return this.times.some(time => weekHour >= time.startWeekHour && weekHour < time.endWeekHour);
   }
 
-  static nowWeeklySecondsUTC(): number {
-    const now = new Date();
-    const dayOfWeek = now.getUTCDay(); // 0 (Sun) to 6 (Sat)
-    console.log(`dayOfWeek: ${dayOfWeek}, now.getUTCHours(): ${now.getUTCHours()}, now.getUTCMinutes(): ${now.getUTCMinutes()}, now.getUTCSeconds(): ${now.getUTCSeconds()}`);
-    return dayOfWeek * 24 * 3600 + now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
-  }
-
-  static offsetHours(): number {
-    const now = new Date();
-    return now.getTimezoneOffset() / 60;
-  }
-
-  nextOrCurrentTimeSpan(currentWeeklyTimeSecondsUTC: number): TimeSpan | undefined {
-    const nextTimeSpan = this.times.find((time) => {
-      return isInTimeSpan(time, currentWeeklyTimeSecondsUTC);
-    });
-
-    if (nextTimeSpan) {
-      return nextTimeSpan;
-    }
-
-    const nextDayFirstTimeSpan = this.times[0];
-    if (nextDayFirstTimeSpan) {
-      if ('startWeekHour' in nextDayFirstTimeSpan) {
-        return {
-          startWeekHour: nextDayFirstTimeSpan.startWeekHour + 24,
-          endWeekHour: nextDayFirstTimeSpan.endWeekHour + 24,
-        };
-      }
-
-      return {
-        startHour: nextDayFirstTimeSpan.startHour + 24,
-        endHour: nextDayFirstTimeSpan.endHour + 24,
-      };
-    }
-
-    return undefined;
-  }
-
-  nextOrCurrentTimeSpanStartSeconds(currentWeeklyTimeSecondsUTC: number): number {
-    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentWeeklyTimeSecondsUTC);
-    let nextTimeSpanStartSeconds: number | undefined;
-    if (nextTimeSpan) {
-      if ('startWeekHour' in nextTimeSpan) {
-        nextTimeSpanStartSeconds = nextTimeSpan.startWeekHour * 3600;
-      }
-      else {
-        nextTimeSpanStartSeconds = nextTimeSpan.startHour * 3600;
+  nextOrCurrentTimeSpan(weekHour: number): WeeklyTimeSpan {
+    for (const time of this.times) {
+      const isCurrent = (time.startWeekHour <= weekHour && weekHour < time.endWeekHour);
+      const isFuture = (weekHour < time.startWeekHour);
+      if (isCurrent || isFuture) {
+        return time;
       }
     }
-    if (nextTimeSpanStartSeconds === undefined) {
-      throw new Error('No next time span found');
-    }
-    return nextTimeSpanStartSeconds;
+    // If we didn't find any current or future time in the time spans,
+    // return the first time span assuming that next week will happen.
+    return this.times[0];
   }
 
-  nextOrCurrentTimeSpanEndSeconds(currentWeeklyTimeSecondsUTC: number): number {
-    const nextTimeSpan = this.nextOrCurrentTimeSpan(currentWeeklyTimeSecondsUTC);
-    let nextTimeSpanEndSeconds: number | undefined;
-    if (nextTimeSpan) {
-      if ('endWeekHour' in nextTimeSpan) {
-        nextTimeSpanEndSeconds = nextTimeSpan.endWeekHour * 3600;
-      }
-      else {
-        nextTimeSpanEndSeconds = nextTimeSpan.endHour * 3600;
-      }
-    }
-    if (nextTimeSpanEndSeconds === undefined) {
-      throw new Error('No next time span found');
-    }
-    return nextTimeSpanEndSeconds;
+  nextOrCurrentStartWeekHour(weekHour: number): number {
+    const timeSpan = this.nextOrCurrentTimeSpan(weekHour);
+    return timeSpan?.startWeekHour;
   }
 
-  secondsUntilNextEnd(): number {
-    const now = MapTimer.nowWeeklySecondsUTC();
-    return this.nextOrCurrentTimeSpanEndSeconds(now) - now;
-  }
-
-  isLive(simTime?: number): boolean {
-    const realNow = MapTimer.nowWeeklySecondsUTC();
-    const now = simTime ?? realNow;
-    return this.times.some(time => isInTimeSpan(time, now));
+  nextOrCurrentEndWeekHour(weekHour: number): number {
+    const timeSpan = this.nextOrCurrentTimeSpan(weekHour);
+    return timeSpan?.endWeekHour;
   }
 }
 

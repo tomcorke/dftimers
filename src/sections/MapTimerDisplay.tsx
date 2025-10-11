@@ -1,48 +1,32 @@
 import { useEffect, useState } from 'react';
-import { format, addSeconds, setHours, setMinutes, setSeconds } from 'date-fns';
+import { format, addSeconds, setHours, setMinutes, setSeconds, addHours, addDays } from 'date-fns';
 
 import { MapTimer } from '../data/map-timers';
 import classNames from 'classnames';
 // import { MAP_TIMERS_BREAK } from '../data/map-timers-break';
 import { MAP_TIMERS_WILDFIRE } from '../data/map-timers-wildire';
 
-const DateTimeDisplay = ({
-  secondsFromMidnight,
-  withSeconds = false,
-  withOffset = true,
-  withOffsetDisplay = false,
+const WeeklyHourDisplay = (weekHour: number) => {
+  const currentWeekHour = (new Date()).getDay() * 24 + (new Date()).getHours();
+  const isSameDay = Math.floor(weekHour / 24) === Math.floor(currentWeekHour / 24);
+  return '0';
+};
+
+const getOffsetHours = (): number => {
+  const now = new Date();
+  return now.getTimezoneOffset() / 60;
+};
+
+const RelativeDateTimeDisplay = ({
+  date,
 }: {
-  secondsFromMidnight: number
-  withSeconds?: boolean
-  withOffset?: boolean
-  withOffsetDisplay?: boolean
+  date: Date
 }) => {
-  const offsetHours = withOffset ? MapTimer.offsetHours() : 0;
-  const adjustedSecondsFromMidnight = secondsFromMidnight - offsetHours * 3600;
-  const currentDate = new Date(Date.now());
-  const displayDate = addSeconds(setSeconds(setMinutes(setHours(currentDate, 0), 0), 0), adjustedSecondsFromMidnight);
-  const dayDisplay = currentDate.getDay() !== displayDate.getDay() ? `${format(displayDate, 'E')} ` : '';
-  let hours = Math.floor(adjustedSecondsFromMidnight / 3600);
-  while (hours >= 24) {
-    hours -= 24;
-  }
-  const minutes = Math.floor((adjustedSecondsFromMidnight % 3600) / 60);
-  const seconds = adjustedSecondsFromMidnight % 60;
-
-  const invertedOffset = 0 - offsetHours;
-  const offsetDisplay
-    = withOffsetDisplay && invertedOffset !== 0
-      ? ` (UTC${invertedOffset >= 0 ? '+' : ''}${invertedOffset})`
-      : '';
-
+  const now = new Date();
+  const isSameDay = date.toDateString() === now.toDateString();
   return (
     <span>
-      {dayDisplay}
-      {hours.toString().padStart(2, '0')}
-      :
-      {minutes.toString().padStart(2, '0')}
-      {withSeconds ? `:${seconds.toString().padStart(2, '0')}` : ''}
-      {offsetDisplay}
+      {isSameDay ? format(date, 'HH:00') : format(date, 'EEE HH:00')}
     </span>
   );
 };
@@ -65,18 +49,28 @@ const abbreviate = (name: string) => {
   return name;
 };
 
+const dateFromWeeklyHour = (weekHour: number): Date => {
+  const now = new Date();
+  // reset to start of the week
+  // then add week hours
+  const startOfWeek = addDays(now, -now.getDay());
+  const date = setHours(setMinutes(setSeconds(startOfWeek, 0), 0), 0);
+  return addHours(date, weekHour);
+};
+
 export const MapTimersSection = () => {
-  const [now, setNow] = useState(() => MapTimer.nowWeeklySecondsUTC());
+  const [now, setNow] = useState(() => new Date());
+
+  const dayStartHour = now.getDay() * 24;
+  const currentWeekHour = dayStartHour + now.getHours();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNow(MapTimer.nowWeeklySecondsUTC());
+      setNow(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
-
-  const currentHour = Math.floor(now / 3600);
 
   const MAP_TIMERS = MAP_TIMERS_WILDFIRE;
 
@@ -88,20 +82,19 @@ export const MapTimersSection = () => {
       <div className="currentTime">
         Current Time:
         {' '}
-        <DateTimeDisplay
-          secondsFromMidnight={now}
-          withSeconds={true}
-          withOffsetDisplay={true}
-        />
+        {format(now, 'HH:mm:ss')}
       </div>
 
       <div className="timers">
         {MAP_TIMERS.timers.map((timer) => {
-          const isOpen = timer.isLive();
+          const isOpen = timer.isLive(currentWeekHour);
 
-          const nextStart = timer.nextOrCurrentTimeSpanStartSeconds(now);
-          const nextEnd = timer.nextOrCurrentTimeSpanEndSeconds(now);
-          const is24h = Math.abs(nextEnd - nextStart) === 86400;
+          const nextStart = timer.nextOrCurrentStartWeekHour(currentWeekHour);
+          const nextEnd = timer.nextOrCurrentEndWeekHour(currentWeekHour);
+          const is24h = Math.abs(nextEnd - nextStart) === 24;
+
+          const nextStartDate = dateFromWeeklyHour(nextStart);
+          const nextEndDate = dateFromWeeklyHour(nextEnd);
 
           return (
             <div
@@ -117,20 +110,14 @@ export const MapTimersSection = () => {
                   {isOpen ? 'Current' : 'Next'}
                   :
                   {' '}
-                  <DateTimeDisplay
-                    secondsFromMidnight={timer.nextOrCurrentTimeSpanStartSeconds(
-                      now,
-                    )}
-                    withOffset={true}
+                  <RelativeDateTimeDisplay
+                    date={nextStartDate}
                   />
                   {' '}
                   -
                   {' '}
-                  <DateTimeDisplay
-                    secondsFromMidnight={timer.nextOrCurrentTimeSpanEndSeconds(
-                      now,
-                    )}
-                    withOffset={true}
+                  <RelativeDateTimeDisplay
+                    date={nextEndDate}
                   />
                 </div>
               )}
@@ -142,11 +129,12 @@ export const MapTimersSection = () => {
       <div className="timeline">
         <div className="name">UTC</div>
         {HOURS.map((hour) => {
+          const weekHour = hour + dayStartHour;
           return (
             <div
               key={hour}
               className={classNames('hour-key', {
-                live: hour === currentHour,
+                live: weekHour === currentWeekHour,
               })}
             >
               {hour}
@@ -159,14 +147,13 @@ export const MapTimersSection = () => {
               {abbreviate(timer.name)}
             </div>,
             HOURS.map((hour) => {
-              const simTime = hour * 3600;
-              const isLive = timer.isLive(simTime);
+              const weekHour = hour + dayStartHour;
+              const isLive = timer.isLive(weekHour);
               return (
                 <div
                   key={`${timer.name}_hour_${hour}`}
                   data-hour={hour}
-                  data-sim-time={simTime}
-                  data-current-hour={currentHour}
+                  data-current-hour={currentWeekHour % 24}
                   className={classNames('hour', { live: isLive })}
                 />
               );
