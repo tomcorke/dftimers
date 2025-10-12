@@ -64,7 +64,19 @@ export class MapTimer {
   }
 
   isLive(weekHour: number): boolean {
-    return this.times.some(time => weekHour >= time.startWeekHour && weekHour < time.endWeekHour);
+    // Check if the current week hour is within any of the time spans
+    // but also consider if the current week hour is within any time spans that might have started a week earlier
+    // to allow for weekly time spans which cross the week boundary
+
+    return this.times.some((time) => {
+      const isLiveInCurrentWeek = weekHour >= time.startWeekHour && weekHour < time.endWeekHour;
+      if (isLiveInCurrentWeek) {
+        return true;
+      }
+      const week = 7 * 24;
+      const isLiveInPreviousWeek = weekHour >= (time.startWeekHour - week) && weekHour < (time.endWeekHour - week);
+      return isLiveInPreviousWeek;
+    });
   }
 
   nextOrCurrentTimeSpan(weekHour: number): WeeklyTimeSpan {
